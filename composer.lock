@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a529934503639f8c6783b21b7efe77f1",
+    "content-hash": "746319c6b81f5c93697bbea89c8e6c60",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -652,6 +652,67 @@
                 "psysh"
             ],
             "time": "2018-03-06T13:48:07+00:00"
+        },
+        {
+            "name": "laravelista/ekko",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravelista/Ekko.git",
+                "reference": "f62f295a391be28b2628b66e88b7dddc3ff66a5f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravelista/Ekko/zipball/f62f295a391be28b2628b66e88b7dddc3ff66a5f",
+                "reference": "f62f295a391be28b2628b66e88b7dddc3ff66a5f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/routing": "~4.0|~5.0",
+                "illuminate/support": "~4.0|~5.0",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^0.9.4",
+                "phpunit/phpunit": "^5.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravelista\\Ekko\\EkkoServiceProvider"
+                    ],
+                    "aliases": {
+                        "Ekko": "Laravelista\\Ekko\\Facades\\Ekko"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Laravelista\\Ekko\\": "src/"
+                },
+                "files": [
+                    "src/Laravelista/Ekko/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mario Basic",
+                    "email": "mario.basic@outlook.com"
+                }
+            ],
+            "description": "Laravel helper for detecting active navigation menu items and applying bootstrap classes.",
+            "keywords": [
+                "bootstrap",
+                "helper",
+                "laravel",
+                "navigation"
+            ],
+            "time": "2018-01-18T10:44:12+00:00"
         },
         {
             "name": "league/flysystem",

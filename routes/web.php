@@ -12,9 +12,23 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/admin', 'AdminController@index')->name('home'); // is the name correct?
+
+
+Route::get('/search', function () {
+    return view('search');
+});
+
+Route::get('/basket', function () {
+    return view('basket');
+});
+
+Route::get('/settings', function () {
+    return view('settings');
+});
