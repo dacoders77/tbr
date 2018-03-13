@@ -106,6 +106,7 @@ class ListenLocalSocket extends Command
 
                 $conn->on('close', function($code = null, $reason = null) {
                     echo "Connection closed ({$code} - {$reason})\n";
+                    $this->connection = null;
                 });
 
                 $conn->send(['event' => 'ping']);
@@ -118,6 +119,7 @@ class ListenLocalSocket extends Command
                 function(\Exception $e) use ($loop) {
                 echo "Could not connect: {$e->getMessage()}\n";
 
+                $this->connection = null;
                 $loop->stop();
             });
 
