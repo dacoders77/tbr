@@ -33,6 +33,8 @@ class ListenLocalSocket extends Command
     }
 
 
+    protected $connection;
+    
     /**
      * Execute the console command.
      *
@@ -56,6 +58,13 @@ class ListenLocalSocket extends Command
         // http://sergeyzhuk.me/2017/06/06/phpreact-event-loop/
         $loop->addPeriodicTimer(0.5, function() use(&$counter) { // addPeriodicTimer($interval, callable $callback)
             $counter++;
+            
+            dump($this->connection);
+            
+            if($this->connection) {
+                $this->connection->send(['event' => 'ping']);
+            }
+             
             //echo "$counter\n";
             // read messages from db
             $z = DB::table('socket_que')->select('*')
@@ -87,6 +96,8 @@ class ListenLocalSocket extends Command
         $connector('ws://localhost:8181', [], ['Origin' => '127.0.0.1:7451'])
             ->then( function(\Ratchet\Client\WebSocket $conn) {
 
+                $this->connection = $conn;
+                
                 $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
                     //RatchetWebSocket::out($msg); // Call the function when the event is received
                     echo $msg . "\n";
@@ -95,6 +106,7 @@ class ListenLocalSocket extends Command
 
                 $conn->on('close', function($code = null, $reason = null) {
                     echo "Connection closed ({$code} - {$reason})\n";
+                    $this->connection = null;
                 });
 
                 $conn->send(['event' => 'ping']);
@@ -107,6 +119,7 @@ class ListenLocalSocket extends Command
                 function(\Exception $e) use ($loop) {
                 echo "Could not connect: {$e->getMessage()}\n";
 
+                $this->connection = null;
                 $loop->stop();
             });
 
