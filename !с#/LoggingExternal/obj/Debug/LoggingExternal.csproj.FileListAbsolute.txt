@@ -1,0 +1,2 @@
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\LoggingExternal\obj\Debug\LoggingExternal.csprojResolveAssemblyReference.cache
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\LoggingExternal\obj\Debug\LoggingExternal.csproj.CoreCompileInputs.cache

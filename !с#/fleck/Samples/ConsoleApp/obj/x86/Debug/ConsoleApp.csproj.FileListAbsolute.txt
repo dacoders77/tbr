@@ -1,0 +1,12 @@
+D:\Программинг\с\new_shit\TBR\fleck\src\Samples\ConsoleApp\bin\Debug\Fleck.Samples.ConsoleApp.exe
+D:\Программинг\с\new_shit\TBR\fleck\src\Samples\ConsoleApp\bin\Debug\Fleck.Samples.ConsoleApp.pdb
+D:\Программинг\с\new_shit\TBR\fleck\src\Samples\ConsoleApp\bin\Debug\Fleck.dll
+D:\Программинг\с\new_shit\TBR\fleck\src\Samples\ConsoleApp\bin\Debug\Fleck.pdb
+D:\Программинг\с\new_shit\TBR\fleck\src\Samples\ConsoleApp\obj\x86\Debug\ConsoleApp.csprojResolveAssemblyReference.cache
+D:\Программинг\с\new_shit\TBR\fleck\src\Samples\ConsoleApp\obj\x86\Debug\ConsoleApp.csproj.CoreCompileInputs.cache
+D:\Программинг\с\new_shit\TBR\fleck\src\Samples\ConsoleApp\obj\x86\Debug\Fleck.Samples.ConsoleApp.exe
+D:\Программинг\с\new_shit\TBR\fleck\src\Samples\ConsoleApp\obj\x86\Debug\Fleck.Samples.ConsoleApp.pdb
+D:\Программинг\с\new_shit\TBR\fleck\src\Samples\ConsoleApp\bin\Debug\Newtonsoft.Json.dll
+D:\Программинг\с\new_shit\TBR\fleck\src\Samples\ConsoleApp\bin\Debug\Newtonsoft.Json.xml
+D:\Программинг\с\new_shit\TBR\fleck\src\Samples\ConsoleApp\bin\Debug\Newtonsoft.Json.Schema.dll
+D:\Программинг\с\new_shit\TBR\fleck\src\Samples\ConsoleApp\bin\Debug\Newtonsoft.Json.Schema.xml

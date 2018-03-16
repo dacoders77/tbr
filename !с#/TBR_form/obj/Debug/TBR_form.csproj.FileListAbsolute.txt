@@ -1,0 +1,12 @@
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.csprojResolveAssemblyReference.cache
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.Form1.resources
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.Properties.Resources.resources
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.csproj.GenerateResource.Cache
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.csproj.CoreCompileInputs.cache
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\bin\Debug\TBR_form.exe.config
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\bin\Debug\TBR_form.exe
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\bin\Debug\TBR_form.pdb
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\bin\Debug\MySql.Data.dll
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\bin\Debug\MySql.Data.xml
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.exe
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.pdb

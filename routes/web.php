@@ -32,3 +32,10 @@ Route::get('/basket', function () {
 Route::get('/settings', function () {
     return view('settings');
 });
+
+// Add a record to websocket que DB
+Route::get('/addmsgws', 'AddMessageToSocketQue@index');
+
+// Test rnis
+Route::get('/rnis', 'RnisApiTestConnect@index');
+

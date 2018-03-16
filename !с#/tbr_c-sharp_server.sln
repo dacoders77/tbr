@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tbr_c-sharp_server", "tbr_c-sharp_server\tbr_c-sharp_server.csproj", "{EE508926-56D3-483B-8768-B15EE52CD791}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fleck", "fleck\Fleck\Fleck.csproj", "{8B12D929-AFA9-4307-BEFF-2ED0F1070FEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggingExternal", "LoggingExternal\LoggingExternal.csproj", "{06345200-17A1-48A9-B9F9-A45B4BEFB89B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBR_form", "TBR_form\TBR_form.csproj", "{8D8D6FB0-948A-4901-88C6-B62524560DDC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE508926-56D3-483B-8768-B15EE52CD791}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE508926-56D3-483B-8768-B15EE52CD791}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE508926-56D3-483B-8768-B15EE52CD791}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EE508926-56D3-483B-8768-B15EE52CD791}.Debug|x86.Build.0 = Debug|Any CPU
+		{EE508926-56D3-483B-8768-B15EE52CD791}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE508926-56D3-483B-8768-B15EE52CD791}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE508926-56D3-483B-8768-B15EE52CD791}.Release|x86.ActiveCfg = Release|Any CPU
+		{EE508926-56D3-483B-8768-B15EE52CD791}.Release|x86.Build.0 = Release|Any CPU
+		{8B12D929-AFA9-4307-BEFF-2ED0F1070FEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B12D929-AFA9-4307-BEFF-2ED0F1070FEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B12D929-AFA9-4307-BEFF-2ED0F1070FEE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8B12D929-AFA9-4307-BEFF-2ED0F1070FEE}.Debug|x86.Build.0 = Debug|Any CPU
+		{8B12D929-AFA9-4307-BEFF-2ED0F1070FEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B12D929-AFA9-4307-BEFF-2ED0F1070FEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B12D929-AFA9-4307-BEFF-2ED0F1070FEE}.Release|x86.ActiveCfg = Release|Any CPU
+		{8B12D929-AFA9-4307-BEFF-2ED0F1070FEE}.Release|x86.Build.0 = Release|Any CPU
+		{06345200-17A1-48A9-B9F9-A45B4BEFB89B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06345200-17A1-48A9-B9F9-A45B4BEFB89B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06345200-17A1-48A9-B9F9-A45B4BEFB89B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{06345200-17A1-48A9-B9F9-A45B4BEFB89B}.Debug|x86.Build.0 = Debug|Any CPU
+		{06345200-17A1-48A9-B9F9-A45B4BEFB89B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06345200-17A1-48A9-B9F9-A45B4BEFB89B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06345200-17A1-48A9-B9F9-A45B4BEFB89B}.Release|x86.ActiveCfg = Release|Any CPU
+		{06345200-17A1-48A9-B9F9-A45B4BEFB89B}.Release|x86.Build.0 = Release|Any CPU
+		{8D8D6FB0-948A-4901-88C6-B62524560DDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D8D6FB0-948A-4901-88C6-B62524560DDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D8D6FB0-948A-4901-88C6-B62524560DDC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8D8D6FB0-948A-4901-88C6-B62524560DDC}.Debug|x86.Build.0 = Debug|Any CPU
+		{8D8D6FB0-948A-4901-88C6-B62524560DDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D8D6FB0-948A-4901-88C6-B62524560DDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D8D6FB0-948A-4901-88C6-B62524560DDC}.Release|x86.ActiveCfg = Release|Any CPU
+		{8D8D6FB0-948A-4901-88C6-B62524560DDC}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FBDF10FE-2D8E-4D3A-A868-5419C4CF1618}
+	EndGlobalSection
+EndGlobal
