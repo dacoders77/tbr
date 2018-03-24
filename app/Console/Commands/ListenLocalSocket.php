@@ -89,6 +89,9 @@ class ListenLocalSocket extends Command
                 $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
                     //RatchetWebSocket::out($msg); // Call the function when the event is received
                     echo $msg . "\n";
+                    // Create new event
+                    event(new \App\Events\TbrAppSearchResponse("event from ratchet"));; // Fire new event. Events are located in app/Events
+
                 });
                 $conn->on('close', function($code = null, $reason = null) {
                     echo "Connection closed ({$code} - {$reason})\n";

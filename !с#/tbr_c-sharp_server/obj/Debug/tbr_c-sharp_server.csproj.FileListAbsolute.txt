@@ -11,3 +11,16 @@ D:\temp\а\OSPanel\domains\tbr.kk\!с#\tbr_c-sharp_server\bin\Debug\Fleck.pdb
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\tbr_c-sharp_server\bin\Debug\MySql.Data.xml
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\tbr_c-sharp_server\obj\Debug\tbr_c-sharp_server.exe
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\tbr_c-sharp_server\obj\Debug\tbr_c-sharp_server.pdb
+W:\domains\tbr.kk\!с#\tbr_c-sharp_server\bin\Debug\tbr_c-sharp_server.exe.config
+W:\domains\tbr.kk\!с#\tbr_c-sharp_server\bin\Debug\tbr_c-sharp_server.exe
+W:\domains\tbr.kk\!с#\tbr_c-sharp_server\bin\Debug\tbr_c-sharp_server.pdb
+W:\domains\tbr.kk\!с#\tbr_c-sharp_server\bin\Debug\Fleck.dll
+W:\domains\tbr.kk\!с#\tbr_c-sharp_server\bin\Debug\MySql.Data.dll
+W:\domains\tbr.kk\!с#\tbr_c-sharp_server\bin\Debug\Fleck.pdb
+W:\domains\tbr.kk\!с#\tbr_c-sharp_server\bin\Debug\MySql.Data.xml
+W:\domains\tbr.kk\!с#\tbr_c-sharp_server\obj\Debug\tbr_c_sharp_server.Form1.resources
+W:\domains\tbr.kk\!с#\tbr_c-sharp_server\obj\Debug\tbr_c_sharp_server.Properties.Resources.resources
+W:\domains\tbr.kk\!с#\tbr_c-sharp_server\obj\Debug\tbr_c-sharp_server.csproj.GenerateResource.Cache
+W:\domains\tbr.kk\!с#\tbr_c-sharp_server\obj\Debug\tbr_c-sharp_server.csproj.CoreCompileInputs.cache
+W:\domains\tbr.kk\!с#\tbr_c-sharp_server\obj\Debug\tbr_c-sharp_server.exe
+W:\domains\tbr.kk\!с#\tbr_c-sharp_server\obj\Debug\tbr_c-sharp_server.pdb

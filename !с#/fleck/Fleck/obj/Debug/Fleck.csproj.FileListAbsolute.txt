@@ -21,3 +21,16 @@ D:\temp\а\OSPanel\domains\tbr.kk\!с#\fleck\Fleck\bin\Debug\Newtonsoft.Json.xml
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\fleck\Fleck\bin\Debug\Newtonsoft.Json.Schema.xml
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\fleck\Fleck\obj\Debug\Fleck.dll
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\fleck\Fleck\obj\Debug\Fleck.pdb
+W:\domains\tbr.kk\!с#\fleck\Fleck\bin\Debug\Fleck.dll
+W:\domains\tbr.kk\!с#\fleck\Fleck\bin\Debug\Fleck.pdb
+W:\domains\tbr.kk\!с#\fleck\Fleck\bin\Debug\Microsoft.QualityTools.Testing.Fakes.dll
+W:\domains\tbr.kk\!с#\fleck\Fleck\bin\Debug\MySql.Data.dll
+W:\domains\tbr.kk\!с#\fleck\Fleck\bin\Debug\Newtonsoft.Json.dll
+W:\domains\tbr.kk\!с#\fleck\Fleck\bin\Debug\Newtonsoft.Json.Schema.dll
+W:\domains\tbr.kk\!с#\fleck\Fleck\bin\Debug\MySql.Data.xml
+W:\domains\tbr.kk\!с#\fleck\Fleck\bin\Debug\Newtonsoft.Json.xml
+W:\domains\tbr.kk\!с#\fleck\Fleck\bin\Debug\Newtonsoft.Json.Schema.xml
+W:\domains\tbr.kk\!с#\fleck\Fleck\obj\Debug\Fleck.csprojResolveAssemblyReference.cache
+W:\domains\tbr.kk\!с#\fleck\Fleck\obj\Debug\Fleck.csproj.CoreCompileInputs.cache
+W:\domains\tbr.kk\!с#\fleck\Fleck\obj\Debug\Fleck.dll
+W:\domains\tbr.kk\!с#\fleck\Fleck\obj\Debug\Fleck.pdb

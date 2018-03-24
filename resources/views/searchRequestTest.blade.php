@@ -31,7 +31,7 @@
 <script>
 
     // Button handlers
-    $('#search').click(function () {
+    $('#search22').click(function () {
         for (i = 0; i < 10; i++)
         $("p").append("Some appended text" + [i] + "<br>");
 

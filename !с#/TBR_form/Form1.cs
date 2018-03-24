@@ -27,6 +27,7 @@ namespace TBR_form
 		bool conntectButtonFlag = true; // Turns to false when connect button is clicked
 		private Thread logThread; // Thread variable. Logging class. From this thread DB is searched for new messages
 		private List<IWebSocketConnection> allSockets; // The list all connected to the socket server clients
+		private string messageFromBrowser; // Received 
 
 		// IB API
 		delegate void MessageHandlerDelegate(IBMessage message);
@@ -86,8 +87,8 @@ namespace TBR_form
 				};
 				socket.OnMessage = message =>
 				{
-					MessageBox.Show("socket.OnMessage");
 					// Send message back to websocket 
+					Log.Insert(DateTime.Now, "Form1.cs", string.Format("socket.OnMessage. A message received from client: {0}", message), "white");
 					allSockets.ToList().ForEach(s => s.Send("Echo. Hellow from c#: " + message));
 				};
 			});
@@ -266,7 +267,7 @@ namespace TBR_form
 
 			foreach (var socket in allSockets.ToList()) // Loop through all connections/connected clients and send each of them a message
 			{
-				socket.Send("Test message: " + textBox1.Text + " Is sent to: " + socket.ConnectionInfo.ClientIpAddress + " port: " + socket.ConnectionInfo.ClientPort + " origin: " + socket.ConnectionInfo.Origin + " id: " + socket.ConnectionInfo.Id);
+				socket.Send("Test message: " + textBox1.Text + " Is sent to: " + socket.ConnectionInfo.ClientIpAddress + " port: " + socket.ConnectionInfo.ClientPort + " origin: " + socket.ConnectionInfo.Origin + " id: " + socket.ConnectionInfo.Id + " message from the browser: ");
 			}
 
 		}

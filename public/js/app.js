@@ -13822,6 +13822,19 @@ var app = new Vue({
             console.log('this is date: ' + d);
         });
     }
+}); // new Wue
+
+// Update chart data
+$('#search').click(function () {
+    //chart.redraw();
+    console.log("Search button clicked");
+
+    // After fresh historical data was received it is read from DB and outputed to the chart
+    var request1 = $.get('addmsgws');
+
+    request1.done(function (response) {
+        console.log("request1 is done");
+    });
 });
 
 /***/ }),
