@@ -155,7 +155,9 @@ namespace Fleck.Handlers
                 onMessage(ReadUTF8PayloadData(data));
                 break;
             default:
+
                 FleckLog.Debug("Received unhandled " + frameType);
+				Log.Insert(DateTime.Now, "Hybi13Handler.cs", string.Format("Received unhandled: {0}", frameType), "white");
                 break;
             }
         }
@@ -164,8 +166,9 @@ namespace Fleck.Handlers
         public static byte[] BuildHandshake(WebSocketHttpRequest request, string subProtocol)
         {
             FleckLog.Debug("Building Hybi-14 Response");
-            
-            var builder = new StringBuilder();
+			Log.Insert(DateTime.Now, "Hybi13Handler.cs", string.Format("Building Hybi-14 Response"), "white");
+
+			var builder = new StringBuilder();
 
             builder.Append("HTTP/1.1 101 Switching Protocols\r\n");
             builder.Append("Upgrade: websocket\r\n");

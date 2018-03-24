@@ -10,3 +10,5 @@ D:\Программинг\с\new_shit\TBR\fleck\src\Samples\ConsoleApp\bin\Debug
 D:\Программинг\с\new_shit\TBR\fleck\src\Samples\ConsoleApp\bin\Debug\Newtonsoft.Json.xml
 D:\Программинг\с\new_shit\TBR\fleck\src\Samples\ConsoleApp\bin\Debug\Newtonsoft.Json.Schema.dll
 D:\Программинг\с\new_shit\TBR\fleck\src\Samples\ConsoleApp\bin\Debug\Newtonsoft.Json.Schema.xml
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\fleck\Samples\ConsoleApp\obj\x86\Debug\ConsoleApp.csprojResolveAssemblyReference.cache
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\fleck\Samples\ConsoleApp\obj\x86\Debug\ConsoleApp.csproj.CoreCompileInputs.cache

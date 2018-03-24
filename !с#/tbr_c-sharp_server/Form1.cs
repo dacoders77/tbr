@@ -48,6 +48,7 @@ namespace tbr_c_sharp_server // tbr_c_sharp_server
 
 			FleckLog.Level = LogLevel.Debug;
 			var allSockets = new List<IWebSocketConnection>();
+
 			var server = new WebSocketServer("ws://0.0.0.0:8181");
 
 			server.SupportedSubProtocols = new[] { "superchat", "chat" };

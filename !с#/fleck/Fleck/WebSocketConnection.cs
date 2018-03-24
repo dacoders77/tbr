@@ -86,6 +86,7 @@ namespace Fleck
       {
           const string errorMessage = "Data sent while closing or after close. Ignoring.";
           FleckLog.Warn(errorMessage);
+		  Log.Insert(DateTime.Now, "WebSocketConnection.cs", string.Format("WARN: Data sent while closing or after close. Ignoring."), "white");
           
           var taskForException = new TaskCompletionSource<object>();
           taskForException.SetException(new ConnectionNotAvailableException(errorMessage));
@@ -153,10 +154,12 @@ namespace Fleck
       {
         if (r <= 0) {
           FleckLog.Debug("0 bytes read. Closing.");
+		  Log.Insert(DateTime.Now, "WebSocketConnection.cs", string.Format("0 bytes read. Closing."), "white");
           CloseSocket();
           return;
         }
         FleckLog.Debug(r + " bytes read");
+		Log.Insert(DateTime.Now, "WebSocketConnection.cs", string.Format("{0} bytes read", r), "white");
         var readBytes = buffer.Take(r);
         if (Handler != null) {
           Handler.Receive(readBytes);
@@ -180,24 +183,30 @@ namespace Fleck
 
       if (e is ObjectDisposedException) {
         FleckLog.Debug("Swallowing ObjectDisposedException", e);
-        return;
+		Log.Insert(DateTime.Now, "WebSocketConnection.cs", string.Format("Swallowing ObjectDisposedException: {0}", e), "white");
+		return;
       }
 
       OnError(e);
             
       if (e is HandshakeException) {
         FleckLog.Debug("Error while reading", e);
+		Log.Insert(DateTime.Now, "WebSocketConnection.cs", string.Format("Error while reading: {0}", e), "white");
       } else if (e is WebSocketException) {
         FleckLog.Debug("Error while reading", e);
+		Log.Insert(DateTime.Now, "WebSocketConnection.cs", string.Format("Error while reading: {0}", e), "white");
         Close(((WebSocketException)e).StatusCode);
       } else if (e is SubProtocolNegotiationFailureException) {
         FleckLog.Debug(e.Message);
+		Log.Insert(DateTime.Now, "WebSocketConnection.cs", string.Format("e.Message: {0}", e.Message), "white");
         Close(WebSocketStatusCodes.ProtocolError);
       } else if (e is IOException) {
         FleckLog.Debug("Error while reading", e);
+		Log.Insert(DateTime.Now, "WebSocketConnection.cs", string.Format("Error while reading: {0}", e), "white");
         Close(WebSocketStatusCodes.AbnormalClosure);
       } else {
         FleckLog.Error("Application Error", e);
+		Log.Insert(DateTime.Now, "WebSocketConnection.cs", string.Format("Application error: {0}", e), "white");
         Close(WebSocketStatusCodes.InternalServerError);
       }
     }
@@ -207,15 +216,22 @@ namespace Fleck
       return Socket.Send(bytes, () =>
       {
         FleckLog.Debug("Sent " + bytes.Length + " bytes");
-        if (callback != null)
+		  Log.Insert(DateTime.Now, "WebSocketConnection.cs", string.Format("Sent: {0} bytes", bytes.Length), "white");
+		  if (callback != null)
           callback();
       },
                         e =>
       {
-        if (e is IOException)
-          FleckLog.Debug("Failed to send. Disconnecting.", e);
-        else
-          FleckLog.Info("Failed to send. Disconnecting.", e);
+		  if (e is IOException)
+		  {
+			  FleckLog.Debug("Failed to send. Disconnecting.", e);
+			  Log.Insert(DateTime.Now, "WebSocketConnection.cs", string.Format("Failed to send. Disconnecting: {0}", e), "white");
+		  }
+		  else
+		  {
+			  FleckLog.Info("Failed to send. Disconnecting.", e);
+			  Log.Insert(DateTime.Now, "WebSocketConnection.cs", string.Format("Failed to send. Disconnecting: {0}", e), "white");
+		  }
         CloseSocket();
       });
     }

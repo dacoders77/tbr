@@ -1,4 +1,3 @@
-D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.csprojResolveAssemblyReference.cache
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.Form1.resources
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.Properties.Resources.resources
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.csproj.GenerateResource.Cache
@@ -6,7 +5,15 @@ D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.csproj.CoreCo
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\bin\Debug\TBR_form.exe.config
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\bin\Debug\TBR_form.exe
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\bin\Debug\TBR_form.pdb
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\bin\Debug\Fleck.dll
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\bin\Debug\MySql.Data.dll
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\bin\Debug\Fleck.pdb
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\bin\Debug\MySql.Data.xml
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.csprojResolveAssemblyReference.cache
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.exe
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.pdb
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\bin\Debug\CSharpAPI.dll
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\bin\Debug\IBSampleApp.exe
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\bin\Debug\IBSampleApp.pdb
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\bin\Debug\IBSampleApp.exe.config
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\TBR_form\bin\Debug\CSharpAPI.pdb

@@ -77,22 +77,26 @@ namespace Fleck
             ListenerSocket.Listen(100);
             Port = ((IPEndPoint)ListenerSocket.LocalEndPoint).Port;
             FleckLog.Info(string.Format("Server started at {0} (actual port {1})", Location, Port));
-			//MessageBox.Show("fffff: " + Location + "" + Port);
 
-			
+			// Add message to log DB
+			Log.Insert(DateTime.Now, "Fleck WebSocketServer.cs", string.Format("Websocket server started at: {0} (actual port: {1})", Location, Port), "white");
+
+					
             if (_scheme == "wss")
             {
                 if (Certificate == null)
                 {
                     FleckLog.Error("Scheme cannot be 'wss' without a Certificate");
-                    return;
+					Log.Insert(DateTime.Now, "WebSocketServer.cs", string.Format("Scheme cannot be 'wss' without a Certificate"), "white");
+					return;
                 }
 
                 if (EnabledSslProtocols == SslProtocols.None)
                 {
                     EnabledSslProtocols = SslProtocols.Tls;
                     FleckLog.Debug("Using default TLS 1.0 security protocol.");
-                }
+					Log.Insert(DateTime.Now, "WebSocketServer.cs", string.Format("Using default TLS 1.0 security protocol"), "white");
+				}
             }
             ListenForClients();
             _config = config;
@@ -125,7 +129,8 @@ namespace Fleck
             if (clientSocket == null) return; // socket closed
 
             FleckLog.Debug(String.Format("Client connected from {0}:{1}", clientSocket.RemoteIpAddress, clientSocket.RemotePort.ToString()));
-            ListenForClients();
+			Log.Insert(DateTime.Now, "WebSocketServer.cs", string.Format("Client connected from {0}:{1}", clientSocket.RemoteIpAddress, clientSocket.RemotePort.ToString()), "white");
+			ListenForClients();
 
             WebSocketConnection connection = null;
 

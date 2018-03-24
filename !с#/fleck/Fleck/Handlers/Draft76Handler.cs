@@ -60,8 +60,9 @@ namespace Fleck.Handlers
         public static byte[] Handshake(WebSocketHttpRequest request, string subProtocol)
         {
             FleckLog.Debug("Building Draft76 Response");
-            
-            var builder = new StringBuilder();
+			Log.Insert(DateTime.Now, "Draft76Handler.cs", string.Format("Building Draft76 Response"), "white");
+
+			var builder = new StringBuilder();
             builder.Append("HTTP/1.1 101 WebSocket Protocol Handshake\r\n");
             builder.Append("Upgrade: WebSocket\r\n");
             builder.Append("Connection: Upgrade\r\n");

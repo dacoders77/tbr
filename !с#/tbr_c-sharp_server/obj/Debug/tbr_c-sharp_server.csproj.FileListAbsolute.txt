@@ -1,4 +1,3 @@
-D:\temp\а\OSPanel\domains\tbr.kk\!с#\tbr_c-sharp_server\obj\Debug\tbr_c-sharp_server.csprojResolveAssemblyReference.cache
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\tbr_c-sharp_server\obj\Debug\tbr_c_sharp_server.Form1.resources
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\tbr_c-sharp_server\obj\Debug\tbr_c_sharp_server.Properties.Resources.resources
 D:\temp\а\OSPanel\domains\tbr.kk\!с#\tbr_c-sharp_server\obj\Debug\tbr_c-sharp_server.csproj.GenerateResource.Cache

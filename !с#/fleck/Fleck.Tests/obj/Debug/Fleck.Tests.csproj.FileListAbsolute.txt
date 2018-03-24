@@ -17,3 +17,5 @@ D:\Программинг\с\new_shit\TBR\fleck\src\Fleck.Tests\obj\Debug\Fleck.
 D:\Программинг\с\new_shit\TBR\fleck\src\Fleck.Tests\obj\Debug\Fleck.Tests.csproj.CoreCompileInputs.cache
 D:\Программинг\с\new_shit\TBR\fleck\src\Fleck.Tests\obj\Debug\Fleck.Tests.dll
 D:\Программинг\с\new_shit\TBR\fleck\src\Fleck.Tests\obj\Debug\Fleck.Tests.pdb
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\fleck\Fleck.Tests\obj\Debug\Fleck.Tests.csprojResolveAssemblyReference.cache
+D:\temp\а\OSPanel\domains\tbr.kk\!с#\fleck\Fleck.Tests\obj\Debug\Fleck.Tests.csproj.CoreCompileInputs.cache

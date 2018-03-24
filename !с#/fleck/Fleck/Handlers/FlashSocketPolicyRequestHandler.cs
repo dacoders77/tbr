@@ -25,7 +25,8 @@ namespace Fleck.Handlers
         public static byte[] Handshake(WebSocketHttpRequest request, string subProtocol)
         {
             FleckLog.Debug("Building Flash Socket Policy Response");
-            return Encoding.UTF8.GetBytes(PolicyResponse);
+			Log.Insert(DateTime.Now, "FlashSocketPolicyRequestHandler.cs", string.Format("Building Flash Socket Policy Response"), "white");
+			return Encoding.UTF8.GetBytes(PolicyResponse);
         }
     }
 }

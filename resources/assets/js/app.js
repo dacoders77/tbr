@@ -18,5 +18,18 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+
+    created() {
+        Echo.channel('tbrChannel')
+            .listen('TbrAppSearchResponse', (e) => {
+            //alert('The event has been triggered! Here is the alert box for proofe!');
+
+        var d = new Date();
+        document.getElementById("app").innerHTML = d;
+        console.log('this is date: ' + d);
+
+    });
+    }
+
 });

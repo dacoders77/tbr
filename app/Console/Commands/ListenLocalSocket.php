@@ -16,7 +16,7 @@ class ListenLocalSocket extends Command
      *
      * @var string
      */
-    protected $description = 'Listens to local c# web socket server at 0.0.0.0:8181';
+    protected $description = 'Listens to local c# web socket server';
     /**
      * Create a new command instance.
      *
@@ -37,6 +37,7 @@ class ListenLocalSocket extends Command
     {
         echo "*****Ratchet websocket c# local listener started!*****\n";
         // The code from: https://github.com/ratchetphp/Pawl
+
         $loop = \React\EventLoop\Factory::create();
         $reactConnector = new \React\Socket\Connector($loop, [
             'dns' => '0.0.0.0',

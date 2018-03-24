@@ -39,3 +39,12 @@ Route::get('/addmsgws', 'AddMessageToSocketQue@index');
 // Test rnis
 Route::get('/rnis', 'RnisApiTestConnect@index');
 
+// Test search view and controller
+Route::get('/searchRequestTest', function () {
+    return view('searchRequestTest');
+});
+
+// Search responswe pusher event
+Route::get('event', function () {
+    event(new \App\Events\TbrAppSearchResponse('How are you?'));
+});
