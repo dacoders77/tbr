@@ -14,6 +14,7 @@
 <body>
 
 <h1>Hellow world!</h1>
+<input id="searchInputTextField" type="text" name="FirstName" value="AAPL">
 <button id="search">send search test request</button>
 <p></p>
 

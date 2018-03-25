@@ -13824,15 +13824,14 @@ var app = new Vue({
     }
 }); // new Wue
 
-// Update chart data
+// Buttons handlers
 $('#search').click(function () {
-    //chart.redraw();
     console.log("Search button clicked");
+    //alert($("#searchInputTextField").val());
 
-    // After fresh historical data was received it is read from DB and outputed to the chart
-    var request1 = $.get('addmsgws');
-
+    var request1 = $.get('addmsgws/hellodude'); // Controller call
     request1.done(function (response) {
+        // When the request is done
         console.log("request1 is done");
     });
 });

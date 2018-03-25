@@ -34,7 +34,7 @@ Route::get('/settings', function () {
 });
 
 // Add a record to websocket que DB
-Route::get('/addmsgws', 'AddMessageToSocketQue@index');
+Route::get('/addmsgws/{searchRequestString}', 'AddMessageToSocketQue@index');
 
 // Test rnis
 Route::get('/rnis', 'RnisApiTestConnect@index');

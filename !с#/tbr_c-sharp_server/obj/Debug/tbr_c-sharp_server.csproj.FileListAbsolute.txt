@@ -24,3 +24,4 @@ W:\domains\tbr.kk\!с#\tbr_c-sharp_server\obj\Debug\tbr_c-sharp_server.csproj.Ge
 W:\domains\tbr.kk\!с#\tbr_c-sharp_server\obj\Debug\tbr_c-sharp_server.csproj.CoreCompileInputs.cache
 W:\domains\tbr.kk\!с#\tbr_c-sharp_server\obj\Debug\tbr_c-sharp_server.exe
 W:\domains\tbr.kk\!с#\tbr_c-sharp_server\obj\Debug\tbr_c-sharp_server.pdb
+W:\domains\tbr.kk\!с#\tbr_c-sharp_server\obj\Debug\tbr_c-sharp_server.csprojResolveAssemblyReference.cache

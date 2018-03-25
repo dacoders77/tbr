@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.listView1 = new System.Windows.Forms.ListView();
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -382,10 +382,11 @@
 			this.connectButton = new System.Windows.Forms.Button();
 			this.tabControl2 = new System.Windows.Forms.TabControl();
 			this.messagesTab = new System.Windows.Forms.TabPage();
-			this.messageBoxClear_link = new System.Windows.Forms.LinkLabel();
 			this.messageBox = new System.Windows.Forms.TextBox();
-			this.status_CT = new System.Windows.Forms.Label();
 			this.status_label_CT = new System.Windows.Forms.Label();
+			this.messageBoxClear_link = new System.Windows.Forms.LinkLabel();
+			this.status_CT = new System.Windows.Forms.Label();
+			this.button1 = new System.Windows.Forms.Button();
 			this.TabControl.SuspendLayout();
 			this.marketDataTab.SuspendLayout();
 			this.marketData_MDT.SuspendLayout();
@@ -567,7 +568,7 @@
 			this.marketDataTab.Location = new System.Drawing.Point(4, 22);
 			this.marketDataTab.Name = "marketDataTab";
 			this.marketDataTab.Padding = new System.Windows.Forms.Padding(3);
-			this.marketDataTab.Size = new System.Drawing.Size(1209, 534);
+			this.marketDataTab.Size = new System.Drawing.Size(1209, 404);
 			this.marketDataTab.TabIndex = 1;
 			this.marketDataTab.Text = "Data";
 			// 
@@ -696,7 +697,7 @@
 			this.deepBookTab_MDT.Location = new System.Drawing.Point(4, 22);
 			this.deepBookTab_MDT.Name = "deepBookTab_MDT";
 			this.deepBookTab_MDT.Padding = new System.Windows.Forms.Padding(3);
-			this.deepBookTab_MDT.Size = new System.Drawing.Size(1219, 135);
+			this.deepBookTab_MDT.Size = new System.Drawing.Size(1195, 0);
 			this.deepBookTab_MDT.TabIndex = 1;
 			this.deepBookTab_MDT.Text = "Deep Book";
 			// 
@@ -725,19 +726,19 @@
             this.askBookPrice,
             this.askBookSize,
             this.askBookMaker});
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-			dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.deepBookGrid.DefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.deepBookGrid.DefaultCellStyle = dataGridViewCellStyle1;
 			this.deepBookGrid.Location = new System.Drawing.Point(4, 19);
 			this.deepBookGrid.Name = "deepBookGrid";
 			this.deepBookGrid.ReadOnly = true;
 			this.deepBookGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.deepBookGrid.Size = new System.Drawing.Size(1209, 110);
+			this.deepBookGrid.Size = new System.Drawing.Size(1185, 0);
 			this.deepBookGrid.TabIndex = 0;
 			// 
 			// bidBookMaker
@@ -784,7 +785,7 @@
 			this.historicalDataTab.Location = new System.Drawing.Point(4, 22);
 			this.historicalDataTab.Name = "historicalDataTab";
 			this.historicalDataTab.Padding = new System.Windows.Forms.Padding(3);
-			this.historicalDataTab.Size = new System.Drawing.Size(1219, 135);
+			this.historicalDataTab.Size = new System.Drawing.Size(1195, 0);
 			this.historicalDataTab.TabIndex = 0;
 			this.historicalDataTab.Text = "Historical Bars";
 			// 
@@ -815,7 +816,7 @@
 			this.barsGrid.Location = new System.Drawing.Point(3, 19);
 			this.barsGrid.Name = "barsGrid";
 			this.barsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.barsGrid.Size = new System.Drawing.Size(504, 110);
+			this.barsGrid.Size = new System.Drawing.Size(504, 0);
 			this.barsGrid.TabIndex = 1;
 			// 
 			// hdDate
@@ -875,7 +876,7 @@
 			this.rtBarsTab_MDT.Location = new System.Drawing.Point(4, 22);
 			this.rtBarsTab_MDT.Name = "rtBarsTab_MDT";
 			this.rtBarsTab_MDT.Padding = new System.Windows.Forms.Padding(3);
-			this.rtBarsTab_MDT.Size = new System.Drawing.Size(1219, 135);
+			this.rtBarsTab_MDT.Size = new System.Drawing.Size(1195, 0);
 			this.rtBarsTab_MDT.TabIndex = 2;
 			this.rtBarsTab_MDT.Text = "RT Bars";
 			// 
@@ -906,7 +907,7 @@
 			this.rtBarsGrid.Location = new System.Drawing.Point(5, 20);
 			this.rtBarsGrid.Name = "rtBarsGrid";
 			this.rtBarsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.rtBarsGrid.Size = new System.Drawing.Size(504, 110);
+			this.rtBarsGrid.Size = new System.Drawing.Size(504, 0);
 			this.rtBarsGrid.TabIndex = 3;
 			// 
 			// dataGridViewTextBoxColumn1
@@ -966,7 +967,7 @@
 			this.scannerTab.Location = new System.Drawing.Point(4, 22);
 			this.scannerTab.Name = "scannerTab";
 			this.scannerTab.Padding = new System.Windows.Forms.Padding(3);
-			this.scannerTab.Size = new System.Drawing.Size(1219, 135);
+			this.scannerTab.Size = new System.Drawing.Size(1195, 0);
 			this.scannerTab.TabIndex = 3;
 			this.scannerTab.Text = "Scanner Results";
 			// 
@@ -1043,7 +1044,7 @@
 			this.scannerParamsTab.Location = new System.Drawing.Point(4, 22);
 			this.scannerParamsTab.Name = "scannerParamsTab";
 			this.scannerParamsTab.Padding = new System.Windows.Forms.Padding(3);
-			this.scannerParamsTab.Size = new System.Drawing.Size(1219, 135);
+			this.scannerParamsTab.Size = new System.Drawing.Size(1195, 0);
 			this.scannerParamsTab.TabIndex = 4;
 			this.scannerParamsTab.Text = "Scanner Parameters";
 			// 
@@ -1555,7 +1556,7 @@
 			this.marketScanner_MDT.Location = new System.Drawing.Point(4, 22);
 			this.marketScanner_MDT.Name = "marketScanner_MDT";
 			this.marketScanner_MDT.Padding = new System.Windows.Forms.Padding(3);
-			this.marketScanner_MDT.Size = new System.Drawing.Size(1215, 200);
+			this.marketScanner_MDT.Size = new System.Drawing.Size(1191, 200);
 			this.marketScanner_MDT.TabIndex = 4;
 			this.marketScanner_MDT.Text = "Scanner";
 			// 
@@ -1755,7 +1756,7 @@
 			this.tradingTab.Location = new System.Drawing.Point(4, 22);
 			this.tradingTab.Name = "tradingTab";
 			this.tradingTab.Padding = new System.Windows.Forms.Padding(3);
-			this.tradingTab.Size = new System.Drawing.Size(1209, 534);
+			this.tradingTab.Size = new System.Drawing.Size(1209, 404);
 			this.tradingTab.TabIndex = 2;
 			this.tradingTab.Text = "Trading";
 			// 
@@ -2145,7 +2146,7 @@
 			this.accountInfoTab.Location = new System.Drawing.Point(4, 22);
 			this.accountInfoTab.Name = "accountInfoTab";
 			this.accountInfoTab.Padding = new System.Windows.Forms.Padding(3);
-			this.accountInfoTab.Size = new System.Drawing.Size(1209, 534);
+			this.accountInfoTab.Size = new System.Drawing.Size(1209, 404);
 			this.accountInfoTab.TabIndex = 3;
 			this.accountInfoTab.Text = "Account Info";
 			// 
@@ -2171,7 +2172,7 @@
 			this.accSummaryTab.Location = new System.Drawing.Point(4, 22);
 			this.accSummaryTab.Name = "accSummaryTab";
 			this.accSummaryTab.Padding = new System.Windows.Forms.Padding(3);
-			this.accSummaryTab.Size = new System.Drawing.Size(1213, 369);
+			this.accSummaryTab.Size = new System.Drawing.Size(1189, 202);
 			this.accSummaryTab.TabIndex = 0;
 			this.accSummaryTab.Text = "Account Summary";
 			// 
@@ -2240,7 +2241,7 @@
 			this.accUpdatesTab.Location = new System.Drawing.Point(4, 22);
 			this.accUpdatesTab.Name = "accUpdatesTab";
 			this.accUpdatesTab.Padding = new System.Windows.Forms.Padding(3);
-			this.accUpdatesTab.Size = new System.Drawing.Size(1213, 369);
+			this.accUpdatesTab.Size = new System.Drawing.Size(1189, 202);
 			this.accUpdatesTab.TabIndex = 1;
 			this.accUpdatesTab.Text = "Account Updates";
 			// 
@@ -2946,7 +2947,7 @@
 			this.fundamentalsPage.Location = new System.Drawing.Point(4, 22);
 			this.fundamentalsPage.Name = "fundamentalsPage";
 			this.fundamentalsPage.Padding = new System.Windows.Forms.Padding(3);
-			this.fundamentalsPage.Size = new System.Drawing.Size(1213, 214);
+			this.fundamentalsPage.Size = new System.Drawing.Size(1189, 187);
 			this.fundamentalsPage.TabIndex = 1;
 			this.fundamentalsPage.Text = "Fundamentals";
 			// 
@@ -2960,7 +2961,7 @@
 			this.fundamentalsOutput.Name = "fundamentalsOutput";
 			this.fundamentalsOutput.ReadOnly = true;
 			this.fundamentalsOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.fundamentalsOutput.Size = new System.Drawing.Size(1201, 202);
+			this.fundamentalsOutput.Size = new System.Drawing.Size(1177, 175);
 			this.fundamentalsOutput.TabIndex = 0;
 			// 
 			// optionChainPage
@@ -2971,7 +2972,7 @@
 			this.optionChainPage.Location = new System.Drawing.Point(4, 22);
 			this.optionChainPage.Name = "optionChainPage";
 			this.optionChainPage.Padding = new System.Windows.Forms.Padding(3);
-			this.optionChainPage.Size = new System.Drawing.Size(1213, 214);
+			this.optionChainPage.Size = new System.Drawing.Size(1189, 187);
 			this.optionChainPage.TabIndex = 2;
 			this.optionChainPage.Text = "Options chain";
 			// 
@@ -3160,7 +3161,7 @@
 			this.optionParametersPage.Controls.Add(this.listViewOptionParams);
 			this.optionParametersPage.Location = new System.Drawing.Point(4, 22);
 			this.optionParametersPage.Name = "optionParametersPage";
-			this.optionParametersPage.Size = new System.Drawing.Size(1213, 214);
+			this.optionParametersPage.Size = new System.Drawing.Size(1189, 187);
 			this.optionParametersPage.TabIndex = 3;
 			this.optionParametersPage.Text = "Option parameters";
 			this.optionParametersPage.UseVisualStyleBackColor = true;
@@ -3173,7 +3174,7 @@
 			this.listViewOptionParams.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listViewOptionParams.Location = new System.Drawing.Point(0, 0);
 			this.listViewOptionParams.Name = "listViewOptionParams";
-			this.listViewOptionParams.Size = new System.Drawing.Size(1213, 214);
+			this.listViewOptionParams.Size = new System.Drawing.Size(1189, 187);
 			this.listViewOptionParams.TabIndex = 0;
 			this.listViewOptionParams.UseCompatibleStateImageBehavior = false;
 			this.listViewOptionParams.View = System.Windows.Forms.View.Details;
@@ -3197,7 +3198,7 @@
 			this.advisorTab.Location = new System.Drawing.Point(4, 22);
 			this.advisorTab.Name = "advisorTab";
 			this.advisorTab.Padding = new System.Windows.Forms.Padding(3);
-			this.advisorTab.Size = new System.Drawing.Size(1209, 534);
+			this.advisorTab.Size = new System.Drawing.Size(1209, 404);
 			this.advisorTab.TabIndex = 5;
 			this.advisorTab.Text = "Financial Advisor";
 			// 
@@ -3386,7 +3387,7 @@
 			this.optionsTab.Location = new System.Drawing.Point(4, 22);
 			this.optionsTab.Name = "optionsTab";
 			this.optionsTab.Padding = new System.Windows.Forms.Padding(3);
-			this.optionsTab.Size = new System.Drawing.Size(1233, 419);
+			this.optionsTab.Size = new System.Drawing.Size(1209, 404);
 			this.optionsTab.TabIndex = 7;
 			this.optionsTab.Text = "Option exercising";
 			// 
@@ -3558,7 +3559,7 @@
 			this.acctPosTab.Location = new System.Drawing.Point(4, 22);
 			this.acctPosTab.Name = "acctPosTab";
 			this.acctPosTab.Padding = new System.Windows.Forms.Padding(3);
-			this.acctPosTab.Size = new System.Drawing.Size(1233, 419);
+			this.acctPosTab.Size = new System.Drawing.Size(1209, 404);
 			this.acctPosTab.TabIndex = 8;
 			this.acctPosTab.Text = "Acct/Pos Multi";
 			// 
@@ -3856,17 +3857,6 @@
 			this.messagesTab.TabIndex = 0;
 			this.messagesTab.Text = "Messages";
 			// 
-			// messageBoxClear_link
-			// 
-			this.messageBoxClear_link.AutoSize = true;
-			this.messageBoxClear_link.Location = new System.Drawing.Point(1183, 150);
-			this.messageBoxClear_link.Name = "messageBoxClear_link";
-			this.messageBoxClear_link.Size = new System.Drawing.Size(31, 13);
-			this.messageBoxClear_link.TabIndex = 11;
-			this.messageBoxClear_link.TabStop = true;
-			this.messageBoxClear_link.Text = "Clear";
-			this.messageBoxClear_link.Click += new System.EventHandler(this.messageBoxClear_link_LinkClicked);
-			// 
 			// messageBox
 			// 
 			this.messageBox.AcceptsReturn = true;
@@ -3881,15 +3871,6 @@
 			this.messageBox.Size = new System.Drawing.Size(514, 108);
 			this.messageBox.TabIndex = 10;
 			// 
-			// status_CT
-			// 
-			this.status_CT.AutoSize = true;
-			this.status_CT.Location = new System.Drawing.Point(134, 9);
-			this.status_CT.Name = "status_CT";
-			this.status_CT.Size = new System.Drawing.Size(82, 13);
-			this.status_CT.TabIndex = 9;
-			this.status_CT.Text = "Disconnected...";
-			// 
 			// status_label_CT
 			// 
 			this.status_label_CT.AutoSize = true;
@@ -3899,11 +3880,42 @@
 			this.status_label_CT.TabIndex = 8;
 			this.status_label_CT.Text = "Status:";
 			// 
+			// messageBoxClear_link
+			// 
+			this.messageBoxClear_link.AutoSize = true;
+			this.messageBoxClear_link.Location = new System.Drawing.Point(1183, 150);
+			this.messageBoxClear_link.Name = "messageBoxClear_link";
+			this.messageBoxClear_link.Size = new System.Drawing.Size(31, 13);
+			this.messageBoxClear_link.TabIndex = 11;
+			this.messageBoxClear_link.TabStop = true;
+			this.messageBoxClear_link.Text = "Clear";
+			this.messageBoxClear_link.Click += new System.EventHandler(this.messageBoxClear_link_LinkClicked);
+			// 
+			// status_CT
+			// 
+			this.status_CT.AutoSize = true;
+			this.status_CT.Location = new System.Drawing.Point(134, 9);
+			this.status_CT.Name = "status_CT";
+			this.status_CT.Size = new System.Drawing.Size(82, 13);
+			this.status_CT.TabIndex = 9;
+			this.status_CT.Text = "Disconnected...";
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(103, 89);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(75, 23);
+			this.button1.TabIndex = 15;
+			this.button1.Text = "json test";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1230, 589);
+			this.Controls.Add(this.button1);
 			this.Controls.Add(this.messageBoxClear_link);
 			this.Controls.Add(this.status_CT);
 			this.Controls.Add(this.tabControl2);
@@ -4377,6 +4389,7 @@
 		private System.Windows.Forms.TextBox messageBox;
 		private System.Windows.Forms.Label status_CT;
 		private System.Windows.Forms.Label status_label_CT;
+		private System.Windows.Forms.Button button1;
 	}
 }
 

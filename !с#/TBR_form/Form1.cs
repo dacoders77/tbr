@@ -1052,5 +1052,10 @@ namespace TBR_form
 			messageBox.Clear();
 
 		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			
+		}
 	} // Public class From1
 }
