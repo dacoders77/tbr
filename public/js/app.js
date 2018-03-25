@@ -13817,9 +13817,23 @@ var app = new Vue({
         Echo.channel('tbrChannel').listen('TbrAppSearchResponse', function (e) {
             //alert('The event has been triggered! Here is the alert box for proofe!');
 
-            var d = new Date();
-            document.getElementById("app").innerHTML = d;
-            console.log('this is date: ' + d);
+            //var d = new Date();
+            //document.getElementById("app").innerHTML = d;
+            var jsonParsedResponse = JSON.parse(e.update);
+            //document.getElementById("text").innerHTML = jsonParsedResponse[0];
+
+            demoP = document.getElementById("demo");
+
+            //for (i = 0; i < 5; i++)
+            //    //document.getElementById("demo").append("Some appended text" + [i] + "<br>");
+            //    demoP.innerHTML = demoP.innerHTML + i + "<br>";
+
+            $.each(jsonParsedResponse, function (index, value) {
+                //alert( index + ": " + value );
+                demoP.innerHTML = demoP.innerHTML + value[1] + "<br>";
+            });
+
+            console.log(jsonParsedResponse);
         });
     }
 }); // new Wue

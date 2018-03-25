@@ -7,11 +7,10 @@ using Newtonsoft.Json.Schema;
 
 namespace TBR_form
 {
-	public class JsonParseTest
+	public static class JsonParseTest
 	{
-		public void Parse() {
+		public static void Parse() {
 
-			
 			// https://www.newtonsoft.com/json/help/html/JsonSchemaParse.htm
 			string schemaJson = @"{
 				  'description': 'A person',
@@ -36,7 +35,8 @@ namespace TBR_form
 			}
 			// name - String
 			// hobbies - Array
-			
+
+			/* working example
 			string schema2 = @"{'dome_name':'hrushevka', 'floors':'9',  'address':'dekabristov 21', 'city':'moscow'}";
 			JSchema jsonParsed = JSchema.Parse(schema2);
 			var x = Newtonsoft.Json.Linq.JObject.Parse(schema2);
@@ -44,11 +44,16 @@ namespace TBR_form
 			x["dome_name"] = "new";
 			Console.WriteLine("parse: " + x.ToString());
 			//Console.WriteLine(jsonParsed.Properties);
+
 			foreach (var z in jsonParsed.Properties)
 			{
 				//Console.WriteLine(z.ToString());
 			}
-			
+			*/
+
+			string searchResultJsonObject = "{'search':['ticker':'AAPL', 'exchnage':'NASDAQ']}";
+			JSchema jsonParsed = JSchema.Parse(searchResultJsonObject);
+
 
 		}
 

@@ -53,7 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\DBLogging.cs" />
-    <Compile Include="Classes\Json_test_delete.cs" />
     <Compile Include="Classes\MySqlConnector.cs" />
     <Compile Include="Classes\User.cs" />
     <Compile Include="Form1.cs">

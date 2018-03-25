@@ -245,6 +245,7 @@ namespace IBSampleApp
 
         private void UpdateUI(IBMessage message)
         {
+
 			ShowMessageOnPanel("(UpdateUI) Message type: " + message.Type.ToString()); 
 
 			switch (message.Type)

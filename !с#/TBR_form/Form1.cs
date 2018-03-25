@@ -55,6 +55,8 @@ namespace TBR_form
 
 		private EReaderMonitorSignal signal = new EReaderMonitorSignal(); // From IBApi name space 
 
+		private SearchJsonResponse searchJsonResponse; // Json search results object
+
 		public Form1()
 		{
 			InitializeComponent();
@@ -69,6 +71,9 @@ namespace TBR_form
 			// Create fleck socket server 
 			FleckLog.Level = LogLevel.Debug;
 
+			// Json search object class instance
+			searchJsonResponse = new SearchJsonResponse("gggggg", 555);
+
 			allSockets = new List<IWebSocketConnection>();
 			var server = new WebSocketServer("ws://0.0.0.0:8181");
 			
@@ -78,18 +83,25 @@ namespace TBR_form
 				socket.OnOpen = () =>
 				{;
 					Log.Insert(DateTime.Now, "Form1.cs", string.Format("Websocket connection open!"), "white");
+					Console.WriteLine("socket.OnOpen");
 					allSockets.Add(socket);
 				};
 				socket.OnClose = () =>
 				{
-					MessageBox.Show("socket.OnClose");
+					Console.WriteLine("socket.OnClose");
 					allSockets.Remove(socket);
 				};
 				socket.OnMessage = message =>
 				{
 					// Send message back to websocket 
-					Log.Insert(DateTime.Now, "Form1.cs", string.Format("socket.OnMessage. A message received from client: {0}", message), "white");
-					allSockets.ToList().ForEach(s => s.Send("Echo. Hellow from c#: " + message));
+					//Log.Insert(DateTime.Now, "Form1.cs", string.Format("socket.OnMessage. A message received from client: {0}", message), "white");
+					//allSockets.ToList().ForEach(s => s.Send("Echo. Hellow from c#: " + message));
+
+					Log.Insert(DateTime.Now, "Form1.cs", string.Format("socket.OnMessage. A message received from client: {0}", searchJsonResponse.Test()), "white");
+					allSockets.ToList().ForEach(s => s.Send(searchJsonResponse.Test()));
+					Console.WriteLine("socket.OnMessage");
+
+
 				};
 			});
 
@@ -345,7 +357,6 @@ namespace TBR_form
 
 		private void UpdateUI(IBMessage message)
 		{
-			//MessageBox.Show("Message UI reseived");
 
 			ShowMessageOnPanel("(UpdateUI) Message type: " + message.Type.ToString());
 
@@ -460,6 +471,10 @@ namespace TBR_form
 							socket.Send("contract_start");
 						}
 
+						// Send json object
+						// After it is sent .clear it!
+						MessageBox.Show(searchJsonResponse.Test());
+
 						break;
 					}
 				case MessageType.ContractData:
@@ -469,12 +484,15 @@ namespace TBR_form
 
 						foreach (var socket in allSockets.ToList()) // Loop through all connections/connected clients and send each of them a message
 						{
-
 							var castedMessage = (ContractDetailsMessage)message;
 							//ShowMessageOnPanel("SYMBOL: " + castedMessage.ContractDetails.Summary.Symbol + " successfully found at: " + castedMessage.ContractDetails.Summary.PrimaryExch + " exchange");
-
 							socket.Send("SYMBOL: " + castedMessage.ContractDetails.Summary.Symbol + " successfully found at: " + castedMessage.ContractDetails.Summary.Exchange + " exchange");
+
 						}
+
+						// Add new object to json array
+						searchJsonResponse.Add("kokokok", 123);
+
 
 						break;
 					}
@@ -844,7 +862,7 @@ namespace TBR_form
 		{
 			ShowTab(contractInfoTab, contractDetailsPage);
 			Contract contract = GetConDetContract(); // Read form fields
-			searchContractDetails.Enabled = false;
+			//searchContractDetails.Enabled = false;
 			contractManager.RequestContractDetails(contract);
 		}
 
@@ -1053,9 +1071,10 @@ namespace TBR_form
 
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		private void button1_Click(object sender, EventArgs e) // Test parse json
 		{
-			
+			//JsonParseTest.Parse();
+			searchJsonResponse.Test();
 		}
 	} // Public class From1
 }

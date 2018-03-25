@@ -36,3 +36,10 @@ W:\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.csproj.GenerateResource.Cache
 W:\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.csproj.CoreCompileInputs.cache
 W:\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.exe
 W:\domains\tbr.kk\!с#\TBR_form\obj\Debug\TBR_form.pdb
+W:\domains\tbr.kk\!с#\TBR_form\bin\Debug\Newtonsoft.Json.dll
+W:\domains\tbr.kk\!с#\TBR_form\bin\Debug\Newtonsoft.Json.Schema.dll
+W:\domains\tbr.kk\!с#\TBR_form\bin\Debug\Newtonsoft.Json.xml
+W:\domains\tbr.kk\!с#\TBR_form\bin\Debug\Newtonsoft.Json.Schema.xml
+W:\domains\tbr.kk\!с#\TBR_form\bin\Debug\Echovoice.JSON.dll
+W:\domains\tbr.kk\!с#\TBR_form\bin\Debug\Echovoice.JSON.pdb
+W:\domains\tbr.kk\!с#\TBR_form\bin\Debug\Echovoice.JSON.xml
