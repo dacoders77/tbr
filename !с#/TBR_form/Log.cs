@@ -134,11 +134,13 @@ namespace TBR_form
 
 		public static void Insert(DateTime d, String s, String m, string c) // Date, source, message, color
 		{
-			// CHECK iT? These linds are obsolete? 
+			// CHECK iT? These lines are obsolete? 
 			//string query = string.Format("INSERT INTO logs(date, source, message, color, is_new) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}' )", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"), s, m, c, 1);
 			//MySqlCommand cmd = new MySqlCommand(query, dbConn);
 
 			// https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-sql-command.html 
+
+			Console.WriteLine(s + " / " + m);
 
 			using (var conn = new MySqlConnection(connectionString))
 			{

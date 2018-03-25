@@ -38,7 +38,16 @@ const app = new Vue({
 
         $.each(jsonParsedResponse, function( index, value ) {
             //alert( index + ": " + value );
-            demoP.innerHTML = demoP.innerHTML + value[1] + "<br>";
+            //demoP.innerHTML = demoP.innerHTML + value[1] + " " + value[0] + " " + value[2] + " " + value[3] + "<br>";
+            $("#myTable tr:last").after("<tr>" +
+                "<th scope=\"row\">" + index + "</th>" +
+                "<th>" + value[1] + "</th>" +
+                "<th>" + value[0] + "</th>" +
+                "<th>" + value[4] + "</th>" +
+                "<th>" + value[2] + "</th>" +
+                "<th>" + value[3] + "</th>" +
+
+                "</tr>");
         });
 
         console.log(jsonParsedResponse);
@@ -52,9 +61,10 @@ $('#search').click(function () {
     console.log("Search button clicked");
     //alert($("#searchInputTextField").val());
 
-    var request1 = $.get('addmsgws/hellodude'); // Controller call
+    $("tbody").remove();
+
+    var request1 = $.get('addmsgws/' + $("#searchInputTextField").val() + ''); // Controller call
     request1.done(function(response) { // When the request is done
         console.log("request1 is done");
-
     });
 });

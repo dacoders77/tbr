@@ -62,10 +62,11 @@ class ListenLocalSocket extends Command
 
                 if($this->connection) {
                     //$this->connection->send(json_encode(['a' => 1])); // works good
-                    $this->connection->send($record->json_message); // works good
-                    //$this->connection->send($record->text_message); // works good
+                    //$this->connection->send($record->json_message); // works good
+                    $this->connection->send($record->text_message); // works good
                 }
 
+                echo $record->text_message . "\n";
                 //echo "xx: " . $record->text_message . "         id: " . $record->id . "\n";
                 //$conn->send('hello world!');
 

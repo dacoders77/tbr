@@ -72,7 +72,7 @@ namespace TBR_form
 			FleckLog.Level = LogLevel.Debug;
 
 			// Json search object class instance
-			searchJsonResponse = new SearchJsonResponse("gggggg", 555);
+			searchJsonResponse = new SearchJsonResponse();
 
 			allSockets = new List<IWebSocketConnection>();
 			var server = new WebSocketServer("ws://0.0.0.0:8181");
@@ -83,27 +83,29 @@ namespace TBR_form
 				socket.OnOpen = () =>
 				{;
 					Log.Insert(DateTime.Now, "Form1.cs", string.Format("Websocket connection open!"), "white");
-					Console.WriteLine("socket.OnOpen");
 					allSockets.Add(socket);
 				};
 				socket.OnClose = () =>
 				{
-					Console.WriteLine("socket.OnClose");
 					allSockets.Remove(socket);
 				};
 				socket.OnMessage = message =>
 				{
 					// Send message back to websocket 
-					//Log.Insert(DateTime.Now, "Form1.cs", string.Format("socket.OnMessage. A message received from client: {0}", message), "white");
-					//allSockets.ToList().ForEach(s => s.Send("Echo. Hellow from c#: " + message));
+					Log.Insert(DateTime.Now, "Form1.cs", string.Format("socket.OnMessage. A message received from client: {0}", message), "white");
+					//allSockets.ToList().ForEach(s => s.Send("Hello from websocket!"));
 
-					Log.Insert(DateTime.Now, "Form1.cs", string.Format("socket.OnMessage. A message received from client: {0}", searchJsonResponse.Test()), "white");
-					allSockets.ToList().ForEach(s => s.Send(searchJsonResponse.Test()));
-					Console.WriteLine("socket.OnMessage");
+					// Contract search. The same code as in searchContractDetails_Click button handler
+					ShowTab(contractInfoTab, contractDetailsPage);
+					Contract contract = GetConDetContract(); // Read form fields
+					contract.Symbol = message;
+					contractManager.RequestContractDetails(contract);
 
+					
 
 				};
 			});
+
 
 			// IB Client new instance
 			ibClient = new IBClient(signal);
@@ -464,34 +466,37 @@ namespace TBR_form
 					{
 						searchContractDetails.Enabled = true;
 						contractManager.UpdateUI(message);
-						MessageBox.Show("contract_end");
 
 						foreach (var socket in allSockets.ToList()) // Loop through all connections/connected clients and send each of them a message
 						{
-							socket.Send("contract_start");
+							socket.Send(searchJsonResponse.Test());
 						}
 
 						// Send json object
 						// After it is sent .clear it!
-						MessageBox.Show(searchJsonResponse.Test());
+						//MessageBox.Show(searchJsonResponse.Test());
+						searchJsonResponse.Clear(); // Collection empty
 
 						break;
 					}
 				case MessageType.ContractData:
 					{
 						HandleContractDataMessage((ContractDetailsMessage)message);
-						MessageBox.Show("contract_start");
+						//MessageBox.Show("contract_start");
 
 						foreach (var socket in allSockets.ToList()) // Loop through all connections/connected clients and send each of them a message
 						{
-							var castedMessage = (ContractDetailsMessage)message;
+							//var castedMessage = (ContractDetailsMessage)message;
 							//ShowMessageOnPanel("SYMBOL: " + castedMessage.ContractDetails.Summary.Symbol + " successfully found at: " + castedMessage.ContractDetails.Summary.PrimaryExch + " exchange");
-							socket.Send("SYMBOL: " + castedMessage.ContractDetails.Summary.Symbol + " successfully found at: " + castedMessage.ContractDetails.Summary.Exchange + " exchange");
+							//socket.Send("SYMBOL: " + castedMessage.ContractDetails.Summary.Symbol + " successfully found at: " + castedMessage.ContractDetails.Summary.Exchange + " exchange");
 
 						}
 
 						// Add new object to json array
-						searchJsonResponse.Add("kokokok", 123);
+						var z = (ContractDetailsMessage)message; // Type cast
+						var x = z.ContractDetails.Summary;
+						searchJsonResponse.Add(x.Exchange, x.LocalSymbol, x.SecType, x.Currency, x.Exchange, x.PrimaryExch, x.ConId);
+						Log.Insert(DateTime.Now, "Form1.cs", string.Format("ContractData: {0} {1} {2} {3} {4} {5} {6}", x.Exchange, x.LocalSymbol, x.SecType, x.Currency, x.Exchange, x.PrimaryExch, x.ConId), "white");
 
 
 						break;
@@ -871,7 +876,7 @@ namespace TBR_form
 			Contract contract = new Contract();
 			contract.Symbol = this.conDetSymbol.Text;
 			contract.SecType = this.conDetSecType.Text;
-			contract.Exchange = this.conDetExchange.Text;
+			//contract.Exchange = this.conDetExchange.Text;
 			contract.Currency = this.conDetCurrency.Text;
 			contract.LastTradeDateOrContractMonth = this.conDetLastTradeDateOrContractMonth.Text;
 			contract.Strike = stringToDouble(this.conDetStrike.Text);

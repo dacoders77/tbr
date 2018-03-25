@@ -15,49 +15,84 @@ namespace TBR_form
 {
 	public class SearchJsonResponse
 	{
-		public string fake { get; set; }
-		public int id { get; set; }
+		//public string fake { get; set; }
+		//public int id { get; set; }
+		public string symbol { get; set; }
+		public string localSymbol { get; set; }
+		public string type { get; set; }
+		public string currency { get; set; }
+		public string exchange { get; set; }
+		public string primaryExchange { get; set; }
+		public int conId { get; set; }
 
 		private List<SearchJsonResponse> jsonResponse = new List<SearchJsonResponse>();
 
 		// Class constructor
-		public SearchJsonResponse(string f, int i)
+		public SearchJsonResponse(string symb, string loc, string typ, string cur, string exc, string pExc, int conI)
 		{
-			fake = f;
-			id = i;
+			//fake = f;
+			//id = i;
+
+			symbol = symb;
+			localSymbol = loc;
+			type = typ;
+			currency = cur;
+			exchange = exc;
+			primaryExchange = pExc;
+			conId = conI;
+		}
+
+		// 2nd Class constructor. Used for creating the SearchJsonResponse object with no records in the List
+		public SearchJsonResponse()
+		{
 		}
 
 		public override string ToString()
 		{
+			//StringBuilder sb = new StringBuilder();
+			//sb.Append('[');
+			//sb.Append(id);
+			//sb.Append(',');
+			//sb.Append(JSONEncoders.EncodeJsString(fake));
+			//sb.Append(']');
+
 			StringBuilder sb = new StringBuilder();
 			sb.Append('[');
-			sb.Append(id);
+			sb.Append(JSONEncoders.EncodeJsString(symbol));
 			sb.Append(',');
-			sb.Append(JSONEncoders.EncodeJsString(fake));
+			sb.Append(JSONEncoders.EncodeJsString(localSymbol));
+			sb.Append(',');
+			sb.Append(JSONEncoders.EncodeJsString(type));
+			sb.Append(',');
+			sb.Append(JSONEncoders.EncodeJsString(currency));
+			sb.Append(',');
+			sb.Append(JSONEncoders.EncodeJsString(exchange));
+			sb.Append(',');
+			sb.Append(JSONEncoders.EncodeJsString(primaryExchange));
+			sb.Append(',');
+			sb.Append(conId);
 			sb.Append(']');
 
 			return sb.ToString();
 		}
 
 		public string Test() {
-
-
-			//jsonResponse.Add(new SearchJsonResponse("moskva", 123));
-			//jsonResponse.Add(new SearchJsonResponse("spb", 5566));
-			//jsonResponse.Add(new SearchJsonResponse("kazan", 78999));
-			//jsonResponse.Add(new SearchJsonResponse("nn", 1));
-			//jsonResponse.Add(new SearchJsonResponse("omsk", 234));
 			
 			string result = JSONEncoders.EncodeJsObjectArray(jsonResponse.ToArray());
-			//MessageBox.Show(result);
 			Console.WriteLine(result);
 
 			return result;
 		}
 
-		public void Add(string s, int i) {
+		public void Add(string symb, string loc, string typ, string cur, string exc, string pExc, int conI) {
 
-			jsonResponse.Add(new SearchJsonResponse(s, i));
+			jsonResponse.Add(new SearchJsonResponse(symb, loc, typ, cur, exc, pExc, conI));
+
+		}
+
+		public void Clear() {
+
+			jsonResponse.Clear(); // Collection empty
 
 		}
 

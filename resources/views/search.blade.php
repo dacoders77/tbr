@@ -5,21 +5,27 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
 
-                <form class="form-inline" style="border-style: solid; border-width: thin; border-color: transparent;">
+                <div class="form-inline" style="border-style: solid; border-width: thin; border-color: transparent;">
                     <div class="form-group mx-auto mb-2" style="width:60%; border-style: solid; border-width: thin; border-color: transparent;">
-                        <input style="width: 100%" type="text" class="form-control" id="inputPassword2">
+                        <input id="searchInputTextField" style="width: 100%" type="text" class="form-control" value="AAPL">
                     </div>
-                    <div style="border-style: solid; border-width: thin; border-color: transparent;">
+                    <div id="search" style="border-style: solid; border-width: thin; border-color: transparent;">
                     <button type="submit" class="btn btn-secondary mb-2">Find symbol</button>
                     </div>
-                </form>
+                </div>
+
+                <div id="app"> <!-- VueJS container -->
+                </div>
+
+                <div id="text"> <!-- Test container -->
+                </div>
+
+                <p id="demo"></p>
 
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
-                    
-                    <!-- Table -->
-
-                    <table class="table table-striped">
+                    <!--
+                    <table class="table table-striped" id="myTable">
                         <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -39,49 +45,34 @@
                             <td>USD</td>
                             <td class="text-danger mx-auto"><i class="fas fa-plus-circle"></i></td>
                         </tr>
+                        </tbody>
+                    </table>
+                    -->
+
+                    <table class="table table-striped" id="myTable">
+                        <thead>
                         <tr>
-                            <th scope="row">2</th>
-                            <td>AAPL</td>
-                            <td>Apple. inc</td>
-                            <td>STK</td>
-                            <td>USD</td>
-                            <td class="text-danger mx-auto"><i class="fas fa-plus-circle"></i></td>
+                            <th scope="col">#</th>
+                            <th scope="col">Symb</th>
+                            <th scope="col">Exch</th>
+                            <th scope="col">PExc</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Curr</th>
+
                         </tr>
+                        </thead>
+
+                        <tbody>
+
                         <tr>
-                            <th scope="row">3</th>
-                            <td>AAPL</td>
-                            <td>Apple. inc</td>
-                            <td>STK</td>
-                            <td>USD</td>
-                            <td class="text-danger mx-auto"><i class="fas fa-plus-circle"></i></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">4</th>
-                            <td>AAPL</td>
-                            <td>Apple. inc</td>
-                            <td>STK</td>
-                            <td>USD</td>
-                            <td class="text-danger mx-auto"><i class="fas fa-plus-circle"></i></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">5</th>
-                            <td>AAPL</td>
-                            <td>Apple. inc</td>
-                            <td>STK</td>
-                            <td>USD</td>
-                            <td class="text-danger mx-auto"><i class="fas fa-plus-circle"></i></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">6</th>
-                            <td>AAPL</td>
-                            <td>Apple. inc</td>
-                            <td>STK</td>
-                            <td>USD</td>
-                            <td class="text-danger mx-auto"><i class="fas fa-plus-circle"></i></td>
+
                         </tr>
 
                         </tbody>
+
                     </table>
+
+
 
                     <div class="alert alert-danger" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -89,11 +80,14 @@
                         Please select an action
                     </div>
 
+
+
                 </div>
 
             </div>
         </div>
     </div>
+
 @endsection
 
 
