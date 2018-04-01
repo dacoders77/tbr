@@ -80,6 +80,9 @@
     <Compile Include="MarginCondition.cs" />
     <Compile Include="MessageValidator.cs" />
     <Compile Include="MinServerVer.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="OperatorCondition.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderComboLeg.cs" />
@@ -97,6 +100,21 @@
     <Compile Include="UnderComp.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="VolumeCondition.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\CSharpAPI.dll" />
+    <Content Include="bin\Debug\CSharpAPI.pdb" />
+    <Content Include="obj\Debug\CSharpAPI.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\CSharpAPI.dll" />
+    <Content Include="obj\Debug\CSharpAPI.pdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="obj\Debug\CSharpAPI.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\CSharpAPI.csprojResolveAssemblyReference.cache" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

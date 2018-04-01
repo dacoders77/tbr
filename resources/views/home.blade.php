@@ -53,99 +53,95 @@
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
 
-                    <!-- Table -->
 
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th scope="col">#</th>
                             <th scope="col">Date</th>
                             <th scope="col">Bskt</th>
                             <th scope="col">Fund</th>
-                            <th scope="col">%</th>
                             <th scope="col">Stat</th>
+                            <th scope="col">Act</th>
                         </tr>
                         </thead>
                         <tbody>
+                        <!-- Table
                         <tr>
-                            <th scope="row">1</th>
                             <td>18.02.18</td>
                             <td>BSK1</td>
                             <td>16.200</td>
-                            <td>15</td>
                             <td class="text-danger mx-auto"><span class="badge badge-warning">Pend</span></td>
+                            <td class="text-danger mx-auto"><i class="fas fa-trash-alt"></i></td>
                         </tr>
 
                         <tr>
-                            <th scope="row">1</th>
                             <td>18.02.17</td>
                             <td>BSK0</td>
                             <td>8.721</td>
-                            <td>76</td>
                             <td class="text-danger mx-auto"><span class="badge badge-success">Filled</span></td>
+                            <td class="text-danger mx-auto"><i class="fas fa-trash-alt"></i></td>
                         </tr>
 
                         <tr>
-                            <th scope="row">1</th>
                             <td>18.02.17</td>
                             <td>BSK0</td>
                             <td>8.721</td>
-                            <td>76</td>
                             <td class="text-danger mx-auto"><span class="badge badge-success">Filled</span></td>
+                            <td class="text-danger mx-auto"><i class="fas fa-trash-alt"></i></td>
                         </tr>
 
                         <tr>
-                            <th scope="row">1</th>
                             <td>18.02.17</td>
                             <td>BSK0</td>
                             <td>8.721</td>
-                            <td>76</td>
                             <td class="text-danger mx-auto"><span class="badge badge-danger">Error</span></td>
+                            <td class="text-danger mx-auto"><i class="fas fa-trash-alt"></i></td>
                         </tr>
 
                         <tr>
-                            <th scope="row">1</th>
                             <td>18.02.17</td>
                             <td>BSK0</td>
                             <td>8.721</td>
-                            <td>76</td>
                             <td class="text-danger mx-auto"><span class="badge badge-success">Filled</span></td>
+                            <td class="text-danger mx-auto"><i class="fas fa-trash-alt"></i></td>
                         </tr>
+                        -->
 
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>18.02.17</td>
-                            <td>BSK0</td>
-                            <td>8.721</td>
-                            <td>76</td>
-                            <td class="text-danger mx-auto"><span class="badge badge-success">Filled</span></td>
-                        </tr>
 
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>18.02.17</td>
-                            <td>BSK0</td>
-                            <td>8.721</td>
-                            <td>76</td>
-                            <td class="text-danger mx-auto"><span class="badge badge-success">Filled</span></td>
-                        </tr>
+                        @php
+                        $allDbRows = DB::table('baskets')->orderBy('basket_id', 'desc')->get();
 
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>18.02.17</td>
-                            <td>BSK0</td>
-                            <td>8.721</td>
-                            <td>76</td>
-                            <td class="text-danger mx-auto"><span class="badge badge-success">Filled</span></td>
-                        </tr>
+                        foreach ($allDbRows as $dbRecord){
+                        $shortDate = date("m-d G:i", strtotime($dbRecord->basket_execution_time));
+                        if ($dbRecord->basket_status == "filled") $status = "badge badge-success";
+                        if ($dbRecord->basket_status == "new") $status = "badge badge-warning";
+                        if ($dbRecord->basket_status == "error") $status = "badge badge-danger";
+
+                        echo "<tr>";
+                            echo "<td><a href=\"$dbRecord->basket_id\">$shortDate</a></td>";
+                            echo "<td>$dbRecord->basket_name</td>";
+                            echo "<td>$dbRecord->basket_allocated_funds</td>";
+                            echo "<td class=\"text-danger mx-auto\"><span class=\"$status\">$dbRecord->basket_status</span></td>";
+                            echo "<td class=\"text-danger mx-auto\"><a href=\"basketdelete/$dbRecord->basket_id\"><i class=\"fas fa-trash-alt\" style=\"color: tomato\"></a></i></td>";
+                        echo "</tr>";
+                        }
+                        @endphp
+
+
+
+
+
+
+
+
 
                         </tbody>
                     </table>
 
-                    <div class="alert alert-danger" role="alert">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        <span class="sr-only">Error:</span>
-                        Please select an action
+                    <div class="alert alert-success" role="alert">
+                        <a href="basketcreate">
+                        <i class="fas fa-plus-square"></i>&nbsp;Add new basked
+                        </a>
                     </div>
 
                 </div>

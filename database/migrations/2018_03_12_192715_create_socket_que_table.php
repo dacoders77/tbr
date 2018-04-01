@@ -24,6 +24,7 @@ class CreateSocketQueTable extends Migration
 
         });
 
+        /*
         $z = json_encode([
             //'event' => 'ping', // 'event' => 'ping'
             'event' => 'subscribe',
@@ -46,7 +47,7 @@ class CreateSocketQueTable extends Migration
             'text_message' => 'this is a second record',
             'json_message' => json_encode(['event' => 'subscribe'])
         ));
-
+        */
     }
 
     /**

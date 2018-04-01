@@ -16,7 +16,10 @@ namespace TBR_form
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+			AppDomain.CurrentDomain.UnhandledException += (sender, args) => MessageBox.Show(args.ExceptionObject.ToString()); // This code catches .net errors
 			Application.Run(new Form1());
+
 		}
+
 	}
 }

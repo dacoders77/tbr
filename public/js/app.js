@@ -13811,41 +13811,31 @@ window.Vue = __webpack_require__(38);
 Vue.component('example-component', __webpack_require__(41));
 
 var app = new Vue({
-    el: '#app',
+
+    el: '#testVue',
+
+    data: {
+        quantityOfRecords: null // quantity of records
+    },
 
     created: function created() {
+        var _this = this;
+
         Echo.channel('tbrChannel').listen('TbrAppSearchResponse', function (e) {
-            //alert('The event has been triggered! Here is the alert box for proofe!');
-
-            //var d = new Date();
-            //document.getElementById("app").innerHTML = d;
             var jsonParsedResponse = JSON.parse(e.update);
-            //document.getElementById("text").innerHTML = jsonParsedResponse[0];
-
-            demoP = document.getElementById("demo");
-
-            //for (i = 0; i < 5; i++)
-            //    //document.getElementById("demo").append("Some appended text" + [i] + "<br>");
-            //    demoP.innerHTML = demoP.innerHTML + i + "<br>";
-
-            $.each(jsonParsedResponse, function (index, value) {
-                //alert( index + ": " + value );
-                //demoP.innerHTML = demoP.innerHTML + value[1] + " " + value[0] + " " + value[2] + " " + value[3] + "<br>";
-                $("#myTable tr:last").after("<tr>" + "<th scope=\"row\">" + index + "</th>" + "<th>" + value[1] + "</th>" + "<th>" + value[0] + "</th>" + "<th>" + value[4] + "</th>" + "<th>" + value[2] + "</th>" + "<th>" + value[3] + "</th>" + "</tr>");
-            });
-
-            console.log(jsonParsedResponse);
-        });
+            console.log("search responce: " + jsonParsedResponse);
+            _this.quantityOfRecords = jsonParsedResponse; // Loop through the length or received json
+        }); // echo.listen
     }
 }); // new Wue
+
 
 // Buttons handlers
 $('#search').click(function () {
     console.log("Search button clicked");
     //alert($("#searchInputTextField").val());
 
-    $("tbody").remove();
-
+    //$("tbody").remove();
     var request1 = $.get('addmsgws/' + $("#searchInputTextField").val() + ''); // Controller call
     request1.done(function (response) {
         // When the request is done

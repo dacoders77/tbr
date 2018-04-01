@@ -18,16 +18,23 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/admin', 'AdminController@index')->name('home'); // is the name correct?
+
+
+
+Route::get('/admin', 'AdminController@index'); // is the name correct?
 
 
 Route::get('/search', function () {
     return view('search');
 });
 
-Route::get('/basket', function () {
-    return view('basket');
-});
+
+Route::get('/basket', function ()
+{
+    return View::make('basket');
+})->name('basket.view'); // basket.blade.php works good
+
+
 
 Route::get('/settings', function () {
     return view('settings');
@@ -44,7 +51,12 @@ Route::get('/searchRequestTest', function () {
     return view('searchRequestTest');
 });
 
-// Search responswe pusher event
+// Search response pusher event
 Route::get('event', function () {
     event(new \App\Events\TbrAppSearchResponse('How are you?'));
 });
+
+// Add new basket
+Route::get('/basketcreate', 'BasketCreate@index');
+
+Route::get('/basketdelete/{param}', 'BasketDelete@index'); // Controller is called using the given name and passing {param} to it

@@ -49,10 +49,12 @@
                     </table>
                     -->
 
+
+                    <div id="testVue">
+
                     <table class="table table-striped" id="myTable">
                         <thead>
                         <tr>
-                            <th scope="col">#</th>
                             <th scope="col">Symb</th>
                             <th scope="col">Exch</th>
                             <th scope="col">PExc</th>
@@ -64,22 +66,37 @@
 
                         <tbody>
 
-                        <tr>
-
+                        <tr v-for="i in quantityOfRecords">
+                            <th>@{{ i[1] }}</th>
+                            <th>@{{ i[0] }}</th>
+                            <th>@{{ i[4] }}</th>
+                            <th>@{{ i[2] }}</th>
+                            <th>@{{ i[3] }}</th>
                         </tr>
 
                         </tbody>
 
                     </table>
+                    </div>
 
 
 
+                    <!--
                     <div class="alert alert-danger" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                         <span class="sr-only">Error:</span>
                         Please select an action
                     </div>
+                    !-->
 
+                    <!--
+                <div id="app-10">
+                    @{{ message }}
+                    <br>
+                    <button v-on:click="reverse">buton</button>
+
+                </div>
+                -->
 
 
                 </div>

@@ -15,7 +15,7 @@ using IBSampleApp;
 using IBSampleApp.ui;
 using IBApi;
 using IBSampleApp.types;
-using IBSampleApp.ui;
+
 using IBSampleApp.messages;
 
 

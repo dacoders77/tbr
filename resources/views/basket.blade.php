@@ -9,16 +9,17 @@
                     <i class="fas fa-check-circle"></i>&nbsp;AAPL was successfully added to BS1 basket!
                 </div>
 
+                <form action="basketcreate">
 
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="BSK1" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <input type="text" name="basket-name" class="form-control" value="AAPL" aria-label="basket name text" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <span class="input-group-text" id="basic-addon2">&nbsp;&nbsp;&nbsp;Basket name</span>
                     </div>
                 </div>
 
                 <div class="input-group mb-3">
-                    <input type="date" class="form-control" placeholder="BSK1" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <input type="datetime-local" name="basket-execution-time" class="form-control" placeholder="BSK1" aria-label="execution time" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <span class="input-group-text" id="basic-addon2">Execution time</span>
                     </div>
@@ -38,11 +39,7 @@
 
 
 
-
-
-
                 <div class="panel panel-default">
-                    <!-- Default panel contents -->
 
                     <!-- Table -->
 
@@ -113,9 +110,56 @@
                     </table>
 
 
-                    <div class="container text-center" style="border-style: solid; border-width: thin; border-color: transparent;">
-                        <button type="submit" class="btn btn-success mb-2"><i class="far fa-save"></i>&nbsp;Save busket</button>
+
+                        <div class="container text-center" style="border-style: solid; border-width: thin; border-color: transparent;">
+                            <button type="submit" class="btn btn-success mb-2"><i class="far fa-save"></i>&nbsp;Save <ba></ba>sket</button>
+                        </div>
+
+                </div>
+                </form>
+
+
+
+
+                <!-- Search feild and button -->
+                <div class="form-inline" style="border-style: solid; border-width: thin; border-color: transparent;">
+                    <div class="form-group mx-auto mb-2" style="width:60%; border-style: solid; border-width: thin; border-color: transparent;">
+                        <input id="searchInputTextField" style="width: 100%" type="text" class="form-control" value="AAPL">
                     </div>
+                    <div id="search" style="border-style: solid; border-width: thin; border-color: transparent;">
+                        <button type="submit" class="btn btn-secondary mb-2">Find symbol</button>
+                    </div>
+                </div>
+
+                <!-- Search results table -->
+                <div id="testVue">
+
+                    <table class="table table-striped" id="myTable">
+                        <thead>
+                        <tr>
+                            <th scope="col">Symb</th>
+                            <th scope="col">Exch</th>
+                            <th scope="col">PExc</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Curr</th>
+
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        <tr v-for="i in quantityOfRecords">
+                            <th>@{{ i[1] }}</th>
+                            <th>@{{ i[0] }}</th>
+                            <th>@{{ i[4] }}</th>
+                            <th>@{{ i[2] }}</th>
+                            <th>@{{ i[3] }}</th>
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+                </div>
 
 
 
