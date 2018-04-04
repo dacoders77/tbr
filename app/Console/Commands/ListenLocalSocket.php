@@ -56,11 +56,8 @@ class ListenLocalSocket extends Command
                 ->where('is_new', 1)
                 ->get();
 
-
             // Loop through all new records found in DB
             foreach ($z as $record){
-                //print_r($z);
-                //echo "xx: " . $record->text_message . "         id: " . $record->id . "\n";
 
 
                 if($this->connection) {
@@ -89,6 +86,7 @@ class ListenLocalSocket extends Command
         $connector('ws://localhost:8181', [], ['Origin' => '127.0.0.1:7451'])
             ->then( function(\Ratchet\Client\WebSocket $conn) {
                 $this->connection = $conn;
+
                 $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
                     //RatchetWebSocket::out($msg); // Call the function when the event is received
                     echo $msg . "\n";
@@ -107,9 +105,6 @@ class ListenLocalSocket extends Command
                     $this->connection = null;
                     $loop->stop();
                 });
-        
         $loop->run();
-
-
     }
 }
