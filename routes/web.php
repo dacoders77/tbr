@@ -29,9 +29,9 @@ Route::get('/search', function () {
 });
 
 
-Route::get('/basket', function ()
+Route::get('/basket/{z}', function ($basketId)
 {
-    return View::make('basket');
+    return View::make('basket')->with('basket_id', $basketId);
 })->name('basket.view'); // basket.blade.php works good
 
 
@@ -60,3 +60,6 @@ Route::get('event', function () {
 Route::get('/basketcreate', 'BasketCreate@index');
 
 Route::get('/basketdelete/{param}', 'BasketDelete@index'); // Controller is called using the given name and passing {param} to it
+
+// Basket update
+Route::post('/basketupdate', 'BasketUpdate@index');

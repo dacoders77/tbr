@@ -33,7 +33,7 @@
                     <a class="nav-link {{ isActiveURL('/search') }}" href="{{ url('/search/')}}"><i class="fas fa-search"></i>&nbspSearch</a>
                 </li>
                 <li style="width: 33%;">
-                    <a class="nav-link {{ isActiveURL('/basket') }}" href="{{ url('/basket/')}}"><i class="fas fa-shopping-basket"></i>&nbspBasket</a>
+                    <a class="nav-link {{ isActiveURL('/basket') }}" href="{{ url('/home/')}}"><i class="fas fa-shopping-basket"></i>&nbspBasket</a>
                 </li>
             </ul>
             </div>

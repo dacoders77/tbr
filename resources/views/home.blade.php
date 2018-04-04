@@ -31,7 +31,6 @@
                             </a>
                             -->
 
-
                             <a style="color:Tomato" class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -46,6 +45,14 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Display flash message -->
+                @if(session()->has('status'))
+                    <div class="alert alert-primary" role="alert">
+                        <i class="fas fa-check-circle"></i>&nbsp;{{session()->get('status')}}
+                    </div>
+
+                @endif
 
 
 
@@ -109,27 +116,26 @@
 
 
                         @php
-                        $allDbRows = DB::table('baskets')->orderBy('basket_id', 'desc')->get();
+                            $allDbRows = DB::table('baskets')->orderBy('basket_id', 'desc')->get();
 
-                        foreach ($allDbRows as $dbRecord){
-                        $shortDate = date("m-d G:i", strtotime($dbRecord->basket_execution_time));
-                        if ($dbRecord->basket_status == "filled") $status = "badge badge-success";
-                        if ($dbRecord->basket_status == "new") $status = "badge badge-warning";
-                        if ($dbRecord->basket_status == "error") $status = "badge badge-danger";
+                            foreach ($allDbRows as $dbRecord){
 
-                        echo "<tr>";
-                            echo "<td><a href=\"$dbRecord->basket_id\">$shortDate</a></td>";
-                            echo "<td>$dbRecord->basket_name</td>";
-                            echo "<td>$dbRecord->basket_allocated_funds</td>";
-                            echo "<td class=\"text-danger mx-auto\"><span class=\"$status\">$dbRecord->basket_status</span></td>";
-                            echo "<td class=\"text-danger mx-auto\"><a href=\"basketdelete/$dbRecord->basket_id\"><i class=\"fas fa-trash-alt\" style=\"color: tomato\"></a></i></td>";
-                        echo "</tr>";
-                        }
+                                if(($dbRecord->basket_is_deleted == 0)){
+                                    $shortDate = date("m-d G:i", strtotime($dbRecord->basket_execution_time));
+                                    if ($dbRecord->basket_status == "filled") $status = "badge badge-success";
+                                    if ($dbRecord->basket_status == "new") $status = "badge badge-warning";
+                                    if ($dbRecord->basket_status == "error") $status = "badge badge-danger";
+
+                                    echo "<tr>";
+                                    echo "<td><a href=\"basket/$dbRecord->basket_id\">$shortDate</a></td>";
+                                    echo "<td>$dbRecord->basket_name</td>";
+                                    echo "<td>$dbRecord->basket_allocated_funds</td>";
+                                    echo "<td class=\"text-danger mx-auto\"><span class=\"$status\">$dbRecord->basket_status</span></td>";
+                                    echo "<td class=\"text-danger mx-auto\"><a href=\"basketdelete/$dbRecord->basket_id\"><i class=\"fas fa-trash-alt\" style=\"color: tomato\"></a></i></td>";
+                                    echo "</tr>";
+                                }
+                            }
                         @endphp
-
-
-
-
 
 
 
@@ -143,6 +149,8 @@
                         <i class="fas fa-plus-square"></i>&nbsp;Add new basked
                         </a>
                     </div>
+
+
 
                 </div>
 
