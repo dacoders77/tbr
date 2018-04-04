@@ -9,7 +9,8 @@
                     <i class="fas fa-check-circle"></i>&nbsp;AAPL was successfully added to BS1 basket!
                 </div>
 
-                <form action="/public/basketupdate" method="post">
+                <!-- <form action="/public/basketupdate" method="post"> -->
+                    {{ Form::open(['route' => 'basketupdate.post']) }}
                     @csrf
 
                     <input type="hidden" name="basket-id" value="{{$basket_id}}">
@@ -59,7 +60,7 @@
                     </div>
 
 
-                    <h1>{{$basket_id}}</h1>
+
 
                     <div class="panel panel-default">
 

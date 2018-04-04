@@ -614,7 +614,7 @@ namespace TBR_form
 				try
 				{
 					port = 4002; // Int32.Parse(this.port_CT.Text);
-					ibClient.ClientId = 1; // Int32.Parse(this.clientid_CT.Text);
+					ibClient.ClientId = 2; // Int32.Parse(this.clientid_CT.Text);
 					ibClient.ClientSocket.eConnect(host, port, ibClient.ClientId);
 
 					var reader = new EReader(ibClient.ClientSocket, signal);

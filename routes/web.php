@@ -62,4 +62,4 @@ Route::get('/basketcreate', 'BasketCreate@index');
 Route::get('/basketdelete/{param}', 'BasketDelete@index'); // Controller is called using the given name and passing {param} to it
 
 // Basket update
-Route::post('/basketupdate', 'BasketUpdate@index');
+Route::post('/basketupdate', 'BasketUpdate@index')->name('basketupdate.post');

@@ -13,7 +13,7 @@ namespace tbr_c_sharp_server.Classes
 	class User
 	{
 		// DB Credentials
-		private const string SERVER = "127.0.0.1";
+		private const string SERVER = "173.248.133.174"; // 173.248.133.174
 		private const string DATABASE = "tut_db";
 		private const string UID = "slinger";
 		private const string PASSWORD = "659111";
