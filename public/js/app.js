@@ -13829,13 +13829,13 @@ var app = new Vue({
 
             // Ajax request. Pure JS
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/public/addmsgws/' + document.getElementById("searchInputTextField").value);
+            xhr.open('GET', 'addmsgws/' + document.getElementById("searchInputTextField").value);
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     console.log('Request is done: ' + xhr.responseText);
                     //console.log(xhr.response);
                 } else {
-                    alert('Request failed.  Returned status of: ' + xhr.status);
+                    alert('Request (addmsgws/) failed.  Returned status of: ' + xhr.status);
                 }
             };
             xhr.send();
@@ -13847,13 +13847,13 @@ var app = new Vue({
             // Ajax request. Pure JS
             var xhr = new XMLHttpRequest();
 
-            xhr.open('GET', '/public/assetcreate/' + _message[0] + '/' + _message[1] + '/' + _message[2] + '/' + _message[3] + '/' + _message[4]);
+            xhr.open('GET', 'assetcreate/' + _message[0] + '/' + _message[1] + '/' + _message[2] + '/' + _message[3] + '/' + _message[4]);
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     console.log('Request is done: ' + xhr.responseText);
-                    //console.log(xhr.response);
+                    console.log(xhr.response);
                 } else {
-                    alert('Request failed.  Returned status of: ' + xhr.status);
+                    alert('Request (assetcreate) failed.  Returned status of: ' + xhr.status);
                 }
             };
             xhr.send();

@@ -1,1 +1,1 @@
-{"ibGateWayPort" : 4002, "dbHost" : "127.0.01", "smtpLogin" : "nextbb", "smtpPassword" : "baxgdl_123_!", "emailFromName" : "Boris B.", "emailFromEmail" : "nextbb@yandex.ru", "emailTo" : "nextbb@yandex.ru", "emailToName" : "Boris", "emailCopy" : "", "emailCopyName" : ""}
+{"ibGateWayPort" : 4002, "dbHost" : "127.0.0.1", "smtpLogin" : "nextbb", "smtpPassword" : "baxgdl_123_!", "emailFromName" : "Boris B.", "emailFromEmail" : "nextbb@yandex.ru", "emailTo" : "nextbb@yandex.ru", "emailToName" : "Boris", "emailCopy" : "", "emailCopyName" : ""}

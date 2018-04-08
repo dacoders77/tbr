@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.IO;
 using Newtonsoft.Json.Schema;
 
-namespace TBR_form
+namespace tbr_c_sharp_server.Classes
 {
 	public static class SettingsJson
 	{

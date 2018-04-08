@@ -43,8 +43,8 @@ namespace TBR_form
 
 		public static void InitializeDB()
 		{
-
-			connectionString = "server=127.0.0.1;user id=slinger;password=659111;database=tut_db"; // 173.248.133.174
+	
+			connectionString = "server=" + SettingsJson.dbHost + ";user id=slinger;password=659111;database=tut_db";
 			dbConn = new MySqlConnection(connectionString);
 			Console.WriteLine("Log.cs line 49. InitializeDB()");
 

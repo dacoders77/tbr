@@ -13,10 +13,10 @@ namespace tbr_c_sharp_server.Classes
 	class User
 	{
 		// DB Credentials
-		private const string SERVER = "127.0.0.1"; // 173.248.133.174
-		private const string DATABASE = "tut_db";
-		private const string UID = "slinger";
-		private const string PASSWORD = "659111";
+		//private const string SERVER = "127.0.0.1"; 
+		//private const string DATABASE = "tut_db";
+		//private const string UID = "slinger";
+		//private const string PASSWORD = "659111";
 		private static MySqlConnection dbConn; // MySql connection 
 
 		// User info
@@ -35,10 +35,10 @@ namespace tbr_c_sharp_server.Classes
 
 		public static void InitializeDB() {
 			MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder();
-			builder.Server = SERVER;
-			builder.UserID = UID;
-			builder.Password = PASSWORD;
-			builder.Database = DATABASE;
+			builder.Server = SettingsJson.dbHost; 
+			builder.UserID = "slinger";
+			builder.Password = "659111";
+			builder.Database = "tut_db";
 
 			string connString = builder.ToString();
 			Console.WriteLine(builder.ToString());

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.IO;
 using Newtonsoft.Json.Schema;
 
-namespace TBR_form
+namespace Fleck
 {
 	public static class SettingsJson
 	{
