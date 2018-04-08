@@ -13812,10 +13812,53 @@ Vue.component('example-component', __webpack_require__(41));
 
 var app = new Vue({
 
-    el: '#testVue',
+    el: '#vueJsContainer',
 
     data: {
+
+        // Variables
+        todos: [], // Direction for v-for tag. array 1
         quantityOfRecords: null // quantity of records
+    },
+
+    methods: {
+
+        // Button event handler
+        greet: function greet(event) {
+            console.log("Search button clicked. Vue even handler2");
+
+            // Ajax request. Pure JS
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/public/addmsgws/' + document.getElementById("searchInputTextField").value);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    console.log('Request is done: ' + xhr.responseText);
+                    //console.log(xhr.response);
+                } else {
+                    alert('Request failed.  Returned status of: ' + xhr.status);
+                }
+            };
+            xhr.send();
+        }, // greet
+
+        message: function message(_message) {
+            //alert(message);
+
+            // Ajax request. Pure JS
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', '/public/assetcreate/' + _message[0] + '/' + _message[1] + '/' + _message[2] + '/' + _message[3] + '/' + _message[4]);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    console.log('Request is done: ' + xhr.responseText);
+                    //console.log(xhr.response);
+                } else {
+                    alert('Request failed.  Returned status of: ' + xhr.status);
+                }
+            };
+            xhr.send();
+        }
+
     },
 
     created: function created() {
@@ -13830,18 +13873,19 @@ var app = new Vue({
 }); // new Wue
 
 
+/*
 // Buttons handlers
 $('#search').click(function () {
     console.log("Search button clicked");
-    //alert($("#searchInputTextField").val());
+    // //alert($("#searchInputTextField").val());
 
     //$("tbody").remove();
-    var request1 = $.get('addmsgws/' + $("#searchInputTextField").val() + ''); // Controller call
-    request1.done(function (response) {
-        // When the request is done
-        console.log("request1 is done");
+    var request1 = $.get('/public/addmsgws/' + $("#searchInputTextField").val() + ''); // Controller call
+    request1.done(function(response) { // When the request is done
+        console.log("Request1 is done");
     });
 });
+*/
 
 /***/ }),
 /* 13 */

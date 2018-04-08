@@ -9,6 +9,8 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
 
+                <div id="vueJsContainer></div>
+
                 <div class="container text-center" style="border-style: solid; border-width: thin; border-color: transparent;">
                     <div class="row align-items-center">
                         <div  style="display: inline-block; width: 20%; border-style: solid; border-width: thin; border-color: transparent; font-size:2em;">
@@ -41,19 +43,29 @@
                                 @csrf
                             </form>
 
-
                         </div>
                     </div>
                 </div>
 
                 <!-- Display flash message -->
-                @if(session()->has('status'))
-                    <div class="alert alert-primary" role="alert">
-                        <i class="fas fa-check-circle"></i>&nbsp;{{session()->get('status')}}
-                    </div>
 
+                @if(session()->has('basket_created'))
+                    <div class="alert alert-success" role="alert">
+                        <i class="fas fa-check-circle"></i>&nbsp;{{session()->get('basket_created')}}
+                    </div>
                 @endif
 
+                @if(session()->has('basket_deleted'))
+                    <div class="alert alert-success" role="alert">
+                        <i class="fas fa-check-circle"></i>&nbsp;{{session()->get('basket_deleted')}}
+                    </div>
+                @endif
+
+                @if(session()->has('basket_saved'))
+                    <div class="alert alert-success" role="alert">
+                        <i class="fas fa-check-circle"></i>&nbsp;{{session()->get('basket_saved')}}
+                    </div>
+                @endif
 
 
 
@@ -72,47 +84,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!-- Table
-                        <tr>
-                            <td>18.02.18</td>
-                            <td>BSK1</td>
-                            <td>16.200</td>
-                            <td class="text-danger mx-auto"><span class="badge badge-warning">Pend</span></td>
-                            <td class="text-danger mx-auto"><i class="fas fa-trash-alt"></i></td>
-                        </tr>
 
-                        <tr>
-                            <td>18.02.17</td>
-                            <td>BSK0</td>
-                            <td>8.721</td>
-                            <td class="text-danger mx-auto"><span class="badge badge-success">Filled</span></td>
-                            <td class="text-danger mx-auto"><i class="fas fa-trash-alt"></i></td>
-                        </tr>
-
-                        <tr>
-                            <td>18.02.17</td>
-                            <td>BSK0</td>
-                            <td>8.721</td>
-                            <td class="text-danger mx-auto"><span class="badge badge-success">Filled</span></td>
-                            <td class="text-danger mx-auto"><i class="fas fa-trash-alt"></i></td>
-                        </tr>
-
-                        <tr>
-                            <td>18.02.17</td>
-                            <td>BSK0</td>
-                            <td>8.721</td>
-                            <td class="text-danger mx-auto"><span class="badge badge-danger">Error</span></td>
-                            <td class="text-danger mx-auto"><i class="fas fa-trash-alt"></i></td>
-                        </tr>
-
-                        <tr>
-                            <td>18.02.17</td>
-                            <td>BSK0</td>
-                            <td>8.721</td>
-                            <td class="text-danger mx-auto"><span class="badge badge-success">Filled</span></td>
-                            <td class="text-danger mx-auto"><i class="fas fa-trash-alt"></i></td>
-                        </tr>
-                        -->
 
 
                         @php
@@ -148,6 +120,7 @@
                         <a href="basketcreate">
                         <i class="fas fa-plus-square"></i>&nbsp;Add new basked
                         </a>
+                        <br>
                     </div>
 
 

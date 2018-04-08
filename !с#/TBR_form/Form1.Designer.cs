@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.listView1 = new System.Windows.Forms.ListView();
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -387,6 +387,7 @@
 			this.messageBoxClear_link = new System.Windows.Forms.LinkLabel();
 			this.status_CT = new System.Windows.Forms.Label();
 			this.button1 = new System.Windows.Forms.Button();
+			this.button5 = new System.Windows.Forms.Button();
 			this.TabControl.SuspendLayout();
 			this.marketDataTab.SuspendLayout();
 			this.marketData_MDT.SuspendLayout();
@@ -726,14 +727,14 @@
             this.askBookPrice,
             this.askBookSize,
             this.askBookMaker});
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.deepBookGrid.DefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.deepBookGrid.DefaultCellStyle = dataGridViewCellStyle2;
 			this.deepBookGrid.Location = new System.Drawing.Point(4, 19);
 			this.deepBookGrid.Name = "deepBookGrid";
 			this.deepBookGrid.ReadOnly = true;
@@ -3910,11 +3911,22 @@
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
+			// button5
+			// 
+			this.button5.Location = new System.Drawing.Point(197, 89);
+			this.button5.Name = "button5";
+			this.button5.Size = new System.Drawing.Size(122, 23);
+			this.button5.TabIndex = 16;
+			this.button5.Text = "read json settings";
+			this.button5.UseVisualStyleBackColor = true;
+			this.button5.Click += new System.EventHandler(this.button5_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1230, 589);
+			this.Controls.Add(this.button5);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.messageBoxClear_link);
 			this.Controls.Add(this.status_CT);
@@ -4390,6 +4402,7 @@
 		private System.Windows.Forms.Label status_CT;
 		private System.Windows.Forms.Label status_label_CT;
 		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button button5;
 	}
 }
 

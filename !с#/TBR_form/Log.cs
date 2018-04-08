@@ -38,15 +38,15 @@ namespace TBR_form
 			Message = m;
 			Color = c;
 			IsNew = i;
-			Console.WriteLine("Log.cs InitializeDB()");
 			InitializeDB();
 		}
 
 		public static void InitializeDB()
 		{
 
-			connectionString = "server=173.248.133.174;user id=slinger;password=659111;database=tut_db";
+			connectionString = "server=127.0.0.1;user id=slinger;password=659111;database=tut_db"; // 173.248.133.174
 			dbConn = new MySqlConnection(connectionString);
+			Console.WriteLine("Log.cs line 49. InitializeDB()");
 
 		}
 
@@ -107,7 +107,7 @@ namespace TBR_form
 					string color = reader["color"].ToString();
 					bool isNew = (bool)reader["is_new"]; // Type cast
 
-					Console.WriteLine("zzz: " + (reader["is_new"].ToString()));
+					Console.WriteLine("log.cs line 110. reader['is_new']: " + (reader["is_new"].ToString()));
 
 					if ((bool)reader["is_new"] == true)
 					{

@@ -17,8 +17,9 @@ class BasketDelete extends Controller
                 'basket_is_deleted' => 1
             ]);
 
-        //return view('home'); //
+        session()->flash('basket_deleted', 'Basket deleted!');
+
         return redirect('home'); // Go to url
-        //return redirect()->route('home');
+
     }
 }

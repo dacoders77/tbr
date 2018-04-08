@@ -12,7 +12,7 @@ namespace tbr_c_sharp_server.Classes
 	class DBLogging
 	{
 		// DB Credentials
-		private const string SERVER = "173.248.133.174"; // Laptop: 127.0.0.1. Server: 173.248.133.174
+		private const string SERVER = "127.0.0.1"; // Laptop: 127.0.0.1. Server: 173.248.133.174
 		private const string DATABASE = "tut_db";
 		private const string UID = "slinger";
 		private const string PASSWORD = "659111";
@@ -94,7 +94,7 @@ namespace tbr_c_sharp_server.Classes
 			List<DBLogging> logs = new List<DBLogging>();
 
 
-			using (var conn = new MySqlConnection("server=173.248.133.174;user id=slinger;password=659111;database=tut_db"))
+			using (var conn = new MySqlConnection("server=127.0.0.1;user id=slinger;password=659111;database=tut_db"))
 			{
 				if (conn.State == System.Data.ConnectionState.Closed)
 				{
@@ -154,7 +154,7 @@ namespace tbr_c_sharp_server.Classes
 			//}
 
 			// A. Panin https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-sql-command.html 
-			using (var conn = new MySqlConnection("server=173.248.133.174;user id=slinger;password=659111;database=tut_db"))
+			using (var conn = new MySqlConnection("server=127.0.0.1;user id=slinger;password=659111;database=tut_db"))
 			{
 				if (conn.State == System.Data.ConnectionState.Closed)
 				{

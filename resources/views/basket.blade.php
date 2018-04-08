@@ -5,9 +5,18 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
 
-                <div class="alert alert-success" role="alert">
-                    <i class="fas fa-check-circle"></i>&nbsp;AAPL was successfully added to BS1 basket!
-                </div>
+                @if(session()->has('asset_added'))
+                    <div class="alert alert-success" role="alert">
+                        <i class="fas fa-check-circle"></i>&nbsp;{{session()->get('asset_added')}}
+                    </div>
+                @endif
+
+                @if(session()->has('asset_deleted'))
+                    <div class="alert alert-success" role="alert">
+                        <i class="fas fa-check-circle"></i>&nbsp;{{session()->get('asset_deleted')}}
+                    </div>
+                @endif
+
 
                 <!-- <form action="/public/basketupdate" method="post"> -->
                     {{ Form::open(['route' => 'basketupdate.post']) }}
@@ -69,7 +78,6 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Symb</th>
                                 <th scope="col">Exch</th>
                                 <th scope="col">Curr</th>
@@ -78,36 +86,27 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>AAPL</td>
-                                <td>NYSE</td>
-                                <td>USD</td>
-                                <td>
-                                    <input style="" type="text" class="form-control" id="inputPassword2" placeholder="12%">
-                                </td>
-                                <td class="text-danger mx-auto"><i class="fas fa-trash-alt"></i></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>AAPL</td>
-                                <td>NYSE</td>
-                                <td>USD</td>
-                                <td>
-                                    <input type="text" class="form-control" id="inputPassword2" placeholder="12%">
-                                </td>
-                                <td class="text-danger mx-auto"><i class="fas fa-trash-alt"></i></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>AAPL</td>
-                                <td>NYSE</td>
-                                <td>USD</td>
-                                <td>
-                                    <input style="" type="text" class="form-control" id="inputPassword2" placeholder="12%">
-                                </td>
-                                <td class="text-danger mx-auto"><i class="fas fa-trash-alt"></i></td>
-                            </tr>
+
+                            @php
+                                $allDbRows = DB::table('assets')->orderBy('basket_id', 'desc')->get();
+
+                                foreach ($allDbRows as $dbRecord){
+
+                                    if(($dbRecord->basket_id == $basket_id)){
+                                        echo "<tr>";
+                                            //echo "<td><a href=\"basket/$dbRecord->basket_id\">$shortDate</a></td>";
+                                            // echo "<td>$dbRecord->asset_id</td>";
+                                            echo "<td>$dbRecord->asset_symbol</td>";
+                                            echo "<td>$dbRecord->asset_exchange</td>";
+                                            echo "<td>$dbRecord->asset_currency</td>";
+                                            echo "<td><input type=\"text\" name=\"$dbRecord->asset_id\" class=\"form-control\" placeholder=\"$dbRecord->asset_allocated_percent\"></td>";
+                                            $url = URL::route('assetdelete', array('zz'=>$basket_id, 'xx'=>$dbRecord->asset_id));
+                                            echo "<td class=\"text-danger mx-auto\"><a href=\"$url\"><i class=\"fas fa-trash-alt\" style=\"color: tomato\"></a></i></td>";
+                                        echo "</tr>";
+                                    }
+                                }
+                            @endphp
+
 
 
                             </tbody>
@@ -127,43 +126,51 @@
 
 
                 <!-- Search feild and button -->
-                <div class="form-inline" style="border-style: solid; border-width: thin; border-color: transparent;">
-                    <div class="form-group mx-auto mb-2" style="width:60%; border-style: solid; border-width: thin; border-color: transparent;">
-                        <input id="searchInputTextField" style="width: 100%" type="text" class="form-control" value="AAPL">
-                    </div>
-                    <div id="search" style="border-style: solid; border-width: thin; border-color: transparent;">
-                        <button type="submit" class="btn btn-secondary mb-2">Find symbol</button>
-                    </div>
-                </div>
 
-                <!-- Search results table -->
-                <div id="testVue">
+                <div id="vueJsContainer">
+
+                    <div class="form-inline" style="border-style: solid; border-width: thin; border-color: transparent;">
+                        <div class="form-group mx-auto mb-2" style="width:60%; border-style: solid; border-width: thin; border-color: transparent;">
+                            <input id="searchInputTextField" style="width: 100%" type="text" class="form-control" value="AAPL">
+                        </div>
+                        <div style="border-style: solid; border-width: thin; border-color: transparent;">
+                            <button v-on:click="greet" id="search" type="submit" class="btn btn-secondary mb-2">Find symbol</button>
+                        </div>
+                    </div>
+
+                    <!-- Search results table -->
 
                     <table class="table table-striped" id="myTable">
                         <thead>
                         <tr>
                             <th scope="col">Symb</th>
                             <th scope="col">Exch</th>
-                            <th scope="col">PExc</th>
                             <th scope="col">Type</th>
                             <th scope="col">Curr</th>
+                            <th scope="col">Add</th>
 
                         </tr>
                         </thead>
 
                         <tbody>
 
-                        <tr v-for="i in quantityOfRecords">
-                            <th>@{{ i[1] }}</th>
-                            <th>@{{ i[0] }}</th>
-                            <th>@{{ i[4] }}</th>
-                            <th>@{{ i[2] }}</th>
-                            <th>@{{ i[3] }}</th>
+                        <tr v-for="(i, index) in quantityOfRecords">
+                            <th>@{{ i[1] }}</th> <!-- symbol -->
+                            <th>@{{ i[0] }}</th> <!-- exchange -->
+                            <!--<th>@{{ i[4] }}</th>  primary exchange -->
+                            <th>@{{ i[2] }}</th> <!-- type -->
+                            <th>@{{ i[3] }}</th> <!-- currency -->
+                            <th>
+                                <!-- <button v-on:click="message(i[0])" type="button" class="btn btn-link">Basket @{{ index }}</button> -->
+                                <a href="" v-on:click='message([{{$basket_id}},i[1],i[0],i[3],0])'><i class="fas fa-plus-square"></i></a>
+                            </th>
+
                         </tr>
 
                         </tbody>
 
                     </table>
+
                 </div>
 
 

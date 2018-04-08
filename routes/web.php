@@ -28,12 +28,11 @@ Route::get('/search', function () {
     return view('search');
 });
 
-
+// basket.blade.php
 Route::get('/basket/{z}', function ($basketId)
 {
     return View::make('basket')->with('basket_id', $basketId);
-})->name('basket.view'); // basket.blade.php works good
-
+});
 
 
 Route::get('/settings', function () {
@@ -63,3 +62,10 @@ Route::get('/basketdelete/{param}', 'BasketDelete@index'); // Controller is call
 
 // Basket update
 Route::post('/basketupdate', 'BasketUpdate@index')->name('basketupdate.post');
+
+
+// Delete asset from the basket
+Route::get('/assetdelete/{z}/{x}', 'AssetDelete@index')->name('assetdelete');
+
+// Add asset to DB
+Route::get('/assetcreate/{basketId}/{assetSymbol}/{assetExchange}/{assetCurrency}/{assetAllocatedPercent}', 'AssetCreate@index')->name('assetcreate');

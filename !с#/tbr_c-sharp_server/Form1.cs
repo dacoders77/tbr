@@ -188,7 +188,7 @@ namespace tbr_c_sharp_server // tbr_c_sharp_server
 				AddItemFromThread(this);
 				Thread.Sleep(500);
 				
-			} // while
+			}
 		}
 
 		private static void AddItemFromThread(Form1 form) {
@@ -207,10 +207,6 @@ namespace tbr_c_sharp_server // tbr_c_sharp_server
 					form.listView1.Items.Add(item);
 
 				}
-
-				//ListViewItem item = new ListViewItem(new string[] { "1", "2", "3" });
-				//item.Tag = u; // Error is thrown because there is not tag assigned
-				//form.listView1.Items.Add(item);
 
 				Console.WriteLine("------------------------------DB watch in progress!");
 				

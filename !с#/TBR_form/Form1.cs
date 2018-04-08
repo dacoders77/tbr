@@ -63,6 +63,8 @@ namespace TBR_form
 			
 			Log.InitializeDB();
 			logThread = new Thread(new ThreadStart(LogThread)); // Make instance of the thread and assign method name which will be executed in the thread
+			
+			
 
 			// listView1 setup
 			listView1.View = View.Details; // Shows the header
@@ -221,27 +223,30 @@ namespace TBR_form
 
 		private void Form1_Load(object sender, EventArgs e) // Form load
 		{
-			logThread.SetApartmentState(ApartmentState.MTA);
-			logThread.Start();
+			//logThread.SetApartmentState(ApartmentState.MTA);
+			logThread.IsBackground = true;
+			logThread.Start(); // Reading log records from DB
 		}
 
-		public void LogThread()
-		{ // ANother method is called because a parameter can not be passed while invoking
-
+		public void LogThread() // ANother method is called because a parameter can not be passed while invoking
+		{ 
+			
 			while (true)
 			{
 				AddItemFromThread(this);
 				Thread.Sleep(2000);
 			} 
+			
 		}
 
 		private static void AddItemFromThread(Form1 form)
 		{
+			List<Log> logs = Log.GetNewLogs(); // Call SQL QUERY method and assign its result to logs list
 
 			form.BeginInvoke(new Action(delegate ()
 			{
 				// DB watch. Get new records
-				List<Log> logs = Log.GetNewLogs(); // Call SQL QUERY method and assign its result to logs list
+				
 
 				foreach (Log u in logs)
 				{
@@ -489,15 +494,13 @@ namespace TBR_form
 							//var castedMessage = (ContractDetailsMessage)message;
 							//ShowMessageOnPanel("SYMBOL: " + castedMessage.ContractDetails.Summary.Symbol + " successfully found at: " + castedMessage.ContractDetails.Summary.PrimaryExch + " exchange");
 							//socket.Send("SYMBOL: " + castedMessage.ContractDetails.Summary.Symbol + " successfully found at: " + castedMessage.ContractDetails.Summary.Exchange + " exchange");
-
 						}
 
 						// Add new object to json array
 						var z = (ContractDetailsMessage)message; // Type cast
 						var x = z.ContractDetails.Summary;
 						searchJsonResponse.Add(x.Exchange, x.LocalSymbol, x.SecType, x.Currency, x.Exchange, x.PrimaryExch, x.ConId);
-						Log.Insert(DateTime.Now, "Form1.cs", string.Format("ContractData: {0} {1} {2} {3} {4} {5} {6}", x.Exchange, x.LocalSymbol, x.SecType, x.Currency, x.Exchange, x.PrimaryExch, x.ConId), "white");
-
+						//Log.Insert(DateTime.Now, "Form1.cs", string.Format("ContractData: {0} {1} {2} {3} {4} {5} {6}", x.Exchange, x.LocalSymbol, x.SecType, x.Currency, x.Exchange, x.PrimaryExch, x.ConId), "white");
 
 						break;
 					}
@@ -621,8 +624,19 @@ namespace TBR_form
 
 					reader.Start();
 
-					new Thread(() => { while (ibClient.ClientSocket.IsConnected()) { signal.waitForSignal(); reader.processMsgs(); } }) { IsBackground = true }.Start();
+					new Thread(() => { // Create object
+						while (ibClient.ClientSocket.IsConnected()) { // Params. Lambda expression  
+							signal.waitForSignal();
+							reader.processMsgs();
+						}
+					}) // Create
+					{
+
+						IsBackground = true
+
+					}.Start(); // Start method call
 				}
+
 				catch (Exception)
 				{
 
@@ -1080,6 +1094,11 @@ namespace TBR_form
 		{
 			//JsonParseTest.Parse();
 			searchJsonResponse.Test();
+		}
+
+		private void button5_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show(SettingsJson.dbHost.ToString());
 		}
 	} // Public class From1
 }
