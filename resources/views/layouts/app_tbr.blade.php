@@ -11,6 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- External links -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -47,7 +48,9 @@
     </div>
 
     <!-- Scripts -->
+    <script>window.siteUrl = "{{ url('/') }}"</script>
     <script src="{{ asset('js/app.js') }}"></script>
+
 
 </body>
 </html>

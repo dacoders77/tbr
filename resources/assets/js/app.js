@@ -25,7 +25,8 @@ const app = new Vue({
 
         // Variables
         todos: [], // Direction for v-for tag. array 1
-        quantityOfRecords: null // quantity of records
+        quantityOfRecords: null, // quantity of records
+        x: axios.defaults.baseURL
     },
 
     methods: {
@@ -34,7 +35,16 @@ const app = new Vue({
         greet: function(event){
             console.log("Search button clicked. Vue even handler2");
 
-            // Ajax request. Pure JS
+            // Ajax request. Axios
+            axios.get('/addmsgws/' + document.getElementById("searchInputTextField").value)
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+            /*
             var xhr = new XMLHttpRequest();
             xhr.open('GET', 'addmsgws/' + document.getElementById("searchInputTextField").value);
             xhr.onload = function() {
@@ -47,31 +57,46 @@ const app = new Vue({
                 }
             };
             xhr.send();
+            */
         }, // greet
 
         message: function(message){
-            //alert(message);
+            
+            // Ajax request. Axios
 
-            // Ajax request. Pure JS
+            // Ajax request. Axios
+            axios.get('public/assetcreate/' + message[0] + '/' + message[1] + '/' + message[2] + '/' + message[3] + '/' + message[4])
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+
+            /*
             var xhr = new XMLHttpRequest();
 
-            xhr.open('GET', 'assetcreate/' + message[0] + '/' + message[1] + '/' + message[2] + '/' + message[3] + '/' + message[4]);
+            xhr.open('GET', 'public/assetcreate/' + message[0] + '/' + message[1] + '/' + message[2] + '/' + message[3] + '/' + message[4]);
             xhr.onload = function() {
                 if (xhr.status === 200) {
                     console.log('Request is done: ' + xhr.responseText);
                     console.log(xhr.response);
                 }
                 else {
-                    alert('Request (assetcreate) failed.  Returned status of: ' + xhr.status);
+                    alert('Request (public/assetcreate) failed.  Returned status of: ' + xhr.status);
                 }
             };
             xhr.send();
-
+            */
         }
 
     },
 
     created() {
+
+        alert("app.js created: " + axios.defaults.baseURL);
+
         Echo.channel('tbrChannel')
 
             .listen('TbrAppSearchResponse', (e) => {
@@ -84,6 +109,7 @@ const app = new Vue({
 
 
 }); // new Wue
+
 
 
 /*

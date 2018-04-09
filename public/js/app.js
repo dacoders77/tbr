@@ -13818,7 +13818,8 @@ var app = new Vue({
 
         // Variables
         todos: [], // Direction for v-for tag. array 1
-        quantityOfRecords: null // quantity of records
+        quantityOfRecords: null, // quantity of records
+        x: axios.defaults.baseURL
     },
 
     methods: {
@@ -13827,42 +13828,62 @@ var app = new Vue({
         greet: function greet(event) {
             console.log("Search button clicked. Vue even handler2");
 
-            // Ajax request. Pure JS
+            // Ajax request. Axios
+            axios.get('/addmsgws/' + document.getElementById("searchInputTextField").value).then(function (response) {
+                console.log(response);
+            }).catch(function (error) {
+                console.log(error);
+            });
+
+            /*
             var xhr = new XMLHttpRequest();
             xhr.open('GET', 'addmsgws/' + document.getElementById("searchInputTextField").value);
-            xhr.onload = function () {
+            xhr.onload = function() {
                 if (xhr.status === 200) {
                     console.log('Request is done: ' + xhr.responseText);
                     //console.log(xhr.response);
-                } else {
+                }
+                else {
                     alert('Request (addmsgws/) failed.  Returned status of: ' + xhr.status);
                 }
             };
             xhr.send();
+            */
         }, // greet
 
         message: function message(_message) {
-            //alert(message);
 
-            // Ajax request. Pure JS
+            // Ajax request. Axios
+
+            // Ajax request. Axios
+            axios.get('public/assetcreate/' + _message[0] + '/' + _message[1] + '/' + _message[2] + '/' + _message[3] + '/' + _message[4]).then(function (response) {
+                console.log(response);
+            }).catch(function (error) {
+                console.log(error);
+            });
+
+            /*
             var xhr = new XMLHttpRequest();
-
-            xhr.open('GET', 'assetcreate/' + _message[0] + '/' + _message[1] + '/' + _message[2] + '/' + _message[3] + '/' + _message[4]);
-            xhr.onload = function () {
+             xhr.open('GET', 'public/assetcreate/' + message[0] + '/' + message[1] + '/' + message[2] + '/' + message[3] + '/' + message[4]);
+            xhr.onload = function() {
                 if (xhr.status === 200) {
                     console.log('Request is done: ' + xhr.responseText);
                     console.log(xhr.response);
-                } else {
-                    alert('Request (assetcreate) failed.  Returned status of: ' + xhr.status);
+                }
+                else {
+                    alert('Request (public/assetcreate) failed.  Returned status of: ' + xhr.status);
                 }
             };
             xhr.send();
+            */
         }
 
     },
 
     created: function created() {
         var _this = this;
+
+        alert("app.js created: " + axios.defaults.baseURL);
 
         Echo.channel('tbrChannel').listen('TbrAppSearchResponse', function (e) {
             var jsonParsedResponse = JSON.parse(e.update);
@@ -13951,6 +13972,9 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   cluster: "eu", // process.env.MIX_PUSHER_APP_CLUSTER
   encrypted: true
 });
+
+axios.defaults.baseURL = window.siteUrl;
+//alert(window.siteUrl);
 
 /***/ }),
 /* 14 */
