@@ -61,7 +61,7 @@ const app = new Vue({
         }, // greet
 
         message: function(message){
-            
+
             // Ajax request. Axios
 
             // Ajax request. Axios
@@ -95,7 +95,7 @@ const app = new Vue({
 
     created() {
 
-        alert("app.js created: " + axios.defaults.baseURL);
+        //alert("app.js created: " + axios.defaults.baseURL);
 
         Echo.channel('tbrChannel')
 

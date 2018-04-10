@@ -13883,7 +13883,7 @@ var app = new Vue({
     created: function created() {
         var _this = this;
 
-        alert("app.js created: " + axios.defaults.baseURL);
+        //alert("app.js created: " + axios.defaults.baseURL);
 
         Echo.channel('tbrChannel').listen('TbrAppSearchResponse', function (e) {
             var jsonParsedResponse = JSON.parse(e.update);
