@@ -9,7 +9,7 @@ class AssetCreate extends Controller
 {
     public function index(int $basketId, string $assetSymbol, string $assetExchange, string $assetCurrency, int $assetAllocatedPercent){
 
-
+        // Add asset to DB
         DB::table('assets')->insert(array(
             'basket_id' => $basketId,
             'asset_symbol' => $assetSymbol,
@@ -19,7 +19,26 @@ class AssetCreate extends Controller
 
         ));
 
+        // Get all assets from DB after the asset was deleted
+        $basketContentObject =
+            DB::table('assets')
+                ->where('basket_id', $basketId) // $request->get('basketid')
+                ->get();
+
+        $basketContentJson = json_encode($basketContentObject);
+
+        //session()->flash('asset_deleted', 'Symbol deleted!');
+        //return redirect('basket/' . $basketId); // Go to url
+
+        // Throw an event
+        event(new \App\Events\TbrAppSearchResponse(json_encode(['eventType' => 'showBasketContent', $basketContentObject])));
+
+
+
+
         session()->flash('asset_added', 'Symbol added!');
+
+
 
         //return redirect('basket/' . $basketId);
 

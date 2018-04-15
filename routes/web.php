@@ -69,3 +69,6 @@ Route::get('/assetdelete/{z}/{x}', 'AssetDelete@index')->name('assetdelete');
 
 // Add asset to DB
 Route::get('/assetcreate/{basketId}/{assetSymbol}/{assetExchange}/{assetCurrency}/{assetAllocatedPercent}', 'AssetCreate@index')->name('assetcreate');
+
+// Get basket name. Axios request controller
+Route::post('/getbasketname', 'AxiosGetBasketName@index');

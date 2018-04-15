@@ -13,10 +13,10 @@ class BasketUpdate extends Controller
 
 
         DB::table('baskets')
-            ->where('basket_id', $request->get('basket-id'))
+            ->where('basket_id', $request->get('idbasket'))
             ->update([
-                'basket_name' => $request->get('basket-name'),
-                'basket_execution_time' => date("Y-m-d G:i:s", strtotime($request->get('basket-execution-time')))
+                'basket_name' => $request->get('basketName'),
+                'basket_execution_time' => date("Y-m-d G:i:s", strtotime($request->get('basketExecTime')))
             ]);
 
         // Loop through the list of all assets shown at the page
@@ -36,7 +36,7 @@ class BasketUpdate extends Controller
 
 
                 DB::table('assets')
-                    ->where('basket_id', $request->get('basket-id'))
+                    ->where('basket_id', $request->get('idbasket'))
                     ->where('asset_id', $x)
                     ->update([
                         'asset_allocated_percent' => $x_value,
@@ -46,9 +46,11 @@ class BasketUpdate extends Controller
             $counter++;
         }
 
-        session()->flash('basket_saved', 'Basked saved!');
+        //session()->flash('basket_saved', 'Basked saved!');
 
-        return redirect('home'); // Go to url
+        //return redirect('home'); // Go to url
+        //return [$request->get('idbasket'),$request->get('basketName')];
+
 
     }
 }

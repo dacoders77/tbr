@@ -13,7 +13,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class TbrAppSearchResponse implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $update; // The public variable which can be read in the event listener as e._variable_name. e.update
+    public $update; // The public variable which can be read in the event listener as e._variable_name. e.update in js
 
     /**
      * Create a new event instance.
@@ -22,7 +22,7 @@ class TbrAppSearchResponse implements ShouldBroadcast
      */
     public function __construct($z)
     {
-        $this->update = $z;
+        $this->update = $z; // Passing a parameter
     }
 
     /**

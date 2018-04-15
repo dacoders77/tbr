@@ -49,8 +49,6 @@ class ListenLocalSocket extends Command
         $loop->addPeriodicTimer(0.5, function() use(&$counter) { // addPeriodicTimer($interval, callable $callback)
             $counter++;
 
-            //dump($this->connection);
-
             // Read records from DB
             $z = DB::table('socket_que')->select('*')
                 ->where('is_new', 1)
@@ -59,16 +57,13 @@ class ListenLocalSocket extends Command
             // Loop through all new records found in DB
             foreach ($z as $record){
 
-
                 if($this->connection) {
                     //$this->connection->send(json_encode(['a' => 1])); // works good
                     //$this->connection->send($record->json_message); // works good
-                    $this->connection->send($record->text_message); // works good
+                    $this->connection->send($record->text_message); // Send data to web socket channel
                 }
 
                 echo $record->text_message . "\n";
-                //echo "xx: " . $record->text_message . "         id: " . $record->id . "\n";
-                //$conn->send('hello world!');
 
                 // Mark them as old. In the next iteration they wont be outputted
                 DB::table('socket_que')
@@ -77,7 +72,7 @@ class ListenLocalSocket extends Command
                         'is_new' => 0,
                     ]);
             }
-        });
+        }); // Pereodic timer loop. Reads whole DB and determines new messages
 
 
 
@@ -98,7 +93,7 @@ class ListenLocalSocket extends Command
                     $this->connection = null;
                 });
                 $conn->send(['event' => 'ping']);
-                $this->conn->send('hello world!');
+                $this->conn->send('hello from ListenLocalSocket.php controller!');
             },
                 function(\Exception $e) use ($loop) {
                     echo "Could not connect: {$e->getMessage()}\n";
