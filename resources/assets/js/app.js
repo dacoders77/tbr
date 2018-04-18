@@ -35,15 +35,15 @@ const app = new Vue({
 
         // Button event handler
         greet: function(event){
-            console.log("Search button clicked. Vue even handler2");
+            //console.log("Search button clicked. Vue even handler2");
 
             // Ajax request. Axios
             axios.get('/addmsgws/' + document.getElementById("searchInputTextField").value)
                 .then(function (response) {
-                    console.log(response);
+                    //console.log(response);
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    console.log('axios addmsgws error: ' + error);
                 });
 
         },
@@ -53,10 +53,10 @@ const app = new Vue({
             // Ajax request. Axios
             axios.get('/assetcreate/' + message[0] + '/' + message[1] + '/' + message[2] + '/' + message[3] + '/' + message[4])
                 .then(function (response) {
-                    console.log(response);
+                    //console.log(response);
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    console.log('axios assetcreate error: ' + error);
                 });
         }
 
@@ -67,9 +67,16 @@ const app = new Vue({
         Echo.channel('tbrChannel')
 
             .listen('TbrAppSearchResponse', (e) => {
-            var jsonParsedResponse = JSON.parse(e.update);
-            console.log("app.js: search responce: " + jsonParsedResponse);
-            this.quantityOfRecords = jsonParsedResponse;
+
+            //console.log(e.update);
+            var jsonParsedResponse = JSON.parse(e.update[0]);
+
+            if (e.update['eventType'] == 'searchJsonResponse')
+
+            {
+                var jsonParsedResponse = jsonParsedResponse;
+                this.quantityOfRecords = jsonParsedResponse;
+            }
 
         });
     },
@@ -85,28 +92,13 @@ const app = new Vue({
 
 
 
-Vue.component('search-block', require('./components/CompForm.vue')); // Vue test component
+Vue.component('search-block', require('./components/CompForm.vue')); // Vue component
 
 const app2 = new Vue({
 
     el: '#vueJsForm',
 
 }); // Vue
-
-
-/*
-// Buttons handlers
-$('#search').click(function () {
-    console.log("Search button clicked");
-    // //alert($("#searchInputTextField").val());
-
-    //$("tbody").remove();
-    var request1 = $.get('/public/addmsgws/' + $("#searchInputTextField").val() + ''); // Controller call
-    request1.done(function(response) { // When the request is done
-        console.log("Request1 is done");
-    });
-});
-*/
 
 
 

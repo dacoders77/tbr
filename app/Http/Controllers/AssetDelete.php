@@ -28,7 +28,7 @@ class AssetDelete extends Controller
         //return redirect('basket/' . $basketId); // Go to url
 
         // Throw an event
-        event(new \App\Events\TbrAppSearchResponse(json_encode(['eventType' => 'showBasketContent', $basketContentObject])));
+        event(new \App\Events\TbrAppSearchResponse(['eventType' => 'showBasketContent', $basketContentJson]));
 
         //return "AssetDelete.php: asset deleted";
 

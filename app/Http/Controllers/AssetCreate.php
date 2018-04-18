@@ -25,22 +25,15 @@ class AssetCreate extends Controller
                 ->where('basket_id', $basketId) // $request->get('basketid')
                 ->get();
 
-        $basketContentJson = json_encode($basketContentObject);
+        $assets = json_encode($basketContentObject);
 
         //session()->flash('asset_deleted', 'Symbol deleted!');
         //return redirect('basket/' . $basketId); // Go to url
 
         // Throw an event
-        event(new \App\Events\TbrAppSearchResponse(json_encode(['eventType' => 'showBasketContent', $basketContentObject])));
+        event(new \App\Events\TbrAppSearchResponse(['eventType' => 'showBasketContent', $assets]));
 
-
-
-
-        session()->flash('asset_added', 'Symbol added!');
-
-
-
-        //return redirect('basket/' . $basketId);
+        //session()->flash('asset_added', 'Symbol added!');
 
     } // public function
 }

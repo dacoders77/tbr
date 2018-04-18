@@ -86,7 +86,10 @@ class ListenLocalSocket extends Command
                     //RatchetWebSocket::out($msg); // Call the function when the event is received
                     echo $msg . "\n";
                     // Create new event
-                    event(new \App\Events\TbrAppSearchResponse((string)$msg));; // Fire new event. Events are located in app/Events
+                    //event(new \App\Events\TbrAppSearchResponse(json_encode(['eventType' => 'showBasketContent', $basketContentObject])));
+                    // (string)$msg
+                    $msgType = json_encode(['eventType' => 'searchJsonResponse']);
+                    event(new \App\Events\TbrAppSearchResponse(['eventType' => 'searchJsonResponse',(string)$msg])); // Fire new event. Events are located in app/Events
                 });
                 $conn->on('close', function($code = null, $reason = null) {
                     echo "Connection closed ({$code} - {$reason})\n";

@@ -12,14 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('admin');
+    //return view('admin');
+    return view('home');
 });
+
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-
 
 Route::get('/admin', 'AdminController@index'); // is the name correct?
 

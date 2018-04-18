@@ -14,26 +14,17 @@ class AxiosGetBasketName extends Controller
 
         $basketName =
             DB::table('baskets')
-                ->where('basket_id', $request->get('basketid'))
+                ->where('basket_id', $request->get('basketId'))
                 ->value('basket_name');
 
         $basketExecTime =
             DB::table('baskets')
-                ->where('basket_id', $request->get('basketid'))
+                ->where('basket_id', $request->get('basketId'))
                 ->value('basket_execution_time');
-
-        // Make another associative array
-        /*
-        $basketContent = array(
-            'val1' => 22,
-            'val2' => 33,
-            'val3' => '445'
-        );
-        */
 
         $basketContentobject =
             DB::table('assets')
-                ->where('basket_id', $request->get('basketid')) // $request->get('basketid')
+                ->where('basket_id', $request->get('basketId')) // $request->get('basketid')
                 ->get();
 
         $basketContentJson = json_encode($basketContentobject);
@@ -42,9 +33,8 @@ class AxiosGetBasketName extends Controller
         $basketProps = array(
             'basketName' => $basketName,
             'basketExecTime' => date("Y-m-d\TH:i", strtotime($basketExecTime)),
-            'basketContentJson' => $basketContentJson
+            'basketAssets' => $basketContentJson
         );
-
 
         //$basketExecutionTime = date("Y-m-d\TH:i", strtotime($basketExecTime));
 

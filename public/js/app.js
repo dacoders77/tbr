@@ -13937,13 +13937,13 @@ var app = new Vue({
 
         // Button event handler
         greet: function greet(event) {
-            console.log("Search button clicked. Vue even handler2");
+            //console.log("Search button clicked. Vue even handler2");
 
             // Ajax request. Axios
             axios.get('/addmsgws/' + document.getElementById("searchInputTextField").value).then(function (response) {
-                console.log(response);
+                //console.log(response);
             }).catch(function (error) {
-                console.log(error);
+                console.log('axios addmsgws error: ' + error);
             });
         },
 
@@ -13951,9 +13951,9 @@ var app = new Vue({
 
             // Ajax request. Axios
             axios.get('/assetcreate/' + _message[0] + '/' + _message[1] + '/' + _message[2] + '/' + _message[3] + '/' + _message[4]).then(function (response) {
-                console.log(response);
+                //console.log(response);
             }).catch(function (error) {
-                console.log(error);
+                console.log('axios assetcreate error: ' + error);
             });
         }
 
@@ -13963,36 +13963,26 @@ var app = new Vue({
         var _this = this;
 
         Echo.channel('tbrChannel').listen('TbrAppSearchResponse', function (e) {
-            var jsonParsedResponse = JSON.parse(e.update);
-            console.log("app.js: search responce: " + jsonParsedResponse);
-            _this.quantityOfRecords = jsonParsedResponse;
+
+            //console.log(e.update);
+            var jsonParsedResponse = JSON.parse(e.update[0]);
+
+            if (e.update['eventType'] == 'searchJsonResponse') {
+                var jsonParsedResponse = jsonParsedResponse;
+                _this.quantityOfRecords = jsonParsedResponse;
+            }
         });
     }
 }); // new Vue
 
 
-Vue.component('search-block', __webpack_require__(45)); // Vue test component
+Vue.component('search-block', __webpack_require__(45)); // Vue component
 
 var app2 = new Vue({
 
     el: '#vueJsForm'
 
 }); // Vue
-
-
-/*
-// Buttons handlers
-$('#search').click(function () {
-    console.log("Search button clicked");
-    // //alert($("#searchInputTextField").val());
-
-    //$("tbody").remove();
-    var request1 = $.get('/public/addmsgws/' + $("#searchInputTextField").val() + ''); // Controller call
-    request1.done(function(response) { // When the request is done
-        console.log("Request1 is done");
-    });
-});
-*/
 
 /***/ }),
 /* 14 */
@@ -52268,23 +52258,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
     props: ['basketid'],
     data: function data() {
         return {
-            idbasket: this.basketid, // Put a property here. This is need in order to send all variables in this.$data to the BasketUpdate.php controller
+            basketId: this.basketid, // Put a property here. This is needed in order to send all variables in this.$data to the BasketUpdate.php controller
             basketName: '',
             basketExecTime: '',
-            basketContentJson: null
+            basketAssets: null
         };
     },
 
     methods: {
         saveBasket: function saveBasket() {
-            //alert('CompVue.vue. Save basket button is clicked');
-            console.log(this.$data);
             axios.post('/basketupdate', this.$data).then(function (response) {
                 console.log(response.data);
             }).catch(function (error) {
@@ -52299,8 +52288,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (error) {
                 console.log(error.response);
             });
+        },
+        onControlValueChanged: function onControlValueChanged() {
+            console.log('event is rised');
+            console.log(this.$data);
+            axios.post('/basketupdate', this.$data).then(function (response) {
+                console.log(response.data);
+            }).catch(function (error) {
+                console.log(error.response);
+            });
         }
-
     },
 
     mounted: function mounted() {
@@ -52309,33 +52306,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //console.log(this.title);
         //console.log(this.$props);
 
-        axios.post('/getbasketname', this.$props).then(function (response) {
-            //console.log(response.data['basketContentJson']);
+        axios.post('/getbasketname', this.$data).then(function (response) {
 
             _this.basketName = response.data['basketName'];
             _this.basketExecTime = response.data['basketExecTime'];
 
-            var jsonParsedResponse = JSON.parse(response.data['basketContentJson']);
-            _this.basketContentJson = jsonParsedResponse;
+            var jsonParsedResponse = JSON.parse(response.data['basketAssets']);
+            _this.basketAssets = jsonParsedResponse;
+
+            //console.log('jsonParseResponse: ');
+            //console.log(jsonParsedResponse);
         }) // Output returned data by controller
         .catch(function (error) {
-            console.log(error.response);
+            console.log('axios getbasketname error: ' + error.response);
         });
     },
     created: function created() {
         var _this2 = this;
 
         Echo.channel('tbrChannel').listen('TbrAppSearchResponse', function (e) {
-            var jsonParsedResponse = JSON.parse(e.update);
 
-            // Second element is goona be - Table Content
-            if (jsonParsedResponse['eventType'] == 'showBasketContent') {
-                console.log(jsonParsedResponse[0]); // First element is key => value, second is another json object
-                var jsonParsedResponse = jsonParsedResponse[0];
-                _this2.basketContentJson = jsonParsedResponse;
-            }
+            var jsonParsedResponse = JSON.parse(e.update[0]);
 
-            //this.quantityOfRecords = jsonParsedResponse;
+            if (e.update['eventType'] == 'showBasketContent') // First element is key => value, second is a json object
+                {
+                    //console.log('show basket content: ');
+                    //console.log(jsonParsedResponse);
+                    _this2.basketAssets = jsonParsedResponse;
+                }
         });
     }
 });
@@ -52363,12 +52361,15 @@ var render = function() {
         staticClass: "form-control",
         domProps: { value: _vm.basketName },
         on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.basketName = $event.target.value
-          }
+          input: [
+            function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.basketName = $event.target.value
+            },
+            _vm.onControlValueChanged
+          ]
         }
       }),
       _vm._v(" "),
@@ -52387,12 +52388,15 @@ var render = function() {
         attrs: { type: "datetime-local" },
         domProps: { value: _vm.basketExecTime },
         on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.basketExecTime = $event.target.value
-          }
+          input: [
+            function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.basketExecTime = $event.target.value
+            },
+            _vm.onControlValueChanged
+          ]
         }
       }),
       _vm._v(" "),
@@ -52404,13 +52408,13 @@ var render = function() {
         _vm._v(" "),
         _c(
           "tbody",
-          _vm._l(_vm.basketContentJson, function(i, index) {
+          _vm._l(_vm.basketAssets, function(asset) {
             return _c("tr", [
-              _c("td", [_vm._v(_vm._s(i["asset_symbol"]))]),
+              _c("td", [_vm._v(_vm._s(asset.asset_symbol))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(i["asset_exchange"]))]),
+              _c("td", [_vm._v(_vm._s(asset.asset_exchange))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(i["asset_currency"]))]),
+              _c("td", [_vm._v(_vm._s(asset.asset_currency))]),
               _vm._v(" "),
               _c("td", [
                 _c("input", {
@@ -52418,24 +52422,27 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: i["asset_allocated_percent"],
-                      expression: "i['asset_allocated_percent']"
+                      value: asset.asset_allocated_percent,
+                      expression: "asset.asset_allocated_percent"
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { size: "1", type: "text" },
-                  domProps: { value: i["asset_allocated_percent"] },
+                  attrs: { type: "text", size: "1" },
+                  domProps: { value: asset.asset_allocated_percent },
                   on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        i,
-                        "asset_allocated_percent",
-                        $event.target.value
-                      )
-                    }
+                    input: [
+                      function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          asset,
+                          "asset_allocated_percent",
+                          $event.target.value
+                        )
+                      },
+                      _vm.onControlValueChanged
+                    ]
                   }
                 })
               ]),
@@ -52448,7 +52455,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         $event.preventDefault()
-                        _vm.assetDelete([i["basket_id"], i["asset_id"]])
+                        _vm.assetDelete([asset.basket_id, asset.asset_id])
                       }
                     }
                   },
@@ -52459,28 +52466,11 @@ var render = function() {
                     })
                   ]
                 )
-              ]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(i["asset_id"]))])
+              ])
             ])
           })
         )
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success mb-2",
-          attrs: { type: "submit" },
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              _vm.saveBasket($event)
-            }
-          }
-        },
-        [_c("i", { staticClass: "far fa-save" }), _vm._v(" Save basket")]
-      )
+      ])
     ])
   ])
 }

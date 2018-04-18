@@ -5,10 +5,10 @@
 
         <!-- <h3>basket id: {{ basketid }}</h3> -->
         Basket name:
-        <input class="form-control" v-model="basketName" />
+        <input class="form-control" v-model="basketName" @input="onControlValueChanged" />
         <br>
         Basket execution time:
-        <input type="datetime-local" class="form-control" v-model="basketExecTime" />
+        <input type="datetime-local" class="form-control" v-model="basketExecTime" @input="onControlValueChanged" />
         <br><br>
 
         <table class="table table-striped">
@@ -26,20 +26,21 @@
 
             <tbody>
 
-                <tr v-for="(i, index) in basketContentJson">
-                    <td>{{ i['asset_symbol'] }}</td>
-                    <td>{{ i['asset_exchange'] }}</td>
-                    <td>{{ i['asset_currency'] }}</td>
-                    <td><input class="form-control" v-model="i['asset_allocated_percent']" size="1" type="text"></td>
-                    <td><a href="" v-on:click.prevent="assetDelete([i['basket_id'], i['asset_id']])"><i class="fas fa-trash-alt" style="color: tomato"></i></a></td>
-                    <td>{{ i['asset_id'] }}</td>
+                <tr v-for="asset in basketAssets">
+                    <td>{{ asset.asset_symbol }}</td>
+                    <td>{{ asset.asset_exchange }}</td>
+                    <td>{{ asset.asset_currency }}</td>
+                    <td><input type="text" class="form-control" v-model="asset.asset_allocated_percent" size="1" @input="onControlValueChanged"></td>
+                    <td><a href="" v-on:click.prevent="assetDelete([asset.basket_id, asset.asset_id])"><i class="fas fa-trash-alt" style="color: tomato"></i></a></td>
                 </tr>
 
             </tbody>
 
         </table>
 
-        <button type="submit" class="btn btn-success mb-2" @click.prevent="saveBasket"><i class="far fa-save"></i>&nbsp;Save basket</button>
+        <!--
+        <button type="hidden" class="btn btn-success mb-2" @click.prevent="saveBasket"><i class="far fa-save"></i>&nbsp;Save basket</button>
+        -->
 
     </form>
 
@@ -54,24 +55,28 @@ export default {
     props: ['basketid'],
     data() {
        return {
-           idbasket: this.basketid, // Put a property here. This is need in order to send all variables in this.$data to the BasketUpdate.php controller
+           basketId: this.basketid, // Put a property here. This is needed in order to send all variables in this.$data to the BasketUpdate.php controller
            basketName: '',
            basketExecTime: '',
-           basketContentJson: null,
+           basketAssets: null,
        }
     },
     methods: {
         saveBasket() {
-            //alert('CompVue.vue. Save basket button is clicked');
-            console.log(this.$data);
             axios.post('/basketupdate', this.$data)
                 .then(response => {console.log(response.data);})
                 .catch(error => {console.log(error.response);})
-
         },
         assetDelete: function(param) {
             //alert(param[1]);
             axios.get('/assetdelete/' + param[0] + '/' + param[1])
+                .then(response => {console.log(response.data);})
+                .catch(error => {console.log(error.response);})
+        },
+        onControlValueChanged() {
+            console.log('event is rised');
+            console.log(this.$data);
+            axios.post('/basketupdate', this.$data)
                 .then(response => {console.log(response.data);})
                 .catch(error => {console.log(error.response);})
         },
@@ -82,19 +87,22 @@ export default {
         //console.log(this.title);
         //console.log(this.$props);
 
-        axios.post('/getbasketname', this.$props)
+        axios.post('/getbasketname', this.$data)
             .then(response => {
-                //console.log(response.data['basketContentJson']);
 
                 this.basketName = response.data['basketName'];
                 this.basketExecTime = response.data['basketExecTime'];
 
-                var jsonParsedResponse = JSON.parse(response.data['basketContentJson']);
-                this.basketContentJson = jsonParsedResponse;
+
+                var jsonParsedResponse = JSON.parse(response.data['basketAssets']);
+                this.basketAssets = jsonParsedResponse;
+
+                //console.log('jsonParseResponse: ');
+                //console.log(jsonParsedResponse);
 
             }) // Output returned data by controller
             .catch(error => {
-                console.log(error.response);
+                console.log('axios getbasketname error: ' + error.response);
             })
     },
     created() {
@@ -102,17 +110,15 @@ export default {
         Echo.channel('tbrChannel')
 
             .listen('TbrAppSearchResponse', (e) => {
-                var jsonParsedResponse = JSON.parse(e.update);
 
-                // Second element is goona be - Table Content
-                if (jsonParsedResponse['eventType'] == 'showBasketContent')
+                var jsonParsedResponse = JSON.parse(e.update[0]);
+
+                if (e.update['eventType'] == 'showBasketContent') // First element is key => value, second is a json object
                 {
-                    console.log(jsonParsedResponse[0]); // First element is key => value, second is another json object
-                    var jsonParsedResponse = jsonParsedResponse[0];
-                    this.basketContentJson = jsonParsedResponse;
+                    //console.log('show basket content: ');
+                    //console.log(jsonParsedResponse);
+                    this.basketAssets = jsonParsedResponse;
                 }
-
-                //this.quantityOfRecords = jsonParsedResponse;
 
             });
     },
