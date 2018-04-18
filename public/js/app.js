@@ -52262,7 +52262,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-    props: ['basketid'],
+    props: ['basketid'], // basketid is passed as a parameter from a vue js component
     data: function data() {
         return {
             basketId: this.basketid, // Put a property here. This is needed in order to send all variables in this.$data to the BasketUpdate.php controller
@@ -52281,9 +52281,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
 
-        assetDelete: function assetDelete(param) {
+        assetDelete: function assetDelete(assetId) {
             //alert(param[1]);
-            axios.get('/assetdelete/' + param[0] + '/' + param[1]).then(function (response) {
+            axios.get('/assetdelete/' + basketId + '/' + assetId) // axios.get('/assetdelete/' + param[0] + '/' + param[1])
+            .then(function (response) {
                 console.log(response.data);
             }).catch(function (error) {
                 console.log(error.response);
@@ -52410,11 +52411,11 @@ var render = function() {
           "tbody",
           _vm._l(_vm.basketAssets, function(asset) {
             return _c("tr", [
-              _c("td", [_vm._v(_vm._s(asset.asset_symbol))]),
+              _c("td", [_vm._v(_vm._s(asset.symbol))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(asset.asset_exchange))]),
+              _c("td", [_vm._v(_vm._s(asset.exchange))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(asset.asset_currency))]),
+              _c("td", [_vm._v(_vm._s(asset.currency))]),
               _vm._v(" "),
               _c("td", [
                 _c("input", {
@@ -52422,13 +52423,13 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: asset.asset_allocated_percent,
-                      expression: "asset.asset_allocated_percent"
+                      value: asset.allocated_percent,
+                      expression: "asset.allocated_percent"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text", size: "1" },
-                  domProps: { value: asset.asset_allocated_percent },
+                  domProps: { value: asset.allocated_percent },
                   on: {
                     input: [
                       function($event) {
@@ -52437,7 +52438,7 @@ var render = function() {
                         }
                         _vm.$set(
                           asset,
-                          "asset_allocated_percent",
+                          "allocated_percent",
                           $event.target.value
                         )
                       },
@@ -52455,7 +52456,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         $event.preventDefault()
-                        _vm.assetDelete([asset.basket_id, asset.asset_id])
+                        _vm.assetDelete(asset.id)
                       }
                     }
                   },

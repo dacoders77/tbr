@@ -12,10 +12,10 @@ class AssetCreate extends Controller
         // Add asset to DB
         DB::table('assets')->insert(array(
             'basket_id' => $basketId,
-            'asset_symbol' => $assetSymbol,
-            'asset_exchange' => $assetExchange,
-            'asset_currency' => $assetCurrency,
-            'asset_allocated_percent' => $assetAllocatedPercent
+            'symbol' => $assetSymbol,
+            'exchange' => $assetExchange,
+            'currency' => $assetCurrency,
+            'allocated_percent' => $assetAllocatedPercent
 
         ));
 

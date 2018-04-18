@@ -15,12 +15,12 @@ class Assets extends Migration
     {
 
         Schema::create('assets', function (Blueprint $table) {
-            $table->increments('asset_id');
+            $table->increments('id');
             $table->integer('basket_id');
-            $table->string('asset_symbol')->nullable();
-            $table->string('asset_exchange')->nullable();
-            $table->string('asset_currency')->nullable();
-            $table->string('asset_allocated_percent')->nullable();
+            $table->string('symbol')->nullable();
+            $table->string('exchange')->nullable();
+            $table->string('currency')->nullable();
+            $table->string('allocated_percent')->nullable();
         });
     }
 

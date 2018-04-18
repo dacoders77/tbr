@@ -12,7 +12,7 @@ class AssetDelete extends Controller
 
         // Delet record
         DB::table('assets')
-            ->where('asset_id', $assetId)
+            ->where('id', $assetId)
             ->where('basket_id', $basketId)
             ->delete();
 

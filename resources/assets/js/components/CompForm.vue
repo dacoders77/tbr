@@ -27,11 +27,11 @@
             <tbody>
 
                 <tr v-for="asset in basketAssets">
-                    <td>{{ asset.asset_symbol }}</td>
-                    <td>{{ asset.asset_exchange }}</td>
-                    <td>{{ asset.asset_currency }}</td>
-                    <td><input type="text" class="form-control" v-model="asset.asset_allocated_percent" size="1" @input="onControlValueChanged"></td>
-                    <td><a href="" v-on:click.prevent="assetDelete([asset.basket_id, asset.asset_id])"><i class="fas fa-trash-alt" style="color: tomato"></i></a></td>
+                    <td>{{ asset.symbol }}</td>
+                    <td>{{ asset.exchange }}</td>
+                    <td>{{ asset.currency }}</td>
+                    <td><input type="text" class="form-control" v-model="asset.allocated_percent" size="1" @input="onControlValueChanged"></td>
+                    <td><a href="" v-on:click.prevent="assetDelete(asset.id)"><i class="fas fa-trash-alt" style="color: tomato"></i></a></td>
                 </tr>
 
             </tbody>
@@ -52,7 +52,7 @@
 <script>
 export default {
 
-    props: ['basketid'],
+    props: ['basketid'], // basketid is passed as a parameter from a vue js component
     data() {
        return {
            basketId: this.basketid, // Put a property here. This is needed in order to send all variables in this.$data to the BasketUpdate.php controller
@@ -67,9 +67,9 @@ export default {
                 .then(response => {console.log(response.data);})
                 .catch(error => {console.log(error.response);})
         },
-        assetDelete: function(param) {
+        assetDelete: function(assetId) {
             //alert(param[1]);
-            axios.get('/assetdelete/' + param[0] + '/' + param[1])
+            axios.get('/assetdelete/' + basketId + '/' + assetId) // axios.get('/assetdelete/' + param[0] + '/' + param[1])
                 .then(response => {console.log(response.data);})
                 .catch(error => {console.log(error.response);})
         },

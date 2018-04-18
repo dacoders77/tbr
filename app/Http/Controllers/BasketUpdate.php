@@ -28,9 +28,9 @@ class BasketUpdate extends Controller
 
             DB::table('assets')
                 ->where('basket_id', $asset['basket_id'])
-                ->where('asset_id', $asset['asset_id'])
+                ->where('id', $asset['id'])
                 ->update([
-                    'asset_allocated_percent' => $asset['allocated_percent'],
+                    'allocated_percent' => $asset['allocated_percent'],
                 ]);
         }
 
