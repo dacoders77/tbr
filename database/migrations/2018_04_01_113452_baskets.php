@@ -16,11 +16,11 @@ class Baskets extends Migration
 
         Schema::create('baskets', function (Blueprint $table) {
             $table->increments('basket_id');
-            $table->dateTime('basket_execution_time')->nullable();
-            $table->string('basket_name')->nullable();
-            $table->integer('basket_allocated_funds')->nullable();
-            $table->string('basket_status')->nullable();
-            $table->boolean('basket_is_deleted'); // Is message new flag
+            $table->dateTime('execution_time')->nullable();
+            $table->string('name')->nullable();
+            $table->integer('allocated_funds')->nullable();
+            $table->string('status')->nullable();
+            $table->boolean('is_deleted'); // Is message new flag
 
         });
     }

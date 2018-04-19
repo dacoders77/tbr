@@ -11,13 +11,13 @@
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
     //return view('admin');
     return view('home');
-});
+})->middleware('auth');
 
-
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -29,11 +29,9 @@ Route::get('/search', function () {
 });
 
 // basket.blade.php
-Route::get('/basket/{z}', function ($basketId)
-{
+Route::get('/basket/{z}', function ($basketId) {
     return View::make('basket')->with('basket_id', $basketId);
 });
-
 
 Route::get('/settings', function () {
     return view('settings');
@@ -63,7 +61,6 @@ Route::get('/basketdelete/{param}', 'BasketDelete@index'); // Controller is call
 // Basket update
 Route::post('/basketupdate', 'BasketUpdate@index')->name('basketupdate.post');
 
-
 // Delete asset from the basket
 Route::get('/assetdelete/{z}/{x}', 'AssetDelete@index')->name('assetdelete');
 
@@ -71,4 +68,4 @@ Route::get('/assetdelete/{z}/{x}', 'AssetDelete@index')->name('assetdelete');
 Route::get('/assetcreate/{basketId}/{assetSymbol}/{assetExchange}/{assetCurrency}/{assetAllocatedPercent}', 'AssetCreate@index')->name('assetcreate');
 
 // Get basket name. Axios request controller
-Route::post('/getbasketname', 'AxiosGetBasketName@index');
+Route::post('/basketgetdetails', 'BasketGetDetails@index');

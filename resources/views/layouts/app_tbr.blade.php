@@ -19,16 +19,14 @@
 </head>
 
 <!-- Ekko menu is used to generate dynamic urls. https://packagist.org/packages/laravelista/ekko -->
-
-<p>{{ isActiveURL('/') }}</p>
+<!-- <p>{{ isActiveURL('/') }}</p> -->
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel" >
-
             <div class="col-md-12 text-center" style="border-style: solid; border-width: thin; border-color: transparent;">
             <ul class="nav nav-pills center-pills nav-justified">
                 <li style="width: 33%; border-style: solid; border-width: thin; border-color: transparent;">
-                    <a class="nav-link {{ isActiveURL('/home') }}" href="{{ route('home') }}"><i class="fas fa-home"></i>&nbspHome</a>
+                    <a class="nav-link {{ isActiveURL('/home') || isActiveURL('/') }}" href="{{ route('home') }}"><i class="fas fa-home"></i>&nbspHome</a>
                 </li>
                 <li style="width: 33%;">
                     <a class="nav-link {{ isActiveURL('/search') }}" href="{{ url('/search/')}}"><i class="fas fa-search"></i>&nbspSearch</a>
@@ -38,10 +36,7 @@
                 </li>
             </ul>
             </div>
-
-
         </nav>
-
         <main class="py-4">
             @yield('content')
         </main>
@@ -51,7 +46,6 @@
     <script>window.siteUrl = "{{ url('/') }}"</script>
     <script src="{{ asset('js/app.js') }}"></script>
 
-
 </body>
 </html>
 
@@ -60,7 +54,6 @@
         display: flex;
         justify-content: center;
     }
-
 </style>
 
 

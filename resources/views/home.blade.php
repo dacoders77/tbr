@@ -92,17 +92,17 @@
 
                             foreach ($allDbRows as $dbRecord){
 
-                                if(($dbRecord->basket_is_deleted == 0)){
-                                    $shortDate = date("m-d G:i", strtotime($dbRecord->basket_execution_time));
-                                    if ($dbRecord->basket_status == "filled") $status = "badge badge-success";
-                                    if ($dbRecord->basket_status == "new") $status = "badge badge-warning";
-                                    if ($dbRecord->basket_status == "error") $status = "badge badge-danger";
+                                if(($dbRecord->is_deleted == 0)){
+                                    $shortDate = date("m-d G:i", strtotime($dbRecord->execution_time));
+                                    if ($dbRecord->status == "filled") $status = "badge badge-success";
+                                    if ($dbRecord->status == "new") $status = "badge badge-warning";
+                                    if ($dbRecord->status == "error") $status = "badge badge-danger";
 
                                     echo "<tr>";
                                     echo "<td><a href=\"basket/$dbRecord->basket_id\">$shortDate</a></td>";
-                                    echo "<td>$dbRecord->basket_name</td>";
-                                    echo "<td>$dbRecord->basket_allocated_funds</td>";
-                                    echo "<td class=\"text-danger mx-auto\"><span class=\"$status\">$dbRecord->basket_status</span></td>";
+                                    echo "<td>$dbRecord->name</td>";
+                                    echo "<td>$dbRecord->allocated_funds</td>";
+                                    echo "<td class=\"text-danger mx-auto\"><span class=\"$status\">$dbRecord->status</span></td>";
                                     echo "<td class=\"text-danger mx-auto\"><a href=\"basketdelete/$dbRecord->basket_id\"><i class=\"fas fa-trash-alt\" style=\"color: tomato\"></a></i></td>";
                                     echo "</tr>";
                                 }

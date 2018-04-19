@@ -87,7 +87,7 @@ export default {
         //console.log(this.title);
         //console.log(this.$props);
 
-        axios.post('/getbasketname', this.$data)
+        axios.post('/basketgetdetails', this.$data)
             .then(response => {
 
                 this.basketName = response.data['basketName'];
@@ -102,7 +102,7 @@ export default {
 
             }) // Output returned data by controller
             .catch(error => {
-                console.log('axios getbasketname error: ' + error.response);
+                console.log('getbasketname error: ' + error.response);
             })
     },
     created() {

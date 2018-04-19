@@ -52307,7 +52307,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //console.log(this.title);
         //console.log(this.$props);
 
-        axios.post('/getbasketname', this.$data).then(function (response) {
+        axios.post('/basketgetdetails', this.$data).then(function (response) {
 
             _this.basketName = response.data['basketName'];
             _this.basketExecTime = response.data['basketExecTime'];
@@ -52319,7 +52319,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //console.log(jsonParsedResponse);
         }) // Output returned data by controller
         .catch(function (error) {
-            console.log('axios getbasketname error: ' + error.response);
+            console.log('getbasketname error: ' + error.response);
         });
     },
     created: function created() {

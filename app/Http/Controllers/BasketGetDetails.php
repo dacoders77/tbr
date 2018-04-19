@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class AxiosGetBasketName extends Controller
+class BasketGetDetails extends Controller
 {
     public function index(Request $request){ //
 
@@ -15,12 +15,12 @@ class AxiosGetBasketName extends Controller
         $basketName =
             DB::table('baskets')
                 ->where('basket_id', $request->get('basketId'))
-                ->value('basket_name');
+                ->value('name');
 
         $basketExecTime =
             DB::table('baskets')
                 ->where('basket_id', $request->get('basketId'))
-                ->value('basket_execution_time');
+                ->value('execution_time');
 
         $basketContentobject =
             DB::table('assets')

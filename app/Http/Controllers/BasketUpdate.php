@@ -14,8 +14,8 @@ class BasketUpdate extends Controller
         DB::table('baskets')
             ->where('basket_id', $request->get('basketId'))
             ->update([
-                'basket_name' => $request->get('basketName'),
-                'basket_execution_time' => date("Y-m-d G:i:s", strtotime($request->get('basketExecTime')))
+                'name' => $request->get('basketName'),
+                'execution_time' => date("Y-m-d G:i:s", strtotime($request->get('basketExecTime')))
             ]);
 
         // Loop through all json records
