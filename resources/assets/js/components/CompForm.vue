@@ -69,7 +69,7 @@ export default {
         },
         assetDelete: function(assetId) {
             //alert(param[1]);
-            axios.get('/assetdelete/' + basketId + '/' + assetId) // axios.get('/assetdelete/' + param[0] + '/' + param[1])
+            axios.get('/assetdelete/' + this.basketId + '/' + assetId) // axios.get('/assetdelete/' + param[0] + '/' + param[1])
                 .then(response => {console.log(response.data);})
                 .catch(error => {console.log(error.response);})
         },

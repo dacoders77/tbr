@@ -52283,7 +52283,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         assetDelete: function assetDelete(assetId) {
             //alert(param[1]);
-            axios.get('/assetdelete/' + basketId + '/' + assetId) // axios.get('/assetdelete/' + param[0] + '/' + param[1])
+            axios.get('/assetdelete/' + this.basketId + '/' + assetId) // axios.get('/assetdelete/' + param[0] + '/' + param[1])
             .then(function (response) {
                 console.log(response.data);
             }).catch(function (error) {
