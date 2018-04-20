@@ -93,7 +93,6 @@ export default {
                 this.basketName = response.data['basketName'];
                 this.basketExecTime = response.data['basketExecTime'];
 
-
                 var jsonParsedResponse = JSON.parse(response.data['basketAssets']);
                 this.basketAssets = jsonParsedResponse;
 

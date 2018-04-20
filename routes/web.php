@@ -68,3 +68,6 @@ Route::get('/assetcreate/{basketId}/{assetSymbol}/{assetExchange}/{assetCurrency
 
 // Get basket name. Axios request controller
 Route::post('/basketgetdetails', 'BasketGetDetails@index');
+
+// Get the list of baskets for the home page
+Route::get('homegetbasketslist', 'HomeGetBasketsList@index'); // Single action controller

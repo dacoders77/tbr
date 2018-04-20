@@ -35,7 +35,7 @@
 
                     <!-- Vue container. Must be wrapped in a parent vue div -->
                     <div id="vueJsForm">
-                        <!-- Vue test component -->
+                        <!-- Vue component -->
                         <search-block basketid="{{ $basket_id }}"></search-block>
                     </div>
 

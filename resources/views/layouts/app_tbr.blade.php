@@ -12,6 +12,7 @@
     <!-- External links -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -32,7 +33,7 @@
                     <a class="nav-link {{ isActiveURL('/search') }}" href="{{ url('/search')}}"><i class="fas fa-search"></i>&nbspSearch</a>
                 </li>
                 <li style="width: 33%;">
-                    <a class="nav-link {{ isActiveURL('/settings') }}" href="{{ url('/settings')}}"><i class="fas fa-sliders-h"></i>&nbspSettings</a>
+                    <a class="nav-link {{ isActiveURL('/settings') }}" href="{{ url('/settings')}}"><i class="fas fa-sliders-h"></i>&nbspSystem</a>
                 </li>
             </ul>
             </div>

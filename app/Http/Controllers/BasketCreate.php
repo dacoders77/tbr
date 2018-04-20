@@ -8,8 +8,11 @@ use Illuminate\Support\Facades\DB;
 class basketCreate extends Controller
 {
 
-    public function index(Request $formRequest){
-
+    /**
+     * @param Request $formRequest
+     */
+    public function index(Request $formRequest)
+    {
         DB::table('baskets')->insert(array(
             'execution_time' => date("Y-m-d G:i:s"),
             'name' => "New",
@@ -18,10 +21,8 @@ class basketCreate extends Controller
             'is_deleted' => 0
         ));
 
-        session()->flash('basket_created', 'New basket created!');
+        app('App\Http\Controllers\HomeGetBasketsList')->index();
 
-        return redirect('home'); // Go to url
+    }
 
-    } // public function
-
-} // Class
+}

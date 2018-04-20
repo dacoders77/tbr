@@ -6,8 +6,8 @@
  */
 
 require('./bootstrap');
-
 window.Vue = require('vue');
+Vue.use(require('vue-moment')); // https://github.com/brockpetrie/vue-moment
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -84,21 +84,16 @@ const app = new Vue({
 }); // new Vue
 
 
-
-
-
-
-
-
-
-
-Vue.component('search-block', require('./components/CompForm.vue')); // Vue component
-
+// Vue basket component
+Vue.component('search-block', require('./components/CompForm.vue'));
 const app2 = new Vue({
-
     el: '#vueJsForm',
+});
 
-}); // Vue
-
+// Vue home page component
+Vue.component('home-block', require('./components/HomeForm.vue'));
+const app3 = new Vue({
+    el: '#vueHomeForm',
+});
 
 
