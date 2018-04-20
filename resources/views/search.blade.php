@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8" id="vueJsContainer" style="border: 1px dashed black">
+            <div class="col-md-8" id="vueJsContainer">
 
                 <div class="form-inline" style="border-style: solid; border-width: thin; border-color: transparent;">
                     <div class="form-group mx-auto mb-2" style="width:60%; border-style: solid; border-width: thin; border-color: transparent;">

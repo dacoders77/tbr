@@ -14,12 +14,12 @@ class BasketGetDetails extends Controller
 
         $basketName =
             DB::table('baskets')
-                ->where('basket_id', $request->get('basketId'))
+                ->where('id', $request->get('basketId'))
                 ->value('name');
 
         $basketExecTime =
             DB::table('baskets')
-                ->where('basket_id', $request->get('basketId'))
+                ->where('id', $request->get('basketId'))
                 ->value('execution_time');
 
         $basketContentobject =

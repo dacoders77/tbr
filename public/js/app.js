@@ -52319,7 +52319,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //console.log(jsonParsedResponse);
         }) // Output returned data by controller
         .catch(function (error) {
-            console.log('getbasketname error: ' + error.response);
+            console.log('getbasketname error: ');
+            console.log(error.response);
         });
     },
     created: function created() {

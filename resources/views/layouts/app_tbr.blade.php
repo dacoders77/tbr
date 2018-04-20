@@ -26,13 +26,13 @@
             <div class="col-md-12 text-center" style="border-style: solid; border-width: thin; border-color: transparent;">
             <ul class="nav nav-pills center-pills nav-justified">
                 <li style="width: 33%; border-style: solid; border-width: thin; border-color: transparent;">
-                    <a class="nav-link {{ isActiveURL('/home') || isActiveURL('/') }}" href="{{ route('home') }}"><i class="fas fa-home"></i>&nbspHome</a>
+                    <a class="nav-link {{ isActiveURL('/home') }}" href="{{ route('home') }}"><i class="fas fa-home"></i>&nbspHome</a>
                 </li>
                 <li style="width: 33%;">
-                    <a class="nav-link {{ isActiveURL('/search') }}" href="{{ url('/search/')}}"><i class="fas fa-search"></i>&nbspSearch</a>
+                    <a class="nav-link {{ isActiveURL('/search') }}" href="{{ url('/search')}}"><i class="fas fa-search"></i>&nbspSearch</a>
                 </li>
                 <li style="width: 33%;">
-                    <a class="nav-link {{ isActiveURL('/basket') }}" href="{{ url('/home/')}}"><i class="fas fa-shopping-basket"></i>&nbspBasket</a>
+                    <a class="nav-link {{ isActiveURL('/settings') }}" href="{{ url('/settings')}}"><i class="fas fa-sliders-h"></i>&nbspSettings</a>
                 </li>
             </ul>
             </div>

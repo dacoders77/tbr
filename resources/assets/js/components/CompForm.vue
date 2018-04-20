@@ -102,7 +102,8 @@ export default {
 
             }) // Output returned data by controller
             .catch(error => {
-                console.log('getbasketname error: ' + error.response);
+                console.log('getbasketname error: ');
+                console.log(error.response);
             })
     },
     created() {

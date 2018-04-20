@@ -11,41 +11,7 @@
 
                 <div id="vueJsContainer></div>
 
-                <div class="container text-center" style="border-style: solid; border-width: thin; border-color: transparent;">
-                    <div class="row align-items-center">
-                        <div  style="display: inline-block; width: 20%; border-style: solid; border-width: thin; border-color: transparent; font-size:2em;">
-                            <a style="color:Tomato" href="{{ url('/settings')}}">
-                            <i class="fas fa-sliders-h"></i>
-                            </a>
-                        </div>
-                        <div class="container col" style="border-style: solid; border-width: thin; border-color: transparent">
-                            <form>
-                                <div >
-                                    <button style="width: 100%" type="submit" class="btn btn-success"><i class="fas fa-play"></i>&nbsp;Start Bot</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div style="display: inline-block; width: 20%; font-size:35px; color:Tomato">
 
-                            <!--
-                            <a style="color:Tomato" href="{{ route('logout') }}">
-                            <i class="fas fa-sign-out-alt"></i>
-                            </a>
-                            -->
-
-                            <a style="color:Tomato" class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                <i class="fas fa-sign-out-alt"></i>
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Display flash message -->
 
@@ -88,7 +54,7 @@
 
 
                         @php
-                            $allDbRows = DB::table('baskets')->orderBy('basket_id', 'desc')->get();
+                            $allDbRows = DB::table('baskets')->orderBy('id', 'desc')->get();
 
                             foreach ($allDbRows as $dbRecord){
 
@@ -99,11 +65,11 @@
                                     if ($dbRecord->status == "error") $status = "badge badge-danger";
 
                                     echo "<tr>";
-                                    echo "<td><a href=\"basket/$dbRecord->basket_id\">$shortDate</a></td>";
+                                    echo "<td><a href=\"basket/$dbRecord->id\">$shortDate</a></td>";
                                     echo "<td>$dbRecord->name</td>";
                                     echo "<td>$dbRecord->allocated_funds</td>";
                                     echo "<td class=\"text-danger mx-auto\"><span class=\"$status\">$dbRecord->status</span></td>";
-                                    echo "<td class=\"text-danger mx-auto\"><a href=\"basketdelete/$dbRecord->basket_id\"><i class=\"fas fa-trash-alt\" style=\"color: tomato\"></a></i></td>";
+                                    echo "<td class=\"text-danger mx-auto\"><a href=\"basketdelete/$dbRecord->id\"><i class=\"fas fa-trash-alt\" style=\"color: tomato\"></a></i></td>";
                                     echo "</tr>";
                                 }
                             }

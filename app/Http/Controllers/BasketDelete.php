@@ -12,7 +12,7 @@ class BasketDelete extends Controller
         //echo "Basket id:" . $param . " is being deleted";
 
         DB::table('baskets')
-            ->where('basket_id', $param) //
+            ->where('id', $param) //
             ->update([
                 'is_deleted' => 1
             ]);
