@@ -27,7 +27,7 @@
                                 <p style="font-size: 1.5em;">USD: <span class="badge badge-warning">10.000</span></p>
                             </div>
                             <div class="container col">
-                                <p style="font-size: 1.5em;">Availible: <span class="badge badge-success">52.856</span></p>
+                                <p style="font-size: 1.5em;">Avail: <span class="badge badge-success">52.856</span></p>
                             </div>
                         </div>
                     </div>

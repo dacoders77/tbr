@@ -22,30 +22,30 @@
 <!-- Ekko menu is used to generate dynamic urls. https://packagist.org/packages/laravelista/ekko -->
 <!-- <p>{{ isActiveURL('/') }}</p> -->
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel" >
-            <div class="col-md-12 text-center" style="border-style: solid; border-width: thin; border-color: transparent;">
-            <ul class="nav nav-pills center-pills nav-justified">
+<div id="app">
+    <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <div class="col-md-12 text-center" style="border-style: solid; border-width: thin; border-color: transparent;">
+            <ul class="nav nav-pills center-pills nav-justified"">
                 <li style="width: 33%; border-style: solid; border-width: thin; border-color: transparent;">
-                    <a class="nav-link {{ isActiveURL('/home') }}" href="{{ route('home') }}"><i class="fas fa-home"></i>&nbspHome</a>
+                    <a class="nav-link {{ isActiveURL('/home') }}" style="padding: 10px 0px;" href="{{ route('home') }}"><i class="fas fa-home"></i>&nbspHome</a>
                 </li>
                 <li style="width: 33%;">
-                    <a class="nav-link {{ isActiveURL('/search') }}" href="{{ url('/search')}}"><i class="fas fa-search"></i>&nbspSearch</a>
+                    <a class="nav-link {{ isActiveURL('/search') }}" style="padding: 10px 0px;" href="{{ url('/search')}}"><i class="fas fa-search"></i>&nbspSearch</a>
                 </li>
                 <li style="width: 33%;">
-                    <a class="nav-link {{ isActiveURL('/settings') }}" href="{{ url('/settings')}}"><i class="fas fa-sliders-h"></i>&nbspSystem</a>
+                    <a class="nav-link {{ isActiveURL('/settings') }}" style="padding: 10px 0px;" href="{{ url('/settings')}}"><i class="fas fa-cog"></i>&nbspSystem</a>
                 </li>
             </ul>
-            </div>
-        </nav>
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+        </div>
+    </nav>
+    <main class="py-4">
+        @yield('content')
+    </main>
+</div>
 
-    <!-- Scripts -->
-    <script>window.siteUrl = "{{ url('/') }}"</script>
-    <script src="{{ asset('js/app.js') }}"></script>
+<!-- Scripts -->
+<script>window.siteUrl = "{{ url('/') }}"</script>
+<script src="{{ asset('js/app.js') }}"></script>
 
 </body>
 </html>
