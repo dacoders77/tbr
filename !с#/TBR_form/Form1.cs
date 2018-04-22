@@ -890,7 +890,7 @@ namespace TBR_form
 			Contract contract = new Contract();
 			contract.Symbol = this.conDetSymbol.Text;
 			contract.SecType = this.conDetSecType.Text;
-			//contract.Exchange = this.conDetExchange.Text;
+			contract.Exchange = this.conDetExchange.Text;
 			contract.Currency = this.conDetCurrency.Text;
 			contract.LastTradeDateOrContractMonth = this.conDetLastTradeDateOrContractMonth.Text;
 			contract.Strike = stringToDouble(this.conDetStrike.Text);
