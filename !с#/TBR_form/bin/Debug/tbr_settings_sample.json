@@ -1,0 +1,1 @@
+{"ibGateWayPort" : 4002, "dbHost" : "127.0.0.1", "smtpLogin" : "nextbb", "smtpPassword" : "PASSWORD", "emailFromName" : "Boris B.", "emailFromEmail" : "nextbb@yandex.ru", "emailTo" : "nextbb@yandex.ru", "emailToName" : "Boris", "emailCopy" : "", "emailCopyName" : ""}

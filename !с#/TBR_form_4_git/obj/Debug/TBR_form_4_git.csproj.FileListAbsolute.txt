@@ -1,0 +1,12 @@
+W:\domains\tbr.kk\!с#\TBR_form_4_git\bin\Debug\TBR_form.exe.config
+W:\domains\tbr.kk\!с#\TBR_form_4_git\bin\Debug\TBR_form.exe
+W:\domains\tbr.kk\!с#\TBR_form_4_git\bin\Debug\TBR_form.pdb
+W:\domains\tbr.kk\!с#\TBR_form_4_git\bin\Debug\MySql.Data.dll
+W:\domains\tbr.kk\!с#\TBR_form_4_git\bin\Debug\MySql.Data.xml
+W:\domains\tbr.kk\!с#\TBR_form_4_git\obj\Debug\TBR_form_4_git.csprojResolveAssemblyReference.cache
+W:\domains\tbr.kk\!с#\TBR_form_4_git\obj\Debug\TBR_form.Form1.resources
+W:\domains\tbr.kk\!с#\TBR_form_4_git\obj\Debug\TBR_form.Properties.Resources.resources
+W:\domains\tbr.kk\!с#\TBR_form_4_git\obj\Debug\TBR_form_4_git.csproj.GenerateResource.Cache
+W:\domains\tbr.kk\!с#\TBR_form_4_git\obj\Debug\TBR_form_4_git.csproj.CoreCompileInputs.cache
+W:\domains\tbr.kk\!с#\TBR_form_4_git\obj\Debug\TBR_form.exe
+W:\domains\tbr.kk\!с#\TBR_form_4_git\obj\Debug\TBR_form.pdb
