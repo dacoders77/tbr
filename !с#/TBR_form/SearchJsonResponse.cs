@@ -42,7 +42,7 @@ namespace TBR_form
 			conId = conI;
 		}
 
-		// 2nd Class constructor. Used for creating the SearchJsonResponse object with no records in the List
+		// Second class constructor. Used for creating the SearchJsonResponse object with no records in the List
 		public SearchJsonResponse()
 		{
 		}

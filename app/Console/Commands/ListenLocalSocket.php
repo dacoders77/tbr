@@ -60,10 +60,16 @@ class ListenLocalSocket extends Command
                 if($this->connection) {
                     //$this->connection->send(json_encode(['a' => 1])); // works good
                     //$this->connection->send($record->json_message); // works good
-                    $this->connection->send($record->text_message); // Send data to web socket channel
+
+                    $request = array("requestType" => $record->message_type, "body" => $record->text_message);
+                    $this->connection->send(json_encode($request));
+                    //$this->connection->send($record->text_message); // Send data to web socket channel
+
+                    echo json_encode($request);
                 }
 
-                echo $record->text_message . "\n";
+                //echo $record->text_message . "\n";
+
 
                 // Mark them as old. In the next iteration they wont be outputted
                 DB::table('socket_que')
@@ -72,7 +78,7 @@ class ListenLocalSocket extends Command
                         'is_new' => 0,
                     ]);
             }
-        }); // Pereodic timer loop. Reads whole DB and determines new messages
+        }); // Pereodic timer loop. Reads the whole DB and determines new messages
 
 
 
@@ -81,15 +87,19 @@ class ListenLocalSocket extends Command
         $connector('ws://localhost:8181', [], ['Origin' => '127.0.0.1:7451'])
             ->then( function(\Ratchet\Client\WebSocket $conn) {
                 $this->connection = $conn;
-
+                // When a message in received in websocket channel
                 $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
                     //RatchetWebSocket::out($msg); // Call the function when the event is received
-                    echo $msg . "\n";
+                    echo "Message from C# client: " . $msg . "\n";
                     // Create new event
-                    //event(new \App\Events\TbrAppSearchResponse(json_encode(['eventType' => 'showBasketContent', $basketContentObject])));
-                    // (string)$msg
-                    $msgType = json_encode(['eventType' => 'searchJsonResponse']);
-                    event(new \App\Events\TbrAppSearchResponse(['eventType' => 'searchJsonResponse',(string)$msg])); // Fire new event. Events are located in app/Events
+                    //event(new \App\Events\TbrAppSearchResponse(['eventType' => 'searchJsonResponse',(string)$msg])); // Fire new event. Events are located in app/Events
+
+                    // DIFFERENT TYPES OF MESSAGES GO HERE
+                    // MESSAGE TYPE CHECK: SEARCH, GET QUTE
+                    // SEARCH - AS IS NOW
+                    // GET QUOTE - ADD NEW METHOD WHICH WILL UPDATE THE PRICE IN ASSETS TABLE (SYMBOL + BASKET NUMBER)
+
+                    event(new \App\Events\TbrAppSearchResponse((string)$msg)); // Fire new event. Events are located in app/Events
                 });
                 $conn->on('close', function($code = null, $reason = null) {
                     echo "Connection closed ({$code} - {$reason})\n";

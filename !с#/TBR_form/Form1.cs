@@ -26,7 +26,7 @@ namespace TBR_form
 	{
 		bool conntectButtonFlag = true; // Turns to false when connect button is clicked
 		private Thread logThread; // Thread variable. Logging class. From this thread DB is searched for new messages
-		private List<IWebSocketConnection> allSockets; // The list all connected to the socket server clients
+		private List<IWebSocketConnection> allSockets; // The list of all connected clients to the websocket server
 		private string messageFromBrowser; // Received 
 
 		// IB API
@@ -62,15 +62,14 @@ namespace TBR_form
 			InitializeComponent();
 			
 			Log.InitializeDB();
-			logThread = new Thread(new ThreadStart(LogThread)); // Make instance of the thread and assign method name which will be executed in the thread
+			logThread = new Thread(new ThreadStart(LogThread)); // Make an instance of the thread and assign method name which will be executed in the thread
 			
 			
-
 			// listView1 setup
 			listView1.View = View.Details; // Shows the header
 			listView1.FullRowSelect = true; // !!!Lets to select the whole row in the table!!!
 
-			// Create fleck socket server 
+			// Fleck socket server 
 			FleckLog.Level = LogLevel.Debug;
 
 			// Json search object class instance
@@ -94,7 +93,7 @@ namespace TBR_form
 				socket.OnMessage = message =>
 				{
 					// Send message back to websocket 
-					Log.Insert(DateTime.Now, "Form1.cs", string.Format("socket.OnMessage. A message received from client: {0}", message), "white");
+					Log.Insert(DateTime.Now, "Form1.cs", string.Format("socket.OnMessage. A message received from a client: {0}", message), "white");
 					//allSockets.ToList().ForEach(s => s.Send("Hello from websocket!"));
 
 					// Contract search. The same code as in searchContractDetails_Click button handler
@@ -102,9 +101,6 @@ namespace TBR_form
 					Contract contract = GetConDetContract(); // Read form fields
 					contract.Symbol = message;
 					contractManager.RequestContractDetails(contract);
-
-					
-
 				};
 			});
 
@@ -228,15 +224,13 @@ namespace TBR_form
 			logThread.Start(); // Reading log records from DB
 		}
 
-		public void LogThread() // ANother method is called because a parameter can not be passed while invoking
+		public void LogThread() // This method is called because a parameter can not be passed while invoking
 		{ 
-			
 			while (true)
 			{
 				AddItemFromThread(this);
 				Thread.Sleep(2000);
 			} 
-			
 		}
 
 		private static void AddItemFromThread(Form1 form)
@@ -246,24 +240,18 @@ namespace TBR_form
 			form.BeginInvoke(new Action(delegate ()
 			{
 				// DB watch. Get new records
-				
-
 				foreach (Log u in logs)
 				{
-
 					ListViewItem item = new ListViewItem(new string[] {u.Id.ToString(), u.Date.ToString(), u.Source, u.Message });
 					item.Tag = u;
 					form.listView1.Items.Add(item);
 					form.listView1.Columns[2].Width = -1;
 					form.listView1.Columns[3].Width = -1;
 					form.listView1.Items[form.listView1.Items.Count - 1].EnsureVisible();
-
 				}
 
-				//Console.WriteLine("------------------------------DB watch in progress! " + DateTime.Now);
-
+				Console.WriteLine("------------------------------DB watch in progress! " + DateTime.Now);
 			}));
-
 		}
 
 		private void Form1_FormClosed(object sender, FormClosedEventArgs e) // Form close
@@ -1080,6 +1068,7 @@ namespace TBR_form
 
 			optionsManager.SecurityDefinitionOptionParametersRequest(symbol, exchange, secType, conId);
 			ShowTab(contractInfoTab, optionParametersPage);
+			
 		}
 
 		private void messageBoxClear_link_LinkClicked(object sender, EventArgs e)

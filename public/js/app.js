@@ -30300,7 +30300,7 @@ Vue.use(__webpack_require__(166)); // https://github.com/brockpetrie/vue-moment
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
+ * or customize the JavaScript scaffolding to fit your unique needs. ok.
  */
 
 Vue.component('example-component', __webpack_require__(168)); // Example component
@@ -30316,7 +30316,6 @@ var app = new Vue({
         quantityOfRecords: null, // quantity of records
         name: '',
         errors: ''
-
     },
 
     methods: {
@@ -30326,20 +30325,28 @@ var app = new Vue({
             //console.log("Search button clicked. Vue even handler2");
 
             // Ajax request. Axios
-            axios.get('/addmsgws/' + document.getElementById("searchInputTextField").value).then(function (response) {
+            axios.get('/addmsgws/symbolSearch/' + document.getElementById("searchInputTextField").value).then(function (response) {
                 //console.log(response);
             }).catch(function (error) {
                 console.log('axios addmsgws error: ' + error);
+                concole.log('');
             });
         },
 
         message: function message(_message) {
 
             // Ajax request. Axios
-            axios.get('/assetcreate/' + _message[0] + '/' + _message[1] + '/' + _message[2] + '/' + _message[3] + '/' + _message[4]).then(function (response) {
+            // /assetcreate/{basketId}/{assetSymbol}/{assetExchange}/{assetCurrency}/{assetAllocatedPercent}
+            axios.get('/assetcreate/' + _message[0] + '/' + _message[1] + '/' + _message[2] + '/' + _message[3] + '/' + _message[4]).then(function (response) {}).catch(function (error) {
+                console.log('axios asset create error: ' + error);
+            });
+
+            // MAKE C# QUOTE REQUEST GOES FROM HERE
+
+            axios.get('/addmsgws/getQuote/0').then(function (response) {
                 //console.log(response);
             }).catch(function (error) {
-                console.log('axios assetcreate error: ' + error);
+                console.log('axios get quote error: ' + error);
             });
         }
 
@@ -30350,12 +30357,9 @@ var app = new Vue({
 
         Echo.channel('tbrChannel').listen('TbrAppSearchResponse', function (e) {
 
-            //console.log(e.update);
-            var jsonParsedResponse = JSON.parse(e.update[0]);
-
-            if (e.update['eventType'] == 'searchJsonResponse') {
-                var jsonParsedResponse = jsonParsedResponse;
-                _this.quantityOfRecords = jsonParsedResponse;
+            var jsonParsedResponse = JSON.parse(e.update);
+            if (jsonParsedResponse.messageType == 'SearchResponse') {
+                _this.quantityOfRecords = jsonParsedResponse.searchList;
             }
         });
     }
@@ -30434,8 +30438,8 @@ window.Pusher = __webpack_require__(162);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'pusher',
-  key: "35c7e5ef408c9a8caa82", // process.env.MIX_PUSHER_APP_KEY
-  cluster: "eu", // process.env.MIX_PUSHER_APP_CLUSTER
+  key: "fc9d4f34484d19968f88", // process.env.MIX_PUSHER_APP_KEY
+  cluster: "ap1", // process.env.MIX_PUSHER_APP_CLUSTER
   encrypted: true
 });
 
@@ -69132,14 +69136,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         Echo.channel('tbrChannel').listen('TbrAppSearchResponse', function (e) {
 
-            var jsonParsedResponse = JSON.parse(e.update[0]);
+            // SHOW BASKET CONTENT
+            var jsonParsedResponse = JSON.parse(e.update);
 
-            if (e.update['eventType'] == 'showBasketContent') // First element is key => value, second is a json object
-                {
-                    //console.log('show basket content: ');
-                    //console.log(jsonParsedResponse);
-                    _this2.basketAssets = jsonParsedResponse;
-                }
+            if (jsonParsedResponse.messageType == 'showBasketContent') {
+                _this2.basketAssets = jsonParsedResponse.body;
+            }
         });
     }
 });
@@ -69408,10 +69410,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 
 // Date Bskt Fund Stat Act
@@ -69447,12 +69445,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     mounted: function mounted() {
-
+        console.log('mounted! Home Form vue');
         axios.get('/homegetbasketslist').then(function (response) {
+            //console.log('HomeForm.vue response: ');
+            //console.log(response);
 
-            //var jsonParsedResponse = JSON.parse(response.data['basketAssets']);
-            console.log('HomeForm.vue response: ');
-            console.log(response);
         }) // Output returned data by controller
         .catch(function (error) {
             console.log('HomeForm.vue error: ');
@@ -69464,14 +69461,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         Echo.channel('tbrChannel').listen('TbrAppSearchResponse', function (e) {
 
-            var jsonParsedResponse = JSON.parse(e.update[0]);
+            var jsonParsedResponse = JSON.parse(e.update);
 
-            if (e.update['eventType'] == 'showBasketsList') // First element is key => value, second is a json object
+            // BASKET LIST AT THE START PAGE
+            if (jsonParsedResponse.messageType == 'basketsList') // First element is key => value, second is a json object
                 {
-                    console.log('HomeForm.vue baskets list: ');
-                    console.log(jsonParsedResponse);
-                    _this.basketAssets = jsonParsedResponse;
-                    console.log(moment('01/12/2016', 'DD/MM/YYYY', true).format()); // Moment JS lib
+                    _this.basketAssets = jsonParsedResponse.body; // Assign only the collection from json object. This collection is the same as it was pulled out from DB, baskets table. HomeGetBasketsList controller
+                    //console.log(moment('01/12/2016', 'DD/MM/YYYY', true).format()); // Moment JS lib
                 }
         });
     }

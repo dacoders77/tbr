@@ -19,19 +19,17 @@ class AssetCreate extends Controller
 
         ));
 
-        // Get all assets from DB after the asset was deleted
+        // Get all assets from DB after the asset was added
         $basketContentObject =
             DB::table('assets')
                 ->where('basket_id', $basketId) // $request->get('basketid')
                 ->get();
 
-        $assets = json_encode($basketContentObject);
+        $messageArray = array('messageType' => "showBasketContent", "body" => $basketContentObject);
 
-        //session()->flash('asset_deleted', 'Symbol deleted!');
-        //return redirect('basket/' . $basketId); // Go to url
+        // Trigger an event
+        event(new \App\Events\TbrAppSearchResponse(json_encode($messageArray))); // showBasketContent
 
-        // Throw an event
-        event(new \App\Events\TbrAppSearchResponse(['eventType' => 'showBasketContent', $assets]));
 
         //session()->flash('asset_added', 'Symbol added!');
 

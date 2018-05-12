@@ -15,14 +15,17 @@ class HomeGetBasketsList extends Controller
 {
     public function index() // public function __invoke()
     {
-        $basketContentobject =
+        $basketContentObject =
             DB::table('baskets')
                 ->where('is_deleted', 0) // Show baskets that has not been deleted
                 ->get();
 
-        $basketContentJson = json_encode($basketContentobject);
+        //$basketContentJson = json_encode($basketContentobject);
+        //event(new \App\Events\TbrAppSearchResponse(['eventType' => 'showBasketsList', $basketContentJson]));
 
-        event(new \App\Events\TbrAppSearchResponse(['eventType' => 'showBasketsList', $basketContentJson]));
+        $messageArray = array('messageType' => "basketsList", "body" => $basketContentObject);
+
+        event(new \App\Events\TbrAppSearchResponse(json_encode($messageArray)));
 
     }
 }

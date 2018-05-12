@@ -42,12 +42,8 @@
             -->
 
         </form>
-
     </div>
 </template>
-
-
-
 <script>
 
     // Date Bskt Fund Stat Act
@@ -78,13 +74,11 @@
         },
 
         mounted() {
-
+            console.log('mounted! Home Form vue');
             axios.get('/homegetbasketslist')
                 .then(response => {
-
-                    //var jsonParsedResponse = JSON.parse(response.data['basketAssets']);
-                    console.log('HomeForm.vue response: ');
-                    console.log(response);
+                    //console.log('HomeForm.vue response: ');
+                    //console.log(response);
 
                 }) // Output returned data by controller
                 .catch(error => {
@@ -98,18 +92,15 @@
 
                 .listen('TbrAppSearchResponse', (e) => {
 
-                    var jsonParsedResponse = JSON.parse(e.update[0]);
+                    var jsonParsedResponse = JSON.parse(e.update);
 
-                    if (e.update['eventType'] == 'showBasketsList') // First element is key => value, second is a json object
+                    // BASKET LIST AT THE START PAGE
+                    if (jsonParsedResponse.messageType == 'basketsList') // First element is key => value, second is a json object
                     {
-                        console.log('HomeForm.vue baskets list: ');
-                        console.log(jsonParsedResponse);
-                        this.basketAssets = jsonParsedResponse;
-                        console.log(moment('01/12/2016', 'DD/MM/YYYY', true).format()); // Moment JS lib
+                        this.basketAssets = jsonParsedResponse.body; // Assign only the collection from json object. This collection is the same as it was pulled out from DB, baskets table. HomeGetBasketsList controller
+                        //console.log(moment('01/12/2016', 'DD/MM/YYYY', true).format()); // Moment JS lib
                     }
-
                 });
         },
-
     }
 </script>

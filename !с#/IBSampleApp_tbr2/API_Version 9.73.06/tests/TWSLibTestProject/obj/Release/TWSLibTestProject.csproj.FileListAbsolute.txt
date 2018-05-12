@@ -1,0 +1,7 @@
+C:\Users\mvorobyev\Source\Repos\InteractiveBrokers\tws-api-installer\apiInstaller\githubTwsApiCode\tws-api\tests\TWSLibTestProject\bin\Release\OrderConditionsParsingTestProject.dll
+C:\Users\mvorobyev\Source\Repos\InteractiveBrokers\tws-api-installer\apiInstaller\githubTwsApiCode\tws-api\tests\TWSLibTestProject\bin\Release\OrderConditionsParsingTestProject.pdb
+C:\Users\mvorobyev\Source\Repos\InteractiveBrokers\tws-api-installer\apiInstaller\githubTwsApiCode\tws-api\tests\TWSLibTestProject\bin\Release\TWSLib.dll
+C:\Users\mvorobyev\Source\Repos\InteractiveBrokers\tws-api-installer\apiInstaller\githubTwsApiCode\tws-api\tests\TWSLibTestProject\bin\Release\TWSLib.pdb
+C:\Users\mvorobyev\Source\Repos\InteractiveBrokers\tws-api-installer\apiInstaller\githubTwsApiCode\tws-api\tests\TWSLibTestProject\obj\Release\TWSLibTestProject.csprojResolveAssemblyReference.cache
+C:\Users\mvorobyev\Source\Repos\InteractiveBrokers\tws-api-installer\apiInstaller\githubTwsApiCode\tws-api\tests\TWSLibTestProject\obj\Release\OrderConditionsParsingTestProject.dll
+C:\Users\mvorobyev\Source\Repos\InteractiveBrokers\tws-api-installer\apiInstaller\githubTwsApiCode\tws-api\tests\TWSLibTestProject\obj\Release\OrderConditionsParsingTestProject.pdb

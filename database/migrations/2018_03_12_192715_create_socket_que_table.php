@@ -19,6 +19,7 @@ class CreateSocketQueTable extends Migration
             $table->increments('id');
             $table->dateTime('date')->nullable();
             $table->boolean('is_new'); // Is message new flag
+            $table->string('message_type')->nullable();
             $table->string('text_message')->nullable();
             $table->json('json_message')->nullable();
 

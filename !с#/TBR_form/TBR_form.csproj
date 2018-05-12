@@ -115,13 +115,13 @@
       <Project>{8b12d929-afa9-4307-beff-2ed0f1070fee}</Project>
       <Name>Fleck</Name>
     </ProjectReference>
-    <ProjectReference Include="W:\domains\tbr.kk\!с#\IBSampleApp_tbr2\samples\CSharp\IBSampleApp\IBSampleApp.csproj">
+    <ProjectReference Include="..\IBSampleApp_tbr2\samples\CSharp\IBSampleApp\IBSampleApp.csproj">
       <Project>{cb7bdb4d-923f-4c4e-bb20-68dbdc33c10a}</Project>
       <Name>IBSampleApp</Name>
     </ProjectReference>
-    <ProjectReference Include="W:\domains\tbr.kk\!с#\IBSampleApp_tbr2\source\CSharpClient\client\CSharpAPI.csproj">
+    <ProjectReference Include="..\IBSampleApp_tbr2\source\CSharpClient\client\CSharpAPI_old.csproj">
       <Project>{8ede0744-96c2-40b0-a8dc-37df79370203}</Project>
-      <Name>CSharpAPI</Name>
+      <Name>CSharpAPI_old</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

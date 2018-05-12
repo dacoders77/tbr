@@ -73,14 +73,13 @@
                             <tbody>
 
                             <tr v-for="(i, index) in quantityOfRecords">
-                                <th>@{{ i[1] }}</th> <!-- symbol -->
-                                <th>@{{ i[0] }}</th> <!-- exchange -->
-                                <!--<th>@{{ i[4] }}</th>  primary exchange -->
-                                <th>@{{ i[2] }}</th> <!-- type -->
-                                <th>@{{ i[3] }}</th> <!-- currency -->
+                                <th>@{{ i.symbol }}</th> <!-- symbol -->
+                                <th>@{{ i.exchange }}</th> <!-- exchange -->
+                                <th>@{{ i.type }}</th> <!-- type -->
+                                <th>@{{ i.currency }}</th> <!-- currency -->
                                 <th>
                                     <!-- <button v-on:click="message(i[0])" type="button" class="btn btn-link">Basket @{{ index }}</button> -->
-                                    <a href="" v-on:click.prevent='message([{{$basket_id}},i[1],i[0],i[3],0])'><i class="fas fa-plus-square"></i></a>
+                                    <a href="" v-on:click.prevent='message([{{$basket_id}},i.symbol,i.exchange,i.currency,0])'><i class="fas fa-plus-square"></i></a>
                                 </th>
 
                             </tr>

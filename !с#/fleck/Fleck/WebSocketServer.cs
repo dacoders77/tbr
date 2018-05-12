@@ -81,7 +81,6 @@ namespace Fleck
 			// Add message to log DB
 			Log.Insert(DateTime.Now, "Fleck WebSocketServer.cs", string.Format("Websocket server started at: {0} (actual port: {1})", Location, Port), "white");
 
-					
             if (_scheme == "wss")
             {
                 if (Certificate == null)
@@ -139,11 +138,11 @@ namespace Fleck
                 _config,
                 bytes => RequestParser.Parse(bytes, _scheme),
                 r => HandlerFactory.BuildHandler(r,
-                                                 s => connection.OnMessage(s),
-                                                 connection.Close,
-                                                 b => connection.OnBinary(b),
-                                                 b => connection.OnPing(b),
-                                                 b => connection.OnPong(b)),
+                s => connection.OnMessage(s),
+                connection.Close,
+                b => connection.OnBinary(b),
+                b => connection.OnPing(b),
+                b => connection.OnPong(b)),
                 s => SubProtocolNegotiator.Negotiate(SupportedSubProtocols, s));
 
             if (IsSecure)

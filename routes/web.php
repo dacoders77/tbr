@@ -36,8 +36,8 @@ Route::get('/settings', function () {
     return view('settings');
 });
 
-// Add a record to websocket que DB
-Route::get('/addmsgws/{searchRequestString}', 'AddMessageToSocketQue@index');
+// Add a record (message) to websocket que DB. Later these messages are sent to C#
+Route::get('/addmsgws/{requestType}/{searchRequestString}', 'AddMessageToSocketQue@index');
 
 // Test rnis
 Route::get('/rnis', 'RnisApiTestConnect@index');

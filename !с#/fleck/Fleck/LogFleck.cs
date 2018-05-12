@@ -9,13 +9,12 @@ using System.Globalization;
 
 namespace Fleck
 {
-
 	/**
 	 * Logging class which offers messages retrival from MySql database.
 	 * Class is used as a communication service provider for C# Visual Studio projects located in the same solution
 	 * which can not be linked together due to circular link restriction. 
-	 * This class can pe copied to other projects in order to send messages (insert) to the DB which will be read by the
-	 * main class, putputed or used as triggers for business logic.
+	 * This class can be copied to other projects in order to send messages (insert) to the DB which will be read by the
+	 * main class, outputed or used as triggers for a business logic.
 	 */
 	public class Log
 	{
@@ -24,7 +23,6 @@ namespace Fleck
 
 		public static void Insert(DateTime d, String s, String m, string c) // Date, source, message, color
 		{
-
 			connectionString = "server=" + SettingsJson.dbHost + ";user id=slinger;password=659111;database=tut_db";
 			dbConn = new MySqlConnection(connectionString);
 
@@ -49,9 +47,6 @@ namespace Fleck
 
 				//conn.Close(); // No need to close the connection. It closes at the disposal 
 			}
-
 		}
-
 	}
-
 }

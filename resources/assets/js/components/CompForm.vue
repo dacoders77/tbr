@@ -111,17 +111,14 @@ export default {
 
             .listen('TbrAppSearchResponse', (e) => {
 
-                var jsonParsedResponse = JSON.parse(e.update[0]);
+                // SHOW BASKET CONTENT
+                var jsonParsedResponse = JSON.parse(e.update);
 
-                if (e.update['eventType'] == 'showBasketContent') // First element is key => value, second is a json object
+                if (jsonParsedResponse.messageType == 'showBasketContent')
                 {
-                    //console.log('show basket content: ');
-                    //console.log(jsonParsedResponse);
-                    this.basketAssets = jsonParsedResponse;
+                    this.basketAssets = jsonParsedResponse.body;
                 }
-
             });
     },
-
 }
 </script>

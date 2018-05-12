@@ -12,7 +12,7 @@ Vue.use(require('vue-moment')); // https://github.com/brockpetrie/vue-moment
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
+ * or customize the JavaScript scaffolding to fit your unique needs. ok.
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue')); // Example component
@@ -28,7 +28,6 @@ const app = new Vue({
         quantityOfRecords: null, // quantity of records
         name: '',
         errors: ''
-
     },
 
     methods: {
@@ -38,12 +37,13 @@ const app = new Vue({
             //console.log("Search button clicked. Vue even handler2");
 
             // Ajax request. Axios
-            axios.get('/addmsgws/' + document.getElementById("searchInputTextField").value)
+            axios.get('/addmsgws/symbolSearch/' + document.getElementById("searchInputTextField").value)
                 .then(function (response) {
                     //console.log(response);
                 })
                 .catch(function (error) {
                     console.log('axios addmsgws error: ' + error);
+                    concole.log('');
                 });
 
         },
@@ -51,12 +51,22 @@ const app = new Vue({
         message: function(message){
 
             // Ajax request. Axios
+            // /assetcreate/{basketId}/{assetSymbol}/{assetExchange}/{assetCurrency}/{assetAllocatedPercent}
             axios.get('/assetcreate/' + message[0] + '/' + message[1] + '/' + message[2] + '/' + message[3] + '/' + message[4])
+                .then(function (response) {
+                })
+                .catch(function (error) {
+                    console.log('axios asset create error: ' + error);
+                });
+
+            // MAKE C# QUOTE REQUEST GOES FROM HERE
+
+            axios.get('/addmsgws/getQuote/0')
                 .then(function (response) {
                     //console.log(response);
                 })
                 .catch(function (error) {
-                    console.log('axios assetcreate error: ' + error);
+                    console.log('axios get quote error: ' + error);
                 });
         }
 
@@ -68,20 +78,18 @@ const app = new Vue({
 
             .listen('TbrAppSearchResponse', (e) => {
 
-            //console.log(e.update);
-            var jsonParsedResponse = JSON.parse(e.update[0]);
-
-            if (e.update['eventType'] == 'searchJsonResponse')
+            var jsonParsedResponse = JSON.parse(e.update);
+            if (jsonParsedResponse.messageType == 'SearchResponse')
 
             {
-                var jsonParsedResponse = jsonParsedResponse;
-                this.quantityOfRecords = jsonParsedResponse;
+                this.quantityOfRecords = jsonParsedResponse.searchList;
             }
 
         });
     },
 
 }); // new Vue
+
 
 
 // Vue basket component
