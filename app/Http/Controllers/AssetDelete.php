@@ -10,7 +10,7 @@ class AssetDelete extends Controller
 {
     public function index(int $basketId, int $assetId) {
 
-        // Delet record
+        // Delete record
         DB::table('assets')
             ->where('id', $assetId)
             ->where('basket_id', $basketId)

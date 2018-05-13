@@ -116,15 +116,16 @@ namespace TBR_noform
 					// apiManager.GetQuote
 
 					var jsonObject = Newtonsoft.Json.Linq.JObject.Parse(message);
-					//MessageBox.Show(jsonObject["requestType"].ToString());
+					var requestBody = jsonObject["body"];
 
 					switch (jsonObject["requestType"].ToString())
 					{
 						case "symbolSearch":
-							apiManager.Search(jsonObject["body"].ToString()); // Works good
+							apiManager.Search(requestBody["symbol"].ToString()); // Works good
 							break;
 						case "getQuote":
-							apiManager.GetQuote(jsonObject["body"].ToString());
+							//quoteResponse.symbolName = requestBody["symbol"].ToString(); 
+							apiManager.GetQuote(requestBody["symbol"].ToString(), (int)requestBody["basketNumber"]);
 							break;
 
 					}
@@ -161,9 +162,20 @@ namespace TBR_noform
 			{
 				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "IbClient_TickPrice. price: " + obj.Price , "white");
 
-				quoteResponse.symbolName = textBox3.Text;
 				quoteResponse.symbolPrice = obj.Price;
+				quoteResponse.symbolName = apiManager.symbolPass; // We have to store symbol name and basket number as apiManager fields. Symbol name is not returned with IbClient_TickPrice response as well as basket number. Then basket number will be returnet to php and passed as the parameter to Quote.php class where price field will be updated. Symbol name and basket number are the key
+				quoteResponse.basketNum = apiManager.basketNumber; // Pass basket number to api manager. First basket number was assigned to a class field basketNumber of apiManager class 
+
+
+
 				Console.WriteLine(quoteResponse.ReturnJson());
+
+				foreach (var socket in allSockets.ToList()) // Loop through all connections/connected clients and send each of them a message
+				{
+					socket.Send(quoteResponse.ReturnJson());
+				}
+
+				MessageBox.Show(quoteResponse.ReturnJson());
 			}
 		}
 
@@ -217,7 +229,7 @@ namespace TBR_noform
 			}
 			searchResponse.searchResponseList.Clear(); // Erase all elements after it was transmitted to the websocket connection 
 
-		Console.WriteLine("contract end: " + searchResponse.ReturnJson()); // searchResponse
+			Console.WriteLine("contract end: " + searchResponse.ReturnJson()); // searchResponse
 		}
 
 
@@ -340,7 +352,7 @@ namespace TBR_noform
 			ibClient.ClientSocket.reqMktData((Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds, contract, "", true, false, null); ; // Request market data for a contract https://interactivebrokers.github.io/tws-api/classIBApi_1_1EClient.html#a7a19258a3a2087c07c1c57b93f659b63
 			*/
 
-			apiManager.GetQuote("aapl");
+			//apiManager.GetQuote("aapl", 1); // Symbol, Basket number
 		}
 	}
 }

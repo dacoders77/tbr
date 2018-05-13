@@ -21,6 +21,7 @@ class Assets extends Migration
             $table->string('exchange')->nullable();
             $table->string('currency')->nullable();
             $table->string('allocated_percent')->nullable();
+            $table->double('price')->nullable();
         });
     }
 

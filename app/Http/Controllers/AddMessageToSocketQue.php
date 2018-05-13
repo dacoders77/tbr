@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+/* This class records messages to DB, socket_que table. Then these messages are read from ListenLocalSocket.php controller
+ * and transmitted to the websocket channel. The this messages are picked up from C# application
+ */
+
 class AddMessageToSocketQue extends Controller
 {
     public function index(string $requestType, string $param)

@@ -36,13 +36,17 @@ const app = new Vue({
         greet: function(event){
             //console.log("Search button clicked. Vue even handler2");
 
-            // Ajax request. Axios
-            axios.get('/addmsgws/symbolSearch/' + document.getElementById("searchInputTextField").value)
+            // Ajax request. Axios. Symbol search request
+
+            var symbolSearchJsonString = {"symbol" : document.getElementById("searchInputTextField").value}; // Prepare a JSON string which consits only of one parameter - symbol
+            var symbolSearchJson = JSON.stringify(symbolSearchJsonString);
+
+            axios.get('/addmsgws/symbolSearch/' + symbolSearchJson) // document.getElementById("searchInputTextField").value
                 .then(function (response) {
                     //console.log(response);
                 })
                 .catch(function (error) {
-                    console.log('axios addmsgws error: ' + error);
+                    console.log('axios addmsgws error (symbolSearch): ' + error);
                     concole.log('');
                 });
 
@@ -51,6 +55,7 @@ const app = new Vue({
         message: function(message){
 
             // Ajax request. Axios
+            // When + is clicked from the basket content page, two requests are made: Create asset and Get quote
             // /assetcreate/{basketId}/{assetSymbol}/{assetExchange}/{assetCurrency}/{assetAllocatedPercent}
             axios.get('/assetcreate/' + message[0] + '/' + message[1] + '/' + message[2] + '/' + message[3] + '/' + message[4])
                 .then(function (response) {
@@ -61,7 +66,10 @@ const app = new Vue({
 
             // MAKE C# QUOTE REQUEST GOES FROM HERE
 
-            axios.get('/addmsgws/getQuote/0')
+            var getQuoteJsonString = {"symbol" : message[1], "basketNumber" : message[0] };
+            var getQuoteJson = JSON.stringify(getQuoteJsonString);
+
+            axios.get('/addmsgws/getQuote/' + getQuoteJson)
                 .then(function (response) {
                     //console.log(response);
                 })

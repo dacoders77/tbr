@@ -30324,11 +30324,16 @@ var app = new Vue({
         greet: function greet(event) {
             //console.log("Search button clicked. Vue even handler2");
 
-            // Ajax request. Axios
-            axios.get('/addmsgws/symbolSearch/' + document.getElementById("searchInputTextField").value).then(function (response) {
+            // Ajax request. Axios. Symbol search request
+
+            var symbolSearchJsonString = { "symbol": document.getElementById("searchInputTextField").value }; // Prepare a JSON string which consits only of one parameter - symbol
+            var symbolSearchJson = JSON.stringify(symbolSearchJsonString);
+
+            axios.get('/addmsgws/symbolSearch/' + symbolSearchJson) // document.getElementById("searchInputTextField").value
+            .then(function (response) {
                 //console.log(response);
             }).catch(function (error) {
-                console.log('axios addmsgws error: ' + error);
+                console.log('axios addmsgws error (symbolSearch): ' + error);
                 concole.log('');
             });
         },
@@ -30336,6 +30341,7 @@ var app = new Vue({
         message: function message(_message) {
 
             // Ajax request. Axios
+            // When + is clicked from the basket content page, two requests are made: Create asset and Get quote
             // /assetcreate/{basketId}/{assetSymbol}/{assetExchange}/{assetCurrency}/{assetAllocatedPercent}
             axios.get('/assetcreate/' + _message[0] + '/' + _message[1] + '/' + _message[2] + '/' + _message[3] + '/' + _message[4]).then(function (response) {}).catch(function (error) {
                 console.log('axios asset create error: ' + error);
@@ -30343,7 +30349,10 @@ var app = new Vue({
 
             // MAKE C# QUOTE REQUEST GOES FROM HERE
 
-            axios.get('/addmsgws/getQuote/0').then(function (response) {
+            var getQuoteJsonString = { "symbol": _message[1], "basketNumber": _message[0] };
+            var getQuoteJson = JSON.stringify(getQuoteJsonString);
+
+            axios.get('/addmsgws/getQuote/' + getQuoteJson).then(function (response) {
                 //console.log(response);
             }).catch(function (error) {
                 console.log('axios get quote error: ' + error);

@@ -16,7 +16,6 @@ class AssetCreate extends Controller
             'exchange' => $assetExchange,
             'currency' => $assetCurrency,
             'allocated_percent' => $assetAllocatedPercent
-
         ));
 
         // Get all assets from DB after the asset was added

@@ -252,7 +252,6 @@
 			this.textBox3.Name = "textBox3";
 			this.textBox3.Size = new System.Drawing.Size(82, 20);
 			this.textBox3.TabIndex = 3;
-			this.textBox3.Text = "AAPL";
 			// 
 			// button12
 			// 
