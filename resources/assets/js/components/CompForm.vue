@@ -18,7 +18,9 @@
                 <th>Symb</th>
                 <th>Exch</th>
                 <th>Curr</th>
+                <th>Price</th>
                 <th>%</th>
+                <th>Fund</th>
                 <th>Action</th>
 
             </tr>
@@ -30,11 +32,26 @@
                     <td>{{ asset.symbol }}</td>
                     <td>{{ asset.exchange }}</td>
                     <td>{{ asset.currency }}</td>
+                    <td>{{ asset.price }}</td>
                     <td><input type="text" class="form-control" v-model="asset.allocated_percent" size="1" @input="onControlValueChanged"></td>
+                    <td>0</td>
                     <td><a href="" v-on:click.prevent="assetDelete(asset.id)"><i class="fas fa-trash-alt" style="color: tomato"></i></a></td>
                 </tr>
 
             </tbody>
+
+            <tfoot>
+            <tr>
+                <th colspan="4">Total:</th>
+                <th>85%</th>
+                <th class="align-right">12,625$</th>
+
+
+
+            </tr>
+            </tfoot>
+
+
 
         </table>
 

@@ -89,29 +89,19 @@ class ListenLocalSocket extends Command
                 $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
                     //RatchetWebSocket::out($msg); // Call the function when the event is received
                     echo "C# response:" . $msg . "\n";
-                    // Create new event
-
-                    // DIFFERENT TYPES OF MESSAGES GO HERE
-                    // MESSAGE TYPE CHECK: SEARCH, GET QUTE
-                    // SEARCH - AS IS NOW
-                    // GET QUOTE - ADD NEW METHOD WHICH WILL UPDATE THE PRICE IN ASSETS TABLE (SYMBOL + BASKET NUMBER)
 
                     $msgDecoded = json_decode($msg); // Decode received JSON to associative array in order to access values by keys
                     switch ($msgDecoded->messageType)
                     {
+                        // Search
                         case "SearchResponse":
                             event(new \App\Events\TbrAppSearchResponse((string)$msg)); // Fire new event. Events are located in app/Events
                             break;
+                        // GetQuote
                         case "QuoteResponse":
-                            echo "quote: NO EVENT YET!" . $msgDecoded->messageType;
-
-                            // Call Quote.Update() method
                             app('App\Classes\Quote')->Update($msgDecoded->symbol, $msgDecoded->price, $msgDecoded->basketNumber);
-
                             break;
                     }
-
-
 
                 });
                 $conn->on('close', function($code = null, $reason = null) {

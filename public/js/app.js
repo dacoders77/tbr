@@ -30367,6 +30367,7 @@ var app = new Vue({
         Echo.channel('tbrChannel').listen('TbrAppSearchResponse', function (e) {
 
             var jsonParsedResponse = JSON.parse(e.update);
+
             if (jsonParsedResponse.messageType == 'SearchResponse') {
                 _this.quantityOfRecords = jsonParsedResponse.searchList;
             }
@@ -69076,6 +69077,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
@@ -69233,6 +69251,8 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(asset.currency))]),
               _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(asset.price))]),
+              _vm._v(" "),
               _c("td", [
                 _c("input", {
                   directives: [
@@ -69264,6 +69284,8 @@ var render = function() {
                 })
               ]),
               _vm._v(" "),
+              _c("td", [_vm._v("0")]),
+              _vm._v(" "),
               _c("td", [
                 _c(
                   "a",
@@ -69286,7 +69308,9 @@ var render = function() {
               ])
             ])
           })
-        )
+        ),
+        _vm._v(" "),
+        _vm._m(1)
       ])
     ])
   ])
@@ -69304,9 +69328,27 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Curr")]),
         _vm._v(" "),
+        _c("th", [_vm._v("Price")]),
+        _vm._v(" "),
         _c("th", [_vm._v("%")]),
         _vm._v(" "),
+        _c("th", [_vm._v("Fund")]),
+        _vm._v(" "),
         _c("th", [_vm._v("Action")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tfoot", [
+      _c("tr", [
+        _c("th", { attrs: { colspan: "4" } }, [_vm._v("Total:")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("85%")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "align-right" }, [_vm._v("12,625$")])
       ])
     ])
   }

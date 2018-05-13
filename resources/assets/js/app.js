@@ -87,8 +87,8 @@ const app = new Vue({
             .listen('TbrAppSearchResponse', (e) => {
 
             var jsonParsedResponse = JSON.parse(e.update);
-            if (jsonParsedResponse.messageType == 'SearchResponse')
 
+            if (jsonParsedResponse.messageType == 'SearchResponse')
             {
                 this.quantityOfRecords = jsonParsedResponse.searchList;
             }

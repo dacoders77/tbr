@@ -166,16 +166,12 @@ namespace TBR_noform
 				quoteResponse.symbolName = apiManager.symbolPass; // We have to store symbol name and basket number as apiManager fields. Symbol name is not returned with IbClient_TickPrice response as well as basket number. Then basket number will be returnet to php and passed as the parameter to Quote.php class where price field will be updated. Symbol name and basket number are the key
 				quoteResponse.basketNum = apiManager.basketNumber; // Pass basket number to api manager. First basket number was assigned to a class field basketNumber of apiManager class 
 
-
-
 				Console.WriteLine(quoteResponse.ReturnJson());
 
 				foreach (var socket in allSockets.ToList()) // Loop through all connections/connected clients and send each of them a message
 				{
 					socket.Send(quoteResponse.ReturnJson());
 				}
-
-				MessageBox.Show(quoteResponse.ReturnJson());
 			}
 		}
 

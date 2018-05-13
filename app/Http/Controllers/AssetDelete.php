@@ -22,13 +22,13 @@ class AssetDelete extends Controller
                 ->where('basket_id', $basketId) // $request->get('basketid')
                 ->get();
 
-        $basketContentJson = json_encode($basketContentObject);
-
         //session()->flash('asset_deleted', 'Symbol deleted!');
         //return redirect('basket/' . $basketId); // Go to url
 
-        // Throw an event
-        event(new \App\Events\TbrAppSearchResponse(['eventType' => 'showBasketContent', $basketContentJson]));
+        $messageArray = array('messageType' => "showBasketContent", "body" => $basketContentObject);
+
+        // Trigger an event
+        event(new \App\Events\TbrAppSearchResponse(json_encode($messageArray))); // showBasketContent
 
         //return "AssetDelete.php: asset deleted";
 
