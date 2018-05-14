@@ -18,13 +18,8 @@ class Quote
 {
     public function Update(string $symbol, float $price, int $basketNumber)
     {
-        echo "\n*********Quote.Update!" . $symbol . " " . $basketNumber . " " . $price . "\n";
-        // Update price
-        // Where
-        // basket num = $basketNumber
-        // symbol = symbol
+        echo "\n********* Quote.Update method!" . $symbol . " " . $basketNumber . " " . $price . "\n";
 
-        
         DB::table('assets')
             ->where('basket_id', $basketNumber)
             ->where('symbol', $symbol)
@@ -43,8 +38,6 @@ class Quote
 
         // Trigger an event
         event(new \App\Events\TbrAppSearchResponse(json_encode($messageArray))); // showBasketContent
-
-        echo "------even shoud trigger!";
 
     }
 }

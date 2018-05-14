@@ -46,8 +46,6 @@
                 <th>85%</th>
                 <th class="align-right">12,625$</th>
 
-
-
             </tr>
             </tfoot>
 

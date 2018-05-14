@@ -30320,12 +30320,10 @@ var app = new Vue({
 
     methods: {
 
-        // Button event handler
+        // Search button event handler
         greet: function greet(event) {
             //console.log("Search button clicked. Vue even handler2");
-
             // Ajax request. Axios. Symbol search request
-
             var symbolSearchJsonString = { "symbol": document.getElementById("searchInputTextField").value }; // Prepare a JSON string which consits only of one parameter - symbol
             var symbolSearchJson = JSON.stringify(symbolSearchJsonString);
 
@@ -30365,9 +30363,7 @@ var app = new Vue({
         var _this = this;
 
         Echo.channel('tbrChannel').listen('TbrAppSearchResponse', function (e) {
-
             var jsonParsedResponse = JSON.parse(e.update);
-
             if (jsonParsedResponse.messageType == 'SearchResponse') {
                 _this.quantityOfRecords = jsonParsedResponse.searchList;
             }
@@ -69092,8 +69088,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
@@ -69496,11 +69490,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     mounted: function mounted() {
-        console.log('mounted! Home Form vue');
+        console.log('HomeForm.vue. Mounted');
         axios.get('/homegetbasketslist').then(function (response) {
-            //console.log('HomeForm.vue response: ');
-            //console.log(response);
-
+            console.log('HomeForm.vue response: ');
+            console.log(response);
         }) // Output returned data by controller
         .catch(function (error) {
             console.log('HomeForm.vue error: ');
@@ -69511,9 +69504,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         Echo.channel('tbrChannel').listen('TbrAppSearchResponse', function (e) {
-
             var jsonParsedResponse = JSON.parse(e.update);
-
+            console.log('HomeForm.vue event listener in created()' + jsonParsedResponse);
             // BASKET LIST AT THE START PAGE
             if (jsonParsedResponse.messageType == 'basketsList') // First element is key => value, second is a json object
                 {

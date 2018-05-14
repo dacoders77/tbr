@@ -32,12 +32,10 @@ const app = new Vue({
 
     methods: {
 
-        // Button event handler
+        // Search button event handler
         greet: function(event){
             //console.log("Search button clicked. Vue even handler2");
-
             // Ajax request. Axios. Symbol search request
-
             var symbolSearchJsonString = {"symbol" : document.getElementById("searchInputTextField").value}; // Prepare a JSON string which consits only of one parameter - symbol
             var symbolSearchJson = JSON.stringify(symbolSearchJsonString);
 
@@ -81,18 +79,13 @@ const app = new Vue({
     },
 
     created() {
-
         Echo.channel('tbrChannel')
-
             .listen('TbrAppSearchResponse', (e) => {
-
             var jsonParsedResponse = JSON.parse(e.update);
-
             if (jsonParsedResponse.messageType == 'SearchResponse')
             {
                 this.quantityOfRecords = jsonParsedResponse.searchList;
             }
-
         });
     },
 

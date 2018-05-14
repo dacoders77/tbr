@@ -74,11 +74,11 @@
         },
 
         mounted() {
-            console.log('mounted! Home Form vue');
+            console.log('HomeForm.vue. Mounted');
             axios.get('/homegetbasketslist')
                 .then(response => {
-                    //console.log('HomeForm.vue response: ');
-                    //console.log(response);
+                    console.log('HomeForm.vue response: ');
+                    console.log(response);
 
                 }) // Output returned data by controller
                 .catch(error => {
@@ -87,13 +87,10 @@
                 })
         },
         created() {
-
             Echo.channel('tbrChannel')
-
                 .listen('TbrAppSearchResponse', (e) => {
-
                     var jsonParsedResponse = JSON.parse(e.update);
-
+                    console.log('HomeForm.vue event listener in created()' + jsonParsedResponse);
                     // BASKET LIST AT THE START PAGE
                     if (jsonParsedResponse.messageType == 'basketsList') // First element is key => value, second is a json object
                     {
