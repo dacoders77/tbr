@@ -69505,7 +69505,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         Echo.channel('tbrChannel').listen('TbrAppSearchResponse', function (e) {
             var jsonParsedResponse = JSON.parse(e.update);
-            console.log('HomeForm.vue event listener in created()' + jsonParsedResponse);
+            console.log('HomeForm.vue event listener in created()' + JSON.stringify(jsonParsedResponse));
             // BASKET LIST AT THE START PAGE
             if (jsonParsedResponse.messageType == 'basketsList') // First element is key => value, second is a json object
                 {
