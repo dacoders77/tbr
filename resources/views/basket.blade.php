@@ -24,10 +24,10 @@
                     <div class="container text-center" style="border-style: solid; border-width: thin; border-color: transparent;">
                         <div class="row align-items-center">
                             <div class="container col" style="border-style: solid; border-width: thin; border-color: transparent">
-                                <p style="font-size: 1.5em;">USD: <span class="badge badge-warning">10.000</span></p>
+                                <p style="font-size: 1.5em;">USD: <span class="badge badge-warning">6,200</span></p>
                             </div>
                             <div class="container col">
-                                <p style="font-size: 1.5em;">Avail: <span class="badge badge-success">52.856</span></p>
+                                <p style="font-size: 1.5em;">Avail: <span class="badge badge-success">82,122</span></p>
                             </div>
                         </div>
                     </div>

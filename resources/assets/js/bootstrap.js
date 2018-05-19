@@ -55,6 +55,5 @@ window.Echo = new Echo({
     encrypted: true
     });
 
-
 axios.defaults.baseURL = window.siteUrl;
-//alert(window.siteUrl);
+

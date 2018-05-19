@@ -49,19 +49,12 @@
             </tr>
             </tfoot>
 
-
-
         </table>
-
-        <!--
-        <button type="hidden" class="btn btn-success mb-2" @click.prevent="saveBasket"><i class="far fa-save"></i>&nbsp;Save basket</button>
-        -->
 
     </form>
 
 </div>
 </template>
-
 
 
 <script>
@@ -111,9 +104,6 @@ export default {
                 var jsonParsedResponse = JSON.parse(response.data['basketAssets']);
                 this.basketAssets = jsonParsedResponse;
 
-                //console.log('jsonParseResponse: ');
-                //console.log(jsonParsedResponse);
-
             }) // Output returned data by controller
             .catch(error => {
                 console.log('getbasketname error: ');
@@ -121,11 +111,8 @@ export default {
             })
     },
     created() {
-
         Echo.channel('tbrChannel')
-
             .listen('TbrAppSearchResponse', (e) => {
-
                 // SHOW BASKET CONTENT
                 var jsonParsedResponse = JSON.parse(e.update);
 

@@ -19,12 +19,11 @@
                 <tbody>
 
                 <tr v-for="asset in basketAssets">
-                    <td><span><a v-bind:href="'basket/' + asset.id"> {{ asset.execution_time | moment("MM-DD HH:mm") }}</a></span></td>
-                    <td>{{ asset.name }}</td>
-                    <td>--</td>
+                    <td><span>{{ asset.execution_time | moment("MM-DD-YY HH:mm") }}</span></td>
+                    <td><a v-bind:href="'basket/' + asset.id">{{ asset.name }}</a></td>
+                    <td>12,000</td>
                     <td class="text-danger mx-auto"><span class="badge" v-bind:class="{ 'badge-warning': (asset.status == 'new'), 'badge-success': (asset.status == 'filled'), 'badge-danger': (asset.status == 'error')}">{{ asset.status }}</span></td>
                     <td><a href="" v-on:click.prevent="deleteBasket(asset.id)"><i class="fas fa-trash-alt" style="color: tomato"></i></a></td>
-
                 </tr>
 
                 </tbody>
@@ -34,12 +33,10 @@
             <div class="alert alert-success" role="alert">
                 <!-- <a href="basketcreate"></i>&nbsp;Add new basked</a> -->
                 <a href="" v-on:click.prevent="createBasket()"><i class="fas fa-plus-square"></i>&nbspCreate new basket</a>
+                &nbsp
+                <a href="" v-on:click.prevent="reloadBasketList()"><i class="fas fa-sync-alt"></i>&nbspReload basket list</a>
                 <br>
             </div>
-
-            <!--
-            <button type="hidden" class="btn btn-success mb-2" @click.prevent="saveBasket"><i class="far fa-save"></i>&nbsp;Save basket</button>
-            -->
 
         </form>
     </div>
@@ -47,10 +44,9 @@
 <script>
 
     // Date Bskt Fund Stat Act
-
     export default {
 
-        props: [], // basketid is passed as a parameter from a vue js component
+        props: [], // basketid is passed as a parameter from vue js component
         data() {
             return {
                 basketAssets: null,
@@ -59,7 +55,6 @@
             }
         },
         methods: {
-
             deleteBasket: function(basketId) {
                 axios.get('/basketdelete/' + basketId)
                     //.then(response => {console.log(response.data);})
@@ -69,20 +64,23 @@
                 axios.get('/basketcreate')
                 //.then(response => {console.log(response.data);})
                 .catch(error => {console.log(error.response);})
+            },
+            reloadBasketList: function() {
+                axios.get('/homegetbasketslist')
+                .then(response => {console.log('HomeForm.vue. homegetbasketslist response: ');console.log(response);})
+                    .catch(error => {console.log('HomeForm.vue. homegetbasketslist error:');console.log(error.response);})
             }
-
         },
-
         mounted() {
             console.log('HomeForm.vue. Mounted');
             axios.get('/homegetbasketslist')
                 .then(response => {
-                    console.log('HomeForm.vue response: ');
+                    console.log('HomeForm.vue. homegetbasketslist response: ');
                     console.log(response);
 
                 }) // Output returned data by controller
                 .catch(error => {
-                    console.log('HomeForm.vue error: ');
+                    console.log('HomeForm.vue. homegetbasketslist error: ');
                     console.log(error.response);
                 })
         },
@@ -90,7 +88,7 @@
             Echo.channel('tbrChannel')
                 .listen('TbrAppSearchResponse', (e) => {
                     var jsonParsedResponse = JSON.parse(e.update);
-                    console.log('HomeForm.vue event listener in created()' + JSON.stringify(jsonParsedResponse));
+                    //console.log('HomeForm.vue event listener in created()' + JSON.stringify(jsonParsedResponse));
                     // BASKET LIST AT THE START PAGE
                     if (jsonParsedResponse.messageType == 'basketsList') // First element is key => value, second is a json object
                     {

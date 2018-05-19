@@ -20,7 +20,6 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 const app = new Vue({
 
     el: '#vueJsContainer',
-
     data: {
 
         // Variables
@@ -29,7 +28,6 @@ const app = new Vue({
         name: '',
         errors: ''
     },
-
     methods: {
 
         // Search button event handler
@@ -49,7 +47,6 @@ const app = new Vue({
                 });
 
         },
-
         message: function(message){
 
             // Ajax request. Axios
@@ -69,10 +66,12 @@ const app = new Vue({
 
             axios.get('/addmsgws/getQuote/' + getQuoteJson)
                 .then(function (response) {
-                    //console.log(response);
+                    console.log('app.js. getQuote response: ');
+                    console.log(response);
                 })
                 .catch(function (error) {
-                    console.log('axios get quote error: ' + error);
+                    console.log('app.js. getQuote error: ');
+                    console.log(error);
                 });
         }
 
