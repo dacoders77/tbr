@@ -201,7 +201,7 @@ namespace TBR_noform
 				obj.ContractDetails.Summary.Currency + " " +
 				obj.ContractDetails.Summary.Exchange + " " +
 				obj.ContractDetails.Summary.PrimaryExch + " " +
-				obj.ContractDetails.Summary.ConId, "white");
+				obj.ContractDetails.LongName, "white");
 
 			// Add all returned values as the element to the collection which will be transformed to json 
 			searchResponse.searchResponseList.Add(new SearchResponseString

@@ -78,8 +78,7 @@ const app = new Vue({
     },
 
     created() {
-        Echo.channel('tbrChannel')
-            .listen('TbrAppSearchResponse', (e) => {
+        Echo.channel('tbrChannel').listen('TbrAppSearchResponse', (e) => {
             var jsonParsedResponse = JSON.parse(e.update);
             if (jsonParsedResponse.messageType == 'SearchResponse')
             {

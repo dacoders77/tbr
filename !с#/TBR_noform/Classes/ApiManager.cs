@@ -22,7 +22,7 @@ namespace TBR_noform
 			contract = new Contract(); // A contract is created. Then while calling a class method contract.Symbol field is assigned
 			//contract.Symbol = "AAPL";
 			contract.SecType = "STK";
-			contract.Currency = "USD";
+			contract.Currency = ""; // USD
 			//In the API side, NASDAQ is always defined as ISLAND in the exchange field
 			contract.Exchange = "SMART"; // SMART. If no exchange specefied - all availible exchanges will be listed
 

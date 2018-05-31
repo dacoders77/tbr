@@ -78,6 +78,8 @@
                     console.log('HomeForm.vue. homegetbasketslist response: ');
                     console.log(response);
 
+                    // Add return to the controller. No need to use pusher in these cases!
+
                 }) // Output returned data by controller
                 .catch(error => {
                     console.log('HomeForm.vue. homegetbasketslist error: ');

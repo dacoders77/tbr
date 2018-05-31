@@ -82,7 +82,7 @@ export default {
                 .catch(error => {console.log(error.response);})
         },
         onControlValueChanged() {
-            console.log('event is rised');
+            console.log('CompForm.vue. Form filed value changed event:');
             console.log(this.$data);
             axios.post('/basketupdate', this.$data)
                 .then(response => {console.log(response.data);})
@@ -111,8 +111,7 @@ export default {
             })
     },
     created() {
-        Echo.channel('tbrChannel')
-            .listen('TbrAppSearchResponse', (e) => {
+        Echo.channel('tbrChannel').listen('TbrAppSearchResponse', (e) => {
                 // SHOW BASKET CONTENT
                 var jsonParsedResponse = JSON.parse(e.update);
 
