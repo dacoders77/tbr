@@ -51,17 +51,20 @@ const app = new Vue({
 
             // Ajax request. Axios
             // When + is clicked from the basket content page, two requests are made: Create asset and Get quote
-            // /assetcreate/{basketId}/{assetSymbol}/{assetExchange}/{assetCurrency}/{assetAllocatedPercent}
-            axios.get('/assetcreate/' + message[0] + '/' + message[1] + '/' + message[2] + '/' + message[3] + '/' + message[4])
+            // {basketId}/{assetSymbol}/{longName}/{assetExchange}/{assetCurrency}/{assetAllocatedPercent}
+
+            axios.get('/assetcreate/' + message[0] + '/' + message[1] + '/' + message[2] + '/' + message[3] + '/' + message[4] + '/' + message[5])
                 .then(function (response) {
+                    //console.log('/assetcreate response:');
+                    //console.log(response);
                 })
                 .catch(function (error) {
-                    console.log('axios asset create error: ' + error);
+                    console.log('app.js. /assetcreate error: ' + error);
                 });
 
             // MAKE C# QUOTE REQUEST GOES FROM HERE
 
-            var getQuoteJsonString = {"symbol" : message[1], "basketNumber" : message[0] };
+            var getQuoteJsonString = {"symbol" : message[1], "basketNumber" : message[0], "currency" : message[4] };
             var getQuoteJson = JSON.stringify(getQuoteJsonString);
 
             axios.get('/addmsgws/getQuote/' + getQuoteJson)

@@ -64,10 +64,13 @@ Route::post('/basketupdate', 'BasketUpdate@index')->name('basketupdate.post');
 Route::get('/assetdelete/{z}/{x}', 'AssetDelete@index')->name('assetdelete');
 
 // Add asset to DB
-Route::get('/assetcreate/{basketId}/{assetSymbol}/{assetExchange}/{assetCurrency}/{assetAllocatedPercent}', 'AssetCreate@index')->name('assetcreate');
+Route::get('/assetcreate/{basketId}/{assetSymbol}/{longName}/{assetExchange}/{assetCurrency}/{assetAllocatedPercent}', 'AssetCreate@index')->name('assetcreate');
 
 // Get basket name. Axios request controller
 Route::post('/basketgetdetails', 'BasketGetDetails@index');
 
 // Get the list of baskets for the home page
 Route::get('homegetbasketslist', 'HomeGetBasketsList@index'); // Single action controller
+
+// Test table view. Delete it
+Route::view('/table', 'table');

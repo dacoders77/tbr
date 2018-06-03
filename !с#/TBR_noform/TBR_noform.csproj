@@ -60,6 +60,7 @@
     <Compile Include="Classes\ApiManager.cs" />
     <Compile Include="Classes\ListViewLog.cs" />
     <Compile Include="Classes\Log.cs" />
+    <Compile Include="Classes\WsApiMessages\FundsResponse.cs" />
     <Compile Include="Classes\WsApiMessages\QuoteResponse.cs" />
     <Compile Include="Classes\WsApiMessages\Response.cs" />
     <Compile Include="Classes\Settings.cs" />

@@ -91,6 +91,7 @@
 			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.button3 = new System.Windows.Forms.Button();
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.button4 = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.groupBox6.SuspendLayout();
 			this.groupBox5.SuspendLayout();
@@ -629,11 +630,22 @@
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
 			this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
 			// 
+			// button4
+			// 
+			this.button4.Location = new System.Drawing.Point(226, 294);
+			this.button4.Name = "button4";
+			this.button4.Size = new System.Drawing.Size(108, 23);
+			this.button4.TabIndex = 56;
+			this.button4.Text = "Account balance";
+			this.button4.UseVisualStyleBackColor = true;
+			this.button4.Click += new System.EventHandler(this.button4_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(955, 564);
+			this.Controls.Add(this.button4);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.status_CT);
 			this.Controls.Add(this.groupBox1);
@@ -729,6 +741,7 @@
 		public System.Windows.Forms.ColumnHeader Message;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.ComboBox comboBox1;
+		private System.Windows.Forms.Button button4;
 	}
 }
 

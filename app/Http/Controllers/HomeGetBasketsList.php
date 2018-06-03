@@ -20,12 +20,9 @@ class HomeGetBasketsList extends Controller
                 ->where('is_deleted', 0) // Show baskets that has not been deleted
                 ->get();
 
-        //$basketContentJson = json_encode($basketContentobject);
-        //event(new \App\Events\TbrAppSearchResponse(['eventType' => 'showBasketsList', $basketContentJson]));
+        return($basketContentObject);
 
-        $messageArray = array('messageType' => "basketsList", "body" => $basketContentObject);
-
-        event(new \App\Events\TbrAppSearchResponse(json_encode($messageArray)));
-
+        //$messageArray = array('messageType' => "basketsList", "body" => $basketContentObject);
+        //event(new \App\Events\TbrAppSearchResponse(json_encode($messageArray)));
     }
 }

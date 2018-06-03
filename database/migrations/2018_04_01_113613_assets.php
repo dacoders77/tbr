@@ -18,6 +18,7 @@ class Assets extends Migration
             $table->increments('id');
             $table->integer('basket_id');
             $table->string('symbol')->nullable();
+            $table->string('long_name')->nullable();
             $table->string('exchange')->nullable();
             $table->string('currency')->nullable();
             $table->string('allocated_percent')->nullable();

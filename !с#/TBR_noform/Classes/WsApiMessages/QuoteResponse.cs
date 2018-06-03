@@ -37,7 +37,6 @@ namespace TBR_noform
 	}
 
 	// Object structure
-
 	public class SearchQuoteObject
 	{
 		public string messageType;

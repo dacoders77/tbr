@@ -22,6 +22,11 @@ class BasketGetDetails extends Controller
                 ->where('id', $request->get('basketId'))
                 ->value('execution_time');
 
+        $allocated_funds =
+            DB::table('baskets')
+                ->where('id', $request->get('basketId'))
+                ->value('allocated_funds');
+
         $basketContentobject =
             DB::table('assets')
                 ->where('basket_id', $request->get('basketId')) // $request->get('basketid')
@@ -33,7 +38,8 @@ class BasketGetDetails extends Controller
         $basketProps = array(
             'basketName' => $basketName,
             'basketExecTime' => date("Y-m-d\TH:i", strtotime($basketExecTime)),
-            'basketAssets' => $basketContentJson
+            'basketAssets' => $basketContentJson,
+            'allocated_funds'=> $allocated_funds
         );
 
         //$basketExecutionTime = date("Y-m-d\TH:i", strtotime($basketExecTime));

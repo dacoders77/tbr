@@ -43,7 +43,8 @@ namespace TBR_noform
 		public string currency;
 		public string exchange;
 		public string primaryExchnage;
-		public int conId; 
+		public int conId;
+		public string longName;
 	}
 
 	public class SearchResponseObject

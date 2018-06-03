@@ -7,9 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 class basketCreate extends Controller
 {
-
     /**
-     * @param Request $formRequest
+     * This controller is called from the first page where all baskets are listed
+     * @param    Request $formRequest
+     * @return   string $basketContentObject
      */
     public function index(Request $formRequest)
     {
@@ -21,7 +22,14 @@ class basketCreate extends Controller
             'is_deleted' => 0
         ));
 
-        app('App\Http\Controllers\HomeGetBasketsList')->index();
+        $basketContentObject =
+            DB::table('baskets')
+                ->where('is_deleted', 0) // Show baskets that has not been deleted
+                ->get();
+
+        return($basketContentObject);
+
+        //app('App\Http\Controllers\HomeGetBasketsList')->index();
 
     }
 

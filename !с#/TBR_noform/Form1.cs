@@ -44,6 +44,7 @@ namespace TBR_noform
 		// Api response
 		private SearchResponse searchResponse; // Search response json object
 		private QuoteResponse quoteResponse; // Quote response json object
+		private AvailableFundsResponse availableFundsResponse; // AvailableFundsResponse json object
 
 
 		public Form1()
@@ -86,6 +87,7 @@ namespace TBR_noform
 			// Json search object class instance
 			searchResponse = new SearchResponse();
 			quoteResponse = new QuoteResponse();
+			availableFundsResponse = new AvailableFundsResponse();
 
 			// Fleck socket server 
 			FleckLog.Level = LogLevel.Debug;
@@ -125,12 +127,12 @@ namespace TBR_noform
 							break;
 						case "getQuote":
 							//quoteResponse.symbolName = requestBody["symbol"].ToString(); 
-							apiManager.GetQuote(requestBody["symbol"].ToString(), (int)requestBody["basketNumber"]);
+							apiManager.GetQuote(requestBody["symbol"].ToString(), (int)requestBody["basketNumber"], requestBody["currency"].ToString());
 							break;
-
+						case "getAvailableFunds":
+							ibClient.ClientSocket.reqAccountUpdates(true, "U2314623");
+							break;
 					}
-
-
 				};
 			});
 
@@ -144,6 +146,21 @@ namespace TBR_noform
 			//ibClient.OrderStatus += IbClient_OrderStatus; // Order status
 			ibClient.ContractDetails += IbClient_ContractDetails; // Ticker search
 			ibClient.ContractDetailsEnd += IbClient_ContractDetailsEnd; // Fires up when the the search response feed is finished. One search request can contain multiple contracts
+			ibClient.UpdateAccountValue += IbClient_UpdateAccountValue; // Account info
+		}
+
+		private void IbClient_UpdateAccountValue(IBSampleApp.messages.AccountValueMessage obj) // Account info event. https://interactivebrokers.github.io/tws-api/interfaceIBApi_1_1EWrapper.html#ae15a34084d9f26f279abd0bdeab1b9b5
+		{
+			if (obj.Key == "AvailableFunds-S")
+			{
+				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "UpdateAccountValue: " + obj.Key + " " + obj.Value, "white");
+				availableFundsResponse.availableFunds = Convert.ToDouble(obj.Value);
+				foreach (var socket in allSockets.ToList()) // Loop through all connections/connected clients and send each of them a message
+				{
+					socket.Send(availableFundsResponse.ReturnJson());
+				}
+			}
+			ibClient.ClientSocket.reqAccountUpdates(false, "U2314623"); // Unsubscribe. Otherwise on the next call it is not gonna work
 		}
 
 		private void IbClient_CurrentTime(long obj) // Get exchnage current time event
@@ -212,7 +229,8 @@ namespace TBR_noform
 				currency = obj.ContractDetails.Summary.Currency,
 				exchange = obj.ContractDetails.Summary.Exchange,
 				primaryExchnage = obj.ContractDetails.Summary.PrimaryExch,
-				conId = obj.ContractDetails.Summary.ConId
+				conId = obj.ContractDetails.Summary.ConId,
+				longName = obj.ContractDetails.LongName
 			});
 		}
 
@@ -348,7 +366,12 @@ namespace TBR_noform
 			ibClient.ClientSocket.reqMktData((Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds, contract, "", true, false, null); ; // Request market data for a contract https://interactivebrokers.github.io/tws-api/classIBApi_1_1EClient.html#a7a19258a3a2087c07c1c57b93f659b63
 			*/
 
-			//apiManager.GetQuote("aapl", 1); // Symbol, Basket number
+			apiManager.GetQuote("aapl", 1, "USD"); // Symbol, Basket number, currency
+		}
+
+		private void button4_Click(object sender, EventArgs e) // Get account availilble funds for trading button click 
+		{
+			ibClient.ClientSocket.reqAccountUpdates(true, "U2314623"); 
 		}
 	}
 }

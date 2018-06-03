@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 
 class AssetCreate extends Controller
 {
-    public function index(int $basketId, string $assetSymbol, string $assetExchange, string $assetCurrency, int $assetAllocatedPercent){
+    public function index(int $basketId, string $assetSymbol, string $longName, string $assetExchange, string $assetCurrency, int $assetAllocatedPercent){
 
         // Add asset to DB
         DB::table('assets')->insert(array(
             'basket_id' => $basketId,
             'symbol' => $assetSymbol,
+            'long_name' => $longName,
             'exchange' => $assetExchange,
             'currency' => $assetCurrency,
             'allocated_percent' => $assetAllocatedPercent

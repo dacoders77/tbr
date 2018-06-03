@@ -25,12 +25,11 @@ class AssetDelete extends Controller
         //session()->flash('asset_deleted', 'Symbol deleted!');
         //return redirect('basket/' . $basketId); // Go to url
 
-        $messageArray = array('messageType' => "showBasketContent", "body" => $basketContentObject);
+        return($basketContentObject);
 
-        // Trigger an event
-        event(new \App\Events\TbrAppSearchResponse(json_encode($messageArray))); // showBasketContent
+        //$messageArray = array('messageType' => "showBasketContent", "body" => $basketContentObject);
+        //event(new \App\Events\TbrAppSearchResponse(json_encode($messageArray))); // showBasketContent
 
-        //return "AssetDelete.php: asset deleted";
 
     }
 }

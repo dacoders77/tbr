@@ -93,7 +93,7 @@ class ListenLocalSocket extends Command
                     $msgDecoded = json_decode($msg); // Decode received JSON to associative array in order to access values by keys
                     switch ($msgDecoded->messageType)
                     {
-                        // Search
+                        // Search. In C# project these api messages are located in WsApiMessages
                         case "SearchResponse":
                             event(new \App\Events\TbrAppSearchResponse((string)$msg)); // Fire new event. Events are located in app/Events
                             break;
@@ -101,6 +101,10 @@ class ListenLocalSocket extends Command
                         case "QuoteResponse":
                             app('App\Classes\Quote')->Update($msgDecoded->symbol, $msgDecoded->price, $msgDecoded->basketNumber);
                             break;
+                        case "AvailableFundsResponse":
+                            event(new \App\Events\TbrAppSearchResponse((string)$msg));
+                            break;
+
                     }
 
                 });

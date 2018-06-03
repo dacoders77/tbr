@@ -31,15 +31,17 @@ namespace TBR_noform
 		public void Search(string symbol) // Ticker search
 		{
 			contract.Symbol = symbol;
+			contract.Currency = ""; // Need to reset the currency because it remains the same after previous search
 			iBClient.ClientSocket.reqContractDetails((Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds, contract); 
 		}
 
-		public void GetQuote(string symbol, int basketNum) // Get ticker qute
+		public void GetQuote(string symbol, int basketNum, string currency) // Get ticker qute
 		{
 			basketNumber = basketNum;
 			symbolPass = symbol;
 
 			contract.Symbol = symbol;
+			contract.Currency = currency;
 			iBClient.ClientSocket.reqMktData((Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds, contract, "", true, false, null); // Request market data for a contract https://interactivebrokers.github.io/tws-api/classIBApi_1_1EClient.html#a7a19258a3a2087c07c1c57b93f659b63
 		}
 
