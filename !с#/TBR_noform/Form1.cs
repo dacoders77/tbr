@@ -19,9 +19,10 @@ namespace TBR_noform
 {
 	public partial class Form1 : Form
 	{
-		// Thread
+		// Threads
 		public Thread emailThread;
 		private Thread logThread; // A thread of Logging class. From this thread DB is searched for new messages
+		private Thread executeBasketThread; // Basket items search and execution thread. Searchs for baskets which need to be executed
 
 		// Websocket
 		private List<IWebSocketConnection> allSockets; // The list of all connected clients to the websocket server
@@ -78,6 +79,9 @@ namespace TBR_noform
 			// DB log messages
 			Log.InitializeDB(); // Connect to the database 
 			logThread = new Thread(new ThreadStart(LogThread)); // Make an instance of the thread and assign method name which will be executed in the thread
+
+			// Basket thread
+			executeBasketThread = new Thread(new ThreadStart(ExecuteBasketThread));
 
 			// IB API instances
 			signal = new EReaderMonitorSignal();
@@ -141,7 +145,7 @@ namespace TBR_noform
 			// ibClient.MarketDataType += IbClient_MarketDataType;
 			ibClient.Error += IbClient_Error; // Errors handling
 
-			ibClient.TickPrice += IbClient_TickPrice; // reqMarketData
+			ibClient.TickPrice += IbClient_TickPrice; // reqMarketData. EWrapper Interface
 			ibClient.NextValidId += IbClient_NextValidId; // Fires when api is connected (connect button clicked)
 			//ibClient.OrderStatus += IbClient_OrderStatus; // Order status
 			ibClient.ContractDetails += IbClient_ContractDetails; // Ticker search
@@ -174,6 +178,12 @@ namespace TBR_noform
 
 		private void IbClient_TickPrice(IBSampleApp.messages.TickPriceMessage obj) // reqMktData. Get quote
 		{
+			// for CASH qoute
+			if (TickType.getField(obj.Field) == "bidPrice")
+			{
+				MessageBox.Show(TickType.getField(obj.Field) + obj.Price);
+			}
+
 			//ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "TickPriceMessage. tick type: " + TickType.getField(msg.Field) + " price: " + msg.Price, "white");
 			if (TickType.getField(obj.Field) == "delayedLast")
 			{
@@ -315,6 +325,16 @@ namespace TBR_noform
 			}
 		}
 
+		public void ExecuteBasketThread() // Basket execution thread
+		{
+			while (true)
+			{
+				MessageBox.Show("jopz");
+				Thread.Sleep(3000);
+			}
+
+		}
+
 		private static void AddItemFromThread(Form1 form)
 		{
 			List<Log> logs = Log.GetNewLogs(); // Call a SQL QUERY method and assign it's result to logs list
@@ -347,6 +367,9 @@ namespace TBR_noform
 		{
 			logThread.IsBackground = true;
 			logThread.Start(); // Read log records from DB thread
+
+			executeBasketThread.IsBackground = true;
+			executeBasketThread.Start();
 		}
 
 		private void search_Button2_Click(object sender, EventArgs e) // Ticker search button click

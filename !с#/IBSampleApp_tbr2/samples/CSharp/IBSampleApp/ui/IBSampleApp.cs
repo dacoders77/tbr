@@ -185,6 +185,7 @@ namespace IBSampleApp
 
         void ibClient_TickPrice(int tickerId, int field, double price, int canAutoExecute)
         {
+			MessageBox.Show("f");
             addTextToBox("Tick Price. Ticker Id:" + tickerId + ", Type: " + TickType.getField(field) + ", Price: " + price + "\n");
             HandleMessage(new TickPriceMessage(tickerId, field, price, canAutoExecute));
         }

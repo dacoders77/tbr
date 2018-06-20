@@ -37,12 +37,23 @@ namespace TBR_noform
 
 		public void GetQuote(string symbol, int basketNum, string currency) // Get ticker qute
 		{
+			
 			basketNumber = basketNum;
 			symbolPass = symbol;
 
 			contract.Symbol = symbol;
 			contract.Currency = currency;
 			iBClient.ClientSocket.reqMktData((Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds, contract, "", true, false, null); // Request market data for a contract https://interactivebrokers.github.io/tws-api/classIBApi_1_1EClient.html#a7a19258a3a2087c07c1c57b93f659b63
+			
+			/* works good!. Event recevied in Form1.cs line 177
+			// Forex pair contract
+			Contract contract_x = new Contract();
+			contract_x.Symbol = "EUR";
+			contract_x.SecType = "CASH";
+			contract_x.Currency = "USD";
+			contract_x.Exchange = "IDEALPRO";
+			iBClient.ClientSocket.reqMktData((Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds, contract_x, "", true, false, null); // Request market data for a contract https://interactivebrokers.github.io/tws-api/classIBApi_1_1EClient.html#a7a19258a3a2087c07c1c57b93f659b63
+			*/
 		}
 
 		public void PlaceOrder() // Send order to the exchnage 
