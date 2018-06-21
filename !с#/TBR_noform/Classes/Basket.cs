@@ -4,9 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TBR_noform.Classes
+namespace TBR_noform
 {
-	class Basket
+	public class Basket
 	{
+		// Class variables
+
+		// Class constructor
+		public Basket() {
+
+		}
+
+
+
 	}
 }

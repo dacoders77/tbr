@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Backend\IBClient.cs" />
     <Compile Include="Classes\ApiManager.cs" />
+    <Compile Include="Classes\Basket.cs" />
     <Compile Include="Classes\ListViewLog.cs" />
     <Compile Include="Classes\Log.cs" />
     <Compile Include="Classes\WsApiMessages\FundsResponse.cs" />

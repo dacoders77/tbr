@@ -23,7 +23,7 @@ namespace Fleck
 
 		public static void Insert(DateTime d, String s, String m, string c) // Date, source, message, color
 		{
-			connectionString = "server=" + SettingsJson.dbHost + ";user id=slinger;password=659111;database=tut_db";
+			connectionString = "server=" + SettingsJson.dbHost + ";user id=slinger;password=659111;database=tbr";
 			dbConn = new MySqlConnection(connectionString);
 
 			// https://dev.mysql.com/doc/connector-net/en/connector-net-tutorials-sql-command.html 

@@ -17,6 +17,9 @@ class Baskets extends Migration
         Schema::create('baskets', function (Blueprint $table) {
             $table->increments('id');
             $table->dateTime('execution_time')->nullable();
+
+            $table->string('elapsed_time')->nullable();
+            $table->boolean('executed');
             $table->string('name')->nullable();
             $table->integer('allocated_funds')->nullable();
             $table->string('status')->nullable();

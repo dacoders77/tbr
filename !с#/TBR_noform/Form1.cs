@@ -329,7 +329,7 @@ namespace TBR_noform
 		{
 			while (true)
 			{
-				MessageBox.Show("jopz");
+
 				Thread.Sleep(3000);
 			}
 
