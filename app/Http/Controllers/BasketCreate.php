@@ -15,7 +15,8 @@ class basketCreate extends Controller
     public function index(Request $formRequest)
     {
         DB::table('baskets')->insert(array(
-            'execution_time' => date("Y-m-d G:i:s"),
+            //'execution_time' => date("Y-m-d G:i:s"),
+            'execution_time' => date('Y-m-d', strtotime('+1 year')),
             'name' => "New",
             'allocated_funds' => 0,
             'status' => "new",
@@ -32,5 +33,4 @@ class basketCreate extends Controller
         //app('App\Http\Controllers\HomeGetBasketsList')->index();
 
     }
-
 }

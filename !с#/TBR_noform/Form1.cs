@@ -27,19 +27,18 @@ namespace TBR_noform
 		// Websocket
 		private List<IWebSocketConnection> allSockets; // The list of all connected clients to the websocket server
 		
-		// API variables
+		// IB API variables
 		private IBClient ibClient;
 		private EReaderMonitorSignal signal;
-		private ApiManager apiManager; // Api features like search, place order, getQute etc.
+		internal ApiManager apiManager; // Api features like search, place order, getQute etc.
 
 		// Flags
 		private bool isConnected = false; // Connection flag. Prevents connect button click when connected
 		bool conntectButtonFlag = true; // Turns to false when connect button is clicked
 
-		// Unknown
+		// Unknown-delete
 		private string messageFromBrowser; // Received 
 		private Response response; // Ticker search results class which holds a collection passed to the websocket connection stream as a message. This collection contains search resuls 
-		
 		private Contract contract; // Contract variable
 
 		// Api response
@@ -47,21 +46,13 @@ namespace TBR_noform
 		private QuoteResponse quoteResponse; // Quote response json object
 		private AvailableFundsResponse availableFundsResponse; // AvailableFundsResponse json object
 
+		// Other
+		public Basket basket; // Baskets execution 
+
 
 		public Form1()
 		{
 			InitializeComponent();
-
-			// listView1 setup
-			/*
-			listView1.View = View.Details;
-			listView1.GridLines = true; // Horizoltal lines
-			listView1.Columns.Add("Time:");
-			listView1.Columns[0].Width = 60;
-			listView1.Columns.Add("Source:", -2, HorizontalAlignment.Left);
-			listView1.Columns.Add("Message:");
-			listView1.Columns[2].Width = 400;
-			*/
 
 			// listView1 setup
 			listView1.View = View.Details; // Shows the header
@@ -86,7 +77,7 @@ namespace TBR_noform
 			// IB API instances
 			signal = new EReaderMonitorSignal();
 			ibClient = new IBClient(signal);
-			apiManager = new ApiManager(ibClient);
+			apiManager = new ApiManager(ibClient, this);
 
 			// Json search object class instance
 			searchResponse = new SearchResponse();
@@ -97,6 +88,9 @@ namespace TBR_noform
 			FleckLog.Level = LogLevel.Debug;
 			allSockets = new List<IWebSocketConnection>();
 			var server = new WebSocketServer("ws://0.0.0.0:8181");
+
+			// Other
+			basket = new Basket(this);
 
 			server.SupportedSubProtocols = new[] { "superchat", "chat" };
 			server.Start(socket =>
@@ -127,10 +121,9 @@ namespace TBR_noform
 					switch (jsonObject["requestType"].ToString())
 					{
 						case "symbolSearch":
-							apiManager.Search(requestBody["symbol"].ToString()); // Works good
+							apiManager.Search(requestBody["symbol"].ToString());
 							break;
 						case "getQuote":
-							//quoteResponse.symbolName = requestBody["symbol"].ToString(); 
 							apiManager.GetQuote(requestBody["symbol"].ToString(), (int)requestBody["basketNumber"], requestBody["currency"].ToString());
 							break;
 						case "getAvailableFunds":
@@ -146,11 +139,18 @@ namespace TBR_noform
 			ibClient.Error += IbClient_Error; // Errors handling
 
 			ibClient.TickPrice += IbClient_TickPrice; // reqMarketData. EWrapper Interface
-			ibClient.NextValidId += IbClient_NextValidId; // Fires when api is connected (connect button clicked)
+			ibClient.OrderStatus += IbClient_OrderStatus; // Status of a placed order
+
+			ibClient.NextValidId += IbClient_NextValidId; // Fires when api is connected. Connection status received here
 			//ibClient.OrderStatus += IbClient_OrderStatus; // Order status
 			ibClient.ContractDetails += IbClient_ContractDetails; // Ticker search
 			ibClient.ContractDetailsEnd += IbClient_ContractDetailsEnd; // Fires up when the the search response feed is finished. One search request can contain multiple contracts
 			ibClient.UpdateAccountValue += IbClient_UpdateAccountValue; // Account info
+		}
+
+		private void IbClient_OrderStatus(IBSampleApp.messages.OrderStatusMessage obj)
+		{
+			ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "IbClient_OrderStatus. line 153. avgFillprice, filled, orderID, orderStatus: " + obj.AvgFillPrice + " | " + obj.Filled + " | " + obj.OrderId + " | " + obj.Status , "white");
 		}
 
 		private void IbClient_UpdateAccountValue(IBSampleApp.messages.AccountValueMessage obj) // Account info event. https://interactivebrokers.github.io/tws-api/interfaceIBApi_1_1EWrapper.html#ae15a34084d9f26f279abd0bdeab1b9b5
@@ -173,38 +173,74 @@ namespace TBR_noform
 		}
 		private void IbClient_Error(int arg1, int arg2, string arg3, Exception arg4) // Errors handling event
 		{
-			ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "IbClient_Error: arg 1,2,3: " + arg1 + " " + arg2 + " " + arg3 + "exception: " + arg4, "white");
+
+			if (arg4 != null) // Show exception if it is not null. There are errors with no exceptions
+			MessageBox.Show(
+				"Form1.cs line 173. IbClient_Error" +
+				"link: " + arg4.HelpLink + "\r" +
+				"result" + arg4.HResult + "\r" +
+				"inner exception: " + arg4.InnerException + "\r" +
+				"message: " + arg4.Message + "\r" +
+				"source: " + arg4.Source + "\r" +
+				"stack trace: " + arg4.StackTrace + "\r" +
+				"target site: " + arg4.TargetSite + "\r"
+				);
+
+			// Must be carefull with these ticks! While debugging - disable this filter. Otherwise you can miss important information 
+			// https://interactivebrokers.github.io/tws-api/message_codes.html
+			// 2104 - A market data farm is connected.
+			// 2108 - A market data farm connection has become inactive but should be available upon demand.
+			// 2106 - A historical data farm is connected. 
+			// .. Not all codes are listed
+
+			//if (arg2 != 2104 && arg2 != 2119 && arg2 != 2108 && arg2 != 2106 && arg2 != 10167)
+			if (true)
+				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "IbClient_Error: args: " + arg1 + " " + arg2 + " " + arg3 + "exception: " + arg4, "white");
 		}
 
-		private void IbClient_TickPrice(IBSampleApp.messages.TickPriceMessage obj) // reqMktData. Get quote
+		private void IbClient_TickPrice(IBSampleApp.messages.TickPriceMessage obj) // ReqMktData. Get quote. Tick types https://interactivebrokers.github.io/tws-api/rtd_simple_syntax.html 
 		{
-			// for CASH qoute
-			if (TickType.getField(obj.Field) == "bidPrice")
+			char requestCode = obj.RequestId.ToString()[0]; // First char is the code. C# requests: 5 - fx, 6 - stock. PHP: 7 - stock
+
+			// FX pairs. C# while executing a basket
+			if (TickType.getField(obj.Field) == "close") // bidPrice = -1. This value returned when market is closed. https://interactivebrokers.github.io/tws-api/md_receive.html
 			{
-				MessageBox.Show(TickType.getField(obj.Field) + obj.Price);
+				basket.assetForexQuote = obj.Price;
+				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs line 206", "IbClient_TickPrice. FX Quote: " + obj.Price + " " + obj.RequestId, "yellow");
+
+				//Console.WriteLine("Form1.cs. line 184: " + obj.RequestId + " : " + obj.Price);
+				basket.addForexQuoteToDB(obj.RequestId, obj.Price);
 			}
 
-			//ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "TickPriceMessage. tick type: " + TickType.getField(msg.Field) + " price: " + msg.Price, "white");
-			if (TickType.getField(obj.Field) == "delayedLast")
+			// For stock. A request from PHP. While adding an asset to a basket
+			// In this case we do not record this price to the DB. It is recorded from PHP
+			if (TickType.getField(obj.Field) == "delayedLast" && requestCode.ToString() == "7") // PHP. Stock quote request
 			{
-				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "IbClient_TickPrice. price: " + obj.Price , "white");
+
+				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs line 216", "IbClient_TickPrice. PHP req. price: " + obj.Price + "reqId: " + obj.RequestId, "white");
 
 				quoteResponse.symbolPrice = obj.Price;
 				quoteResponse.symbolName = apiManager.symbolPass; // We have to store symbol name and basket number as apiManager fields. Symbol name is not returned with IbClient_TickPrice response as well as basket number. Then basket number will be returnet to php and passed as the parameter to Quote.php class where price field will be updated. Symbol name and basket number are the key
 				quoteResponse.basketNum = apiManager.basketNumber; // Pass basket number to api manager. First basket number was assigned to a class field basketNumber of apiManager class 
-
-				Console.WriteLine(quoteResponse.ReturnJson());
 
 				foreach (var socket in allSockets.ToList()) // Loop through all connections/connected clients and send each of them a message
 				{
 					socket.Send(quoteResponse.ReturnJson());
 				}
 			}
+
+			// C#. ApiManager stock quote request
+			if (TickType.getField(obj.Field) == "delayedLast" && requestCode.ToString() == "6") 
+			{
+				// Updte quote value in DB
+				basket.UpdateStockQuoteValue(obj.RequestId, obj.Price, this);
+				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "IbClient_TickPrice. C# 6 req. price: " + obj.Price + " " + obj.RequestId, "white");
+			}
 		}
 
 		private void IbClient_NextValidId(IBSampleApp.messages.ConnectionStatusMessage obj) // Api connection established
 		{
-			ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "API connected: " + obj.IsConnected, "white");
+			ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "API connected: " + obj.IsConnected + " Next valid req id: " + ibClient.NextOrderId, "white");
 
 			// 1 - Realtime, 2 - Frozen, 3 - Delayed data, 4 - Delayed frozen
 			ibClient.ClientSocket.reqMarketDataType(3); // https://interactivebrokers.github.io/tws-api/classIBApi_1_1EClient.html#ae03b31bb2702ba519ed63c46455872b6 
@@ -216,7 +252,7 @@ namespace TBR_noform
 				button13.Text = "Disconnect";
 			}
 			// 1 - Realtime, 2 - Frozen, 3 - Delayed data, 4 - Delayed frozen
-			ibClient.ClientSocket.reqMarketDataType(3); // https://interactivebrokers.github.io/tws-api/classIBApi_1_1EClient.html#ae03b31bb2702ba519ed63c46455872b6 
+			//ibClient.ClientSocket.reqMarketDataType(3); // https://interactivebrokers.github.io/tws-api/classIBApi_1_1EClient.html#ae03b31bb2702ba519ed63c46455872b6 
 		}
 
 		private void IbClient_ContractDetails(IBSampleApp.messages.ContractDetailsMessage obj) // Ticker search event reqContractDetails
@@ -253,7 +289,7 @@ namespace TBR_noform
 			}
 			searchResponse.searchResponseList.Clear(); // Erase all elements after it was transmitted to the websocket connection 
 
-			Console.WriteLine("contract end: " + searchResponse.ReturnJson()); // searchResponse
+			//Console.WriteLine("contract end: " + searchResponse.ReturnJson()); // searchResponse
 		}
 
 
@@ -329,10 +365,11 @@ namespace TBR_noform
 		{
 			while (true)
 			{
-
-				Thread.Sleep(3000);
+				basket.Watch(); // Watch baskets table. When the time comes - execute all assets from this basket and set executed flag to 1 in the DB
+				basket.WatchFxQuoteRow(); // Watch when a fx quote is received and added to assets table
+				basket.WatchVolumeRow(); // Watch when a volume is calculated. When calculated - execute the asset
+				Thread.Sleep(1000);
 			}
-
 		}
 
 		private static void AddItemFromThread(Form1 form)
@@ -351,7 +388,7 @@ namespace TBR_noform
 					form.listView1.Items[form.listView1.Items.Count - 1].EnsureVisible();
 					
 				}
-				Console.WriteLine("------------------------------DB watch in progress! " + DateTime.Now);
+				//Console.WriteLine("Form1.cs line 349 ------------------------------DB watch in progress! " + DateTime.Now);
 			}));
 		}
 
@@ -389,12 +426,18 @@ namespace TBR_noform
 			ibClient.ClientSocket.reqMktData((Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds, contract, "", true, false, null); ; // Request market data for a contract https://interactivebrokers.github.io/tws-api/classIBApi_1_1EClient.html#a7a19258a3a2087c07c1c57b93f659b63
 			*/
 
-			apiManager.GetQuote("aapl", 1, "USD"); // Symbol, Basket number, currency
+			apiManager.GetQuote(textBox3.Text, 1, textBox4.Text); // Symbol, Basket number, currency
+			//apiManager.GetForexQuote("EUR", "USD", 7894561);
 		}
 
 		private void button4_Click(object sender, EventArgs e) // Get account availilble funds for trading button click 
 		{
 			ibClient.ClientSocket.reqAccountUpdates(true, "U2314623"); 
+		}
+
+		private void label5_Click(object sender, EventArgs e)
+		{
+			listView2.Items.Clear();
 		}
 	}
 }

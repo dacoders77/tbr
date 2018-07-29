@@ -20,7 +20,7 @@
                 <tbody>
 
                 <tr v-for="asset in basketAssets">
-                    <td><span>{{ asset.execution_time | moment("MM-DD-YY HH:mm") }}</span></td>
+                    <td><span>{{ asset.execution_time | moment("MM-DD-YY HH:mm") }}</span> <span>&nbsp{{ asset.elapsed_time }}</span></td>
                     <td><a v-bind:href="'basket/' + asset.id">{{ asset.name }}</a></td>
                     <td>{{ asset.allocated_funds }}$</td>
                     <td class="text-danger mx-auto"><span class="badge"
@@ -46,6 +46,8 @@
                 <a href="" v-on:click.prevent="createBasket()"><i class="fas fa-plus-square"></i>&nbspCreate new basket</a>
                 &nbsp
                 <a href="" v-on:click.prevent="reloadBasketList()"><i class="fas fa-sync-alt"></i>&nbspReload basket list</a>
+                &nbsp<i class="fas fa-clock"></i>
+                {{ serverTime }}
                 <br>
             </div>
 
@@ -62,14 +64,15 @@
             return {
                 basketAssets: null,
                 isActive: true,
-                href: 'xxxx'
+                href: 'xxxx',
+                serverTime: null
             }
         },
         methods: {
             deleteBasket: function (basketId) {
                 axios.get('/basketdelete/' + basketId)
                     .then(response => {
-                        console.log(response);
+                        //console.log(response);
                         this.basketAssets = response.data
                     })
                     .catch(error => {
@@ -79,7 +82,7 @@
             createBasket: function () {
                 axios.get('/basketcreate')
                     .then(response => {
-                        console.log(response);
+                        //console.log(response);
                         this.basketAssets = response.data
                     })
                     .catch(error => {
@@ -90,11 +93,23 @@
             reloadBasketList: function () {
                 axios.get('/homegetbasketslist')
                     .then(response => {
-                        console.log('HomeForm.vue. homegetbasketslist response: ');
-                        console.log(response);
+                        //console.log('HomeForm.vue. homegetbasketslist response: ');
+                        //console.log(response);
                     })
                     .catch(error => {
                         console.log('HomeForm.vue. homegetbasketslist error:');
+                        console.log(error.response);
+                    })
+            },
+            getBasketsList: function(){
+                axios.get('/homegetbasketslist')
+                    .then(response => {
+                        //console.log('HomeForm.vue. homegetbasketslist response: ');
+                        //console.log(response);
+                        this.basketAssets = response.data;
+                    })
+                    .catch(error => {
+                        console.log('HomeForm.vue. homegetbasketslist error: ');
                         console.log(error.response);
                     })
             }
@@ -104,22 +119,23 @@
                 let amount = 0;
                 _.each(this.basketAssets, (asset) => {
                     amount += asset.allocated_funds;
-                    console.log(asset);
+                    //console.log(asset);
                 });
                 return amount;
             },
         },
         created() {
-            axios.get('/homegetbasketslist')
+            var myVar = setInterval(this.getBasketsList, 2000); // Make continues requests in order to show changing elapsed time
+
+            axios.get('/getservertime')
                 .then(response => {
-                    //console.log('HomeForm.vue. homegetbasketslist response: ');
-                    //console.log(response);
-                    this.basketAssets = response.data;
+                    this.serverTime = response.data;
                 })
                 .catch(error => {
-                    console.log('HomeForm.vue. homegetbasketslist error: ');
+                    console.log('HomeForm.vue. getservertime error: ');
                     console.log(error.response);
                 })
+
 
             // No websocket is needed
             /*

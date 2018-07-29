@@ -21,9 +21,7 @@ const app = new Vue({
 
     el: '#vueJsContainer',
     data: {
-
-        // Variables
-        todos: [], // Direction for v-for tag. array 1
+        todos: [],
         quantityOfRecords: null, // quantity of records
         name: '',
         errors: ''
@@ -32,8 +30,7 @@ const app = new Vue({
 
         // Search button event handler
         greet: function(event){
-            //console.log("Search button clicked. Vue even handler2");
-            // Ajax request. Axios. Symbol search request
+            // Symbol search request. C#
             var symbolSearchJsonString = {"symbol" : document.getElementById("searchInputTextField").value}; // Prepare a JSON string which consits only of one parameter - symbol
             var symbolSearchJson = JSON.stringify(symbolSearchJsonString);
 
@@ -49,9 +46,10 @@ const app = new Vue({
         },
         message: function(message){
 
-            // Ajax request. Axios
             // When + is clicked from the basket content page, two requests are made: Create asset and Get quote
             // {basketId}/{assetSymbol}/{longName}/{assetExchange}/{assetCurrency}/{assetAllocatedPercent}
+            // Actually two controllers are called. This one and getQuote controller
+            // One creates a record in assets table, a second one is getting a quote and updates its value in DB (stock_quote)
 
             axios.get('/assetcreate/' + message[0] + '/' + message[1] + '/' + message[2] + '/' + message[3] + '/' + message[4] + '/' + message[5])
                 .then(function (response) {
@@ -59,7 +57,7 @@ const app = new Vue({
                     //console.log(response);
                 })
                 .catch(function (error) {
-                    console.log('app.js. /assetcreate error: ' + error);
+                    console.log('app.js line 62. /assetcreate error: ' + error);
                 });
 
             // MAKE C# QUOTE REQUEST GOES FROM HERE
@@ -67,13 +65,14 @@ const app = new Vue({
             var getQuoteJsonString = {"symbol" : message[1], "basketNumber" : message[0], "currency" : message[4] };
             var getQuoteJson = JSON.stringify(getQuoteJsonString);
 
+            // This json string will be passed directley to web-socket channel, processed in ListenLocalSocket.php (ratchet)
             axios.get('/addmsgws/getQuote/' + getQuoteJson)
                 .then(function (response) {
-                    console.log('app.js. getQuote response: ');
-                    console.log(response);
+                    //console.log('app.js. getQuote response: ');
+                    //console.log(response);
                 })
                 .catch(function (error) {
-                    console.log('app.js. getQuote error: ');
+                    console.log('app.js line 77. getQuote error: ');
                     console.log(error);
                 });
         }
@@ -81,6 +80,8 @@ const app = new Vue({
     },
 
     created() {
+
+        // Web-socket listener. Listens for search results returened from web-socket
         Echo.channel('tbrChannel').listen('TbrAppSearchResponse', (e) => {
             var jsonParsedResponse = JSON.parse(e.update);
             if (jsonParsedResponse.messageType == 'SearchResponse')
@@ -90,8 +91,7 @@ const app = new Vue({
         });
     },
 
-}); // new Vue
-
+});
 
 
 // Vue basket component

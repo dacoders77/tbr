@@ -24,7 +24,7 @@ class Quote
             ->where('basket_id', $basketNumber)
             ->where('symbol', $symbol)
             ->update([
-                'price' => $price,
+                'stock_quote' => $price,
             ]);
 
         // Get all assets from DB after the asset was added

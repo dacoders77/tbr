@@ -70,7 +70,10 @@ Route::get('/assetcreate/{basketId}/{assetSymbol}/{longName}/{assetExchange}/{as
 Route::post('/basketgetdetails', 'BasketGetDetails@index');
 
 // Get the list of baskets for the home page
-Route::get('homegetbasketslist', 'HomeGetBasketsList@index'); // Single action controller
+Route::get('homegetbasketslist', 'HomeGetBasketsList@index');
+
+// Get server timr
+Route::get('getservertime', 'GetServerTime'); // Single action controller
 
 // Test table view. Delete it
 Route::view('/table', 'table');

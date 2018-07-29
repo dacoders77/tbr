@@ -22,7 +22,13 @@ class Assets extends Migration
             $table->string('exchange')->nullable();
             $table->string('currency')->nullable();
             $table->string('allocated_percent')->nullable();
-            $table->double('price')->nullable();
+            $table->double('stock_quote')->nullable();
+            $table->double('fx_quote')->nullable();
+            $table->double('fx_quote_processed')->nullable();
+            $table->double('volume')->nullable();
+            $table->bigInteger('request_id')->nullable();
+            $table->double('order_placed')->nullable();
+            $table->json('info')->nullable();
         });
     }
 

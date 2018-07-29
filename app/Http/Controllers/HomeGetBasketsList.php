@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
  */
 class HomeGetBasketsList extends Controller
 {
-    public function index() // public function __invoke()
+    public function index()
     {
         $basketContentObject =
             DB::table('baskets')
@@ -22,7 +22,5 @@ class HomeGetBasketsList extends Controller
 
         return($basketContentObject);
 
-        //$messageArray = array('messageType' => "basketsList", "body" => $basketContentObject);
-        //event(new \App\Events\TbrAppSearchResponse(json_encode($messageArray)));
     }
 }

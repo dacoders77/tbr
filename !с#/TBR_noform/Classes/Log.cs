@@ -84,13 +84,11 @@ namespace TBR_noform
 			{
 				if (mySqlConnection.State == System.Data.ConnectionState.Closed)
 				{
-					//Console.WriteLine("Connection state: " + conn.State + " .Opening the connection!");
-					//System.Windows.Forms.MessageBox.Show(connectionString);
 					mySqlConnection.Open(); // If no connection to DB
 				}
 				else
 				{
-					//Console.WriteLine("Connection state: " + conn.State + " .Connection open, no need to connect");
+					Console.WriteLine("Log.cs. Line 91. Connection state: " + dbConn.State + " .Connection open, no need to connect");
 				}
 
 				sqlQueryString = "SELECT * from logs WHERE is_new = '1'";
@@ -100,7 +98,8 @@ namespace TBR_noform
 
 				while (reader.Read())
 				{
-					int id = (int)reader["id"]; // Type cast. If after migration the Error: this type of conversion can not be done - go to phpMyAdmin and make it blank (no value). Value was UNSIGNED
+					//MessageBox.Show(reader["id"].ToString());
+					int id = Convert.ToInt32(reader["id"]); // Type cast. If after migration the Error: this type of conversion can not be done - go to phpMyAdmin and make it blank (no value). Value was UNSIGNED
 					DateTime date = (DateTime)reader["date"]; // Cast it to integer. (int)reader["id"]
 					string source = reader["source"].ToString();
 					string message = reader["message"].ToString();
@@ -126,99 +125,8 @@ namespace TBR_noform
 				}
 				reader.Close();
 
-				// Baskets handle 
-
-				// sqlQueryString = "SELECT * from baskets WHERE status = 'new'";
-				sqlQueryString = "SELECT * from baskets";
-				MySqlCommand cmd4 = new MySqlCommand(sqlQueryString, mySqlConnection); // Use the connection opened in the constructor
-				cmd4.ExecuteNonQuery();
-				MySqlDataReader readerBasketsTable = cmd4.ExecuteReader();
-				
-
-				while (readerBasketsTable.Read()) {
-
-					// Calculate elapsed time and update eache record. Then it will be read with php and shown at the web form
-					int id = (int)readerBasketsTable["id"]; // Get id of the record
-
-					DateTime executionTime = (DateTime)readerBasketsTable["execution_time"];
-					TimeSpan timeSpan = executionTime.Subtract(DateTime.Now);
-
-					// Calculate elapsed_time only for not executed baskets
-					// Calculate elapsed time and update eache record. Then it will be read with php and shown at the web form
-					if (!(bool)readerBasketsTable["executed"]) {
-
-						basketId = (int)readerBasketsTable["id"]; 
-
-						var sqlConnectionUpdateRecord = new MySqlConnection(connectionString);
-						sqlConnectionUpdateRecord.Open();
-						sqlQueryString = string.Format("UPDATE `baskets` SET `elapsed_time` = '" + timeSpan.Days.ToString() + ":" + timeSpan.Hours.ToString() + ":" + timeSpan.Minutes.ToString() + ":" + timeSpan.Seconds.ToString() + "' WHERE `baskets`.`id` = {0}", id);
-						MySqlCommand sqlCommandUpdateRecord = new MySqlCommand(sqlQueryString, sqlConnectionUpdateRecord);
-						sqlCommandUpdateRecord.ExecuteNonQuery();
-						sqlConnectionUpdateRecord.Close();
-					}
-
-
-					// Execution time is > current time. A basket needs to be executed
-					if ((DateTime.Compare((DateTime)readerBasketsTable["execution_time"], DateTime.Now)) < 0 && !(bool)readerBasketsTable["executed"])
-					{
-
-						// Make a new reader. Assets table
-
-						var sqlConnectionSelectAssets = new MySqlConnection(connectionString);
-						sqlConnectionSelectAssets.Open();
-
-						sqlQueryString = string.Format("SELECT * from assets WHERE basket_id = {0}", basketId); // (int)readerBasketsTable["id"]
-						MySqlCommand cmd5 = new MySqlCommand(sqlQueryString, sqlConnectionSelectAssets); 
-						cmd5.ExecuteNonQuery();
-						MySqlDataReader readerAssetsTable = cmd5.ExecuteReader();
-
-						while (readerAssetsTable.Read())
-						{
-							Console.WriteLine("x:" + readerAssetsTable["symbol"]);
-						}
-
-						sqlConnectionSelectAssets.Close();
-
-						
-
-
-
-						// Get all assets with basket_id = basket ID
-
-
-						// Set executed flag to true
-						var sqlConnectionUpdateRecord = new MySqlConnection(connectionString);
-						sqlConnectionUpdateRecord.Open();
-						sqlQueryString = string.Format("UPDATE `baskets` SET `executed` = '1', status='filled' WHERE `baskets`.`id` = {0}", id);
-						MySqlCommand sqlCommandUpdateRecord = new MySqlCommand(sqlQueryString, sqlConnectionUpdateRecord);
-						sqlCommandUpdateRecord.ExecuteNonQuery();
-						sqlConnectionUpdateRecord.Close();
-
-
-					
-
-						// get basket it
-						// make new sql request with this basket id
-
-						// flag = true
-						// loop through all basked id assets
-						// first record
-						// execute order (need to track timeout. if order freezes - need to catch it)
-						// flag = false and continue looping
-						// -- 
-						// order filled
-						// flag = true
-
-						// update record
-						// set executed flag to true(1)
-					}
-
-				}
-				readerBasketsTable.Close();
-
-
-
-				//Environment.Exit(1);
+		
+				// BASKET HANDLE WAS HERE
 				
 				//mySqlConnection.Close(); // No need to close the connection. It closes at the disposal 
 			}

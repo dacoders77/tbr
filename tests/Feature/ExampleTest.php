@@ -14,6 +14,7 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
+        $this->actingAs(factory(\App\User::class)->create());
         $response = $this->get('/');
 
         $response->assertStatus(200);

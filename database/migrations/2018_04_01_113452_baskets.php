@@ -19,12 +19,11 @@ class Baskets extends Migration
             $table->dateTime('execution_time')->nullable();
 
             $table->string('elapsed_time')->nullable();
-            $table->boolean('executed');
+            $table->boolean('executed')->default(0);
             $table->string('name')->nullable();
-            $table->integer('allocated_funds')->nullable();
+            $table->integer('allocated_funds')->default(0);
             $table->string('status')->nullable();
-            $table->boolean('is_deleted'); // Is message new flag
-
+            $table->boolean('is_deleted')->default(0); // Is message new flag
         });
     }
 

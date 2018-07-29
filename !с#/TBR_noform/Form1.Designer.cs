@@ -92,6 +92,7 @@
 			this.button3 = new System.Windows.Forms.Button();
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.button4 = new System.Windows.Forms.Button();
+			this.textBox4 = new System.Windows.Forms.TextBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox6.SuspendLayout();
 			this.groupBox5.SuspendLayout();
@@ -150,9 +151,9 @@
 			this.groupBox1.Controls.Add(this.button2);
 			this.groupBox1.Controls.Add(this.button13);
 			this.groupBox1.Controls.Add(this.button1);
-			this.groupBox1.Location = new System.Drawing.Point(6, 239);
+			this.groupBox1.Location = new System.Drawing.Point(6, 160);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(214, 78);
+			this.groupBox1.Size = new System.Drawing.Size(214, 74);
 			this.groupBox1.TabIndex = 43;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "System";
@@ -191,7 +192,7 @@
 			// 
 			this.label7.AutoSize = true;
 			this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.label7.Location = new System.Drawing.Point(3, 320);
+			this.label7.Location = new System.Drawing.Point(3, 240);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(102, 13);
 			this.label7.TabIndex = 49;
@@ -199,9 +200,9 @@
 			// 
 			// listView2
 			// 
-			this.listView2.Location = new System.Drawing.Point(4, 339);
+			this.listView2.Location = new System.Drawing.Point(4, 256);
 			this.listView2.Name = "listView2";
-			this.listView2.Size = new System.Drawing.Size(948, 153);
+			this.listView2.Size = new System.Drawing.Size(948, 236);
 			this.listView2.TabIndex = 48;
 			this.listView2.UseCompatibleStateImageBehavior = false;
 			// 
@@ -211,7 +212,7 @@
 			this.groupBox5.Controls.Add(this.button10);
 			this.groupBox5.Location = new System.Drawing.Point(194, 498);
 			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(196, 55);
+			this.groupBox5.Size = new System.Drawing.Size(182, 55);
 			this.groupBox5.TabIndex = 50;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Trades";
@@ -238,6 +239,7 @@
 			// 
 			// groupBox8
 			// 
+			this.groupBox8.Controls.Add(this.textBox4);
 			this.groupBox8.Controls.Add(this.textBox3);
 			this.groupBox8.Controls.Add(this.button12);
 			this.groupBox8.Location = new System.Drawing.Point(396, 498);
@@ -251,15 +253,16 @@
 			// 
 			this.textBox3.Location = new System.Drawing.Point(6, 22);
 			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(82, 20);
+			this.textBox3.Size = new System.Drawing.Size(43, 20);
 			this.textBox3.TabIndex = 3;
+			this.textBox3.Text = "AAPL";
 			// 
 			// button12
 			// 
 			this.button12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-			this.button12.Location = new System.Drawing.Point(94, 20);
+			this.button12.Location = new System.Drawing.Point(112, 20);
 			this.button12.Name = "button12";
-			this.button12.Size = new System.Drawing.Size(82, 23);
+			this.button12.Size = new System.Drawing.Size(71, 23);
 			this.button12.TabIndex = 1;
 			this.button12.Text = "Get Quote";
 			this.button12.UseVisualStyleBackColor = false;
@@ -276,6 +279,7 @@
 			this.label5.Size = new System.Drawing.Size(30, 13);
 			this.label5.TabIndex = 51;
 			this.label5.Text = "clear";
+			this.label5.Click += new System.EventHandler(this.label5_Click);
 			// 
 			// label4
 			// 
@@ -300,7 +304,7 @@
 			this.tabControl1.Location = new System.Drawing.Point(0, 28);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(956, 205);
+			this.tabControl1.Size = new System.Drawing.Size(956, 124);
 			this.tabControl1.TabIndex = 41;
 			// 
 			// tabPage1
@@ -309,7 +313,7 @@
 			this.tabPage1.Location = new System.Drawing.Point(4, 22);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(948, 179);
+			this.tabPage1.Size = new System.Drawing.Size(948, 98);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "System (websocket) log";
 			this.tabPage1.UseVisualStyleBackColor = true;
@@ -323,7 +327,7 @@
             this.Message});
 			this.listView1.Location = new System.Drawing.Point(0, 0);
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(948, 179);
+			this.listView1.Size = new System.Drawing.Size(948, 96);
 			this.listView1.TabIndex = 0;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			// 
@@ -348,7 +352,7 @@
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(948, 179);
+			this.tabPage2.Size = new System.Drawing.Size(948, 98);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "API log";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -632,13 +636,21 @@
 			// 
 			// button4
 			// 
-			this.button4.Location = new System.Drawing.Point(226, 294);
+			this.button4.Location = new System.Drawing.Point(226, 215);
 			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(108, 23);
+			this.button4.Size = new System.Drawing.Size(108, 19);
 			this.button4.TabIndex = 56;
 			this.button4.Text = "Account balance";
 			this.button4.UseVisualStyleBackColor = true;
 			this.button4.Click += new System.EventHandler(this.button4_Click);
+			// 
+			// textBox4
+			// 
+			this.textBox4.Location = new System.Drawing.Point(59, 22);
+			this.textBox4.Name = "textBox4";
+			this.textBox4.Size = new System.Drawing.Size(43, 20);
+			this.textBox4.TabIndex = 4;
+			this.textBox4.Text = "USD";
 			// 
 			// Form1
 			// 
@@ -742,6 +754,7 @@
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.ComboBox comboBox1;
 		private System.Windows.Forms.Button button4;
+		private System.Windows.Forms.TextBox textBox4;
 	}
 }
 

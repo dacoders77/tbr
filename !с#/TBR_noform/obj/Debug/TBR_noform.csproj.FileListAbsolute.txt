@@ -21,3 +21,4 @@ W:\domains\tbr.kk\!с#\TBR_noform\bin\Debug\Fleck.pdb
 W:\domains\tbr.kk\!с#\TBR_noform\bin\Debug\Echovoice.JSON.pdb
 W:\domains\tbr.kk\!с#\TBR_noform\bin\Debug\Echovoice.JSON.xml
 W:\domains\tbr.kk\!с#\TBR_noform\bin\Debug\MySql.Data.xml
+W:\domains\tbr.kk\!с#\TBR_noform\bin\Debug\ObjectDumper.dll
