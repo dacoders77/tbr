@@ -69,7 +69,9 @@ namespace TBR_noform
 			System.Threading.Thread.Sleep(2000); // If dont place this delay - no symbol found error pops up
 
 			// The first action from which basket execution is started
-			Console.WriteLine("GetQuoteBasket. ApiManager.cs line 70. " + DateTime.Now.ToString("yyyy.MM.dd. HH:mm:ss:fff") + " " + contract.Symbol + " | " + contract.Currency + " " + requestId);
+			Console.WriteLine("GetQuoteBasket. ApiManager.cs line 72. " + DateTime.Now.ToString("yyyy.MM.dd. HH:mm:ss:fff") + " " + contract.Symbol + " | " + contract.Currency + " " + requestId);
+			
+			form.basket.UpdateInfoJson(string.Format("Stock quote requested. Symbol: {1}. Currency: {2}.  RequestID: {0}", requestId, contract.Symbol, contract.Currency), "stockQuoteRequest", "sent", requestId); // Update json info feild in DB
 			iBClient.ClientSocket.reqMktData(requestId, contract, "", true, false, null); 
 		}
 
@@ -87,7 +89,9 @@ namespace TBR_noform
 
 			//private void UpdateInfoJson(int basketId, string symbol, int requestId, string currency, int volume)
 
-			form.basket.UpdateInfoJson(id, 11, symbol, requestId, currency, 222); // Update json info feild in DB
+			
+
+			form.basket.UpdateInfoJson(string.Format("FX quote requested. RequestID: {0}", requestId), "fxQuoteRequest", "ok", requestId); // Update json info feild in DB. Log: time, fx request has been sent
 			iBClient.ClientSocket.reqMktData(requestId, contract_x, "", true, false, null); 
 		}
 
@@ -135,8 +139,12 @@ namespace TBR_noform
 			//Console.WriteLine("ApiManager.cs line 116. place order id ******" + requestId);
 			//iBClient.ClientSocket.placeOrder(requestId, contract, order);
 
-			Console.WriteLine("PlaceOrder. ApiManager.cs line 132. " + DateTime.Now.ToString("yyyy.MM.dd. HH:mm:ss:fff") + " " + contract.Symbol + " | " + contract.Currency + " " + requestId);
-			iBClient.ClientSocket.placeOrder(unixTimestamp, contract, order);
+			Console.WriteLine("PlaceOrder. ApiManager.cs line 132. " + DateTime.Now.ToString("yyyy.MM.dd. HH:mm:ss:fff" + " ibClient.NextOrderId: " + iBClient.NextOrderId ) + " " + contract.Symbol + " | " + contract.Currency + " " + requestId);
+			form.basket.UpdateInfoJson(string.Format("Order placed. RequestID: {0}", requestId), "placeOrder", "ok", requestId); // Update json info feild in DB
+
+			//iBClient.ClientSocket.placeOrder(unixTimestamp, contract, order);
+			
+			iBClient.ClientSocket.placeOrder(requestId, contract, order);
 
 		}
 

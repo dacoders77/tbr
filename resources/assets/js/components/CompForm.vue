@@ -17,9 +17,11 @@
 -->
 
         <form>
+            <!--
             <br>
             <input v-validate="'required|email'" name="email" type="text"><span>{{ errors.first('email') }}</span>
             <br>
+            -->
 
             Basket name:
             <input class="form-control" v-model="basketName"/>
@@ -149,7 +151,7 @@
                 let amount = 0; // Like var in func boundry
                 _.each(this.basketAssets, (asset) => {
                     amount += this.allocatedFunds * asset.allocated_percent / 100
-                }); // lodash lib. chech it!
+                }); // lodash lib
                 return amount; // outpuit it to the form
             },
             totalPercent() {

@@ -60,15 +60,19 @@ namespace TBR_noform
 		public double assetForexQuote;
 		public string assetCurrency;
 
+		internal IBClient iBClient;
+
 		private double volume;
 
 		// Class constructor
-		public Basket(Form1 Form) {
+		internal Basket(Form1 Form, IBClient IBClient) {
 
 			form = Form;
 			isBasketExecuting = false; 
 			connectionString = "server=" + Settings.dbHost + ";user id=slinger;password=659111;database=tbr";
 			dbConn = new MySqlConnection(connectionString);
+
+			iBClient = IBClient;
 		}
 
 		// Bastekts watch
@@ -118,8 +122,9 @@ namespace TBR_noform
 
 					// DEBUG is_executed = 0
 					// Execution time is > current time. A basket needs to be executed
-					if (!(bool)readerBasketsTable["executed"]) // This case is only when exectute == 0. Just for debbuing purpuse. Not to wait for execution time. Set it to 0 - basket is executed
-					//if ((DateTime.Compare((DateTime)readerBasketsTable["execution_time"], DateTime.Now)) < 0 && !(bool)readerBasketsTable["executed"])
+
+					//if (!(bool)readerBasketsTable["executed"]) // This case is only when exectute == 0. Just for debbuing purpuse. Not to wait for execution time. Set it to 0 - basket is executed
+					if ((DateTime.Compare((DateTime)readerBasketsTable["execution_time"], DateTime.Now)) < 0 && !(bool)readerBasketsTable["executed"])
 					{
 						basketAllocatedFunds = Convert.ToDouble(readerBasketsTable["allocated_funds"]); // Get basket allocated funds
 						var sqlConnectionSelectAssets = new MySqlConnection(connectionString);
@@ -161,7 +166,7 @@ namespace TBR_noform
 						// Set executed flag to true and update status to filled
 						var sqlConnectionUpdateRecord = new MySqlConnection(connectionString);
 						sqlConnectionUpdateRecord.Open();
-						sqlQueryString = string.Format("UPDATE baskets SET executed=1, status='filled' WHERE id = {0}", id); // only strings are covered with '' quotes
+						sqlQueryString = string.Format("UPDATE baskets SET executed=1, status='executed' WHERE id = {0}", id); // only strings are covered with '' quotes
 						MySqlCommand sqlCommandUpdateRecord = new MySqlCommand(sqlQueryString, sqlConnectionUpdateRecord);
 						sqlCommandUpdateRecord.ExecuteNonQuery();
 						sqlConnectionUpdateRecord.Close();
@@ -173,7 +178,7 @@ namespace TBR_noform
 			} 
 		}
 
-		// Once a secod the whole fx_quote row is checked for the presance of a quote
+		// Once a secod (pr other period) the whole fx_quote row is checked for the presance of a quote
 		public void WatchFxQuoteRow()
 		{
 			//fx_quote_processed
@@ -216,7 +221,7 @@ namespace TBR_noform
 				}
 				else
 				{
-					Console.WriteLine("Basket.cs. Line 217. Connection state: " + dbConn.State + " .Connection open, no need to connect");
+					Console.WriteLine("Basket.cs. Line 219. Connection state: " + dbConn.State + " .Connection open, no need to connect");
 				}
 
 				sqlQueryString = "SELECT * FROM assets WHERE volume != 0 and order_placed = 0";
@@ -228,8 +233,12 @@ namespace TBR_noform
 				
 				while (readerAssetsTable.Read())
 				{
-					int requestId = (int)new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
-					string x = "8" + requestId.ToString().Remove(0, 3);
+					//int requestId = (int)new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+					int requestId = iBClient.NextOrderId++;
+
+					//string x = "8" + requestId.ToString().Remove(0, 3);
+					
+					string x = "8" + requestId.ToString().Remove(0, 1);
 					requestId = Convert.ToInt32(x); // C# requests: 5 - fx, 6 - stock. PHP: 7 - stock. 8 - order execution
 
 					//MessageBox.Show("place order: " + readerAssetsTable["symbol"].ToString());
@@ -249,7 +258,7 @@ namespace TBR_noform
 				}
 				else
 				{
-					Console.WriteLine("Basket.cs. Line 252. Connection state: " + dbConn.State + " .Connection open, no need to connect");
+					Console.WriteLine("Basket.cs. Line 260. Connection state: " + dbConn.State + " .Connection open, no need to connect");
 				}
 
 				// Update FX quote in the DB using a request id
@@ -259,18 +268,7 @@ namespace TBR_noform
 				// 2. status:ok update
 				// 3. log update (using string concatination)
 
-				// When updating json we need to send: object name (fxQuoteRequest, placeOrder etc.), log text.
-				// This methos is ready: UpdateInfoJson 
-
-				sqlQueryString = string.Format(
-
-					" UPDATE assets SET fx_quote = {0}, info = JSON_SET(info, '$.fxQuoteRequest', JSON_SET(info->'$.fxQuoteRequest', '$.status', 'ok')), info = JSON_SET(info, '$.fxQuoteRequest.log', CONCAT(`info`->>'$.fxQuoteRequest.log', '{2} FX Quote seccessfully received. Request Id: {1}.<br> ')) WHERE request_id = {1} ", fxQuote, requestId, DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss.fff"));
-
-
-				//"UPDATE assets " +
-				//"SET fx_quote = {0}, " +
-				//"info = JSON_SET(info, '$.fxQuoteRequest', JSON_SET((json_extract(info, '$.fxQuoteRequest')), '$.status', 'ok'))  " +
-				//"WHERE request_id = {1}", fxQuote, requestId);
+				sqlQueryString = string.Format("UPDATE assets SET fx_quote = {0} WHERE request_id = {1}", fxQuote, requestId);
 
 				MySqlCommand updateFxQuote = new MySqlCommand(sqlQueryString, mySqlConnection); // Use the connection opened in the constructor
 				updateFxQuote.ExecuteNonQuery();
@@ -335,7 +333,7 @@ namespace TBR_noform
 				}
 				else
 				{
-					Console.WriteLine("BasketWatch.cs. Line 282. Connection state: " + dbConn.State + " .Connection open, no need to connect");
+					Console.WriteLine("BasketWatch.cs. Line 327. Connection state: " + dbConn.State + ". Connection open, no need to connect");
 				}
 
 				sqlQueryString = string.Format("UPDATE assets SET request_id = {0}, fx_quote_processed = 1 WHERE basket_id = {1} AND symbol = '{2}' ", requestId, basketId, symbol);
@@ -371,6 +369,7 @@ namespace TBR_noform
 		}
 
 		// When basket needs to be executed, a stock quote is requested in order to calculate volume
+		// VOLUME CALCULATION
 		public void UpdateStockQuoteValue(int requestId, double stockQuote, Form1 form) {
 
 			// Update record in DB
@@ -382,7 +381,7 @@ namespace TBR_noform
 				}
 				else
 				{
-					Console.WriteLine("BasketWatch.cs. Line 368. Connection state: " + dbConn.State + " .Connection open, no need to connect");
+					Console.WriteLine("BasketWatch.cs. Line 375. Connection state: " + dbConn.State + " .Connection open, no need to connect");
 				}
 
 				/*
@@ -401,32 +400,51 @@ namespace TBR_noform
 				sqlQueryString = string.Format("SELECT allocated_funds FROM baskets WHERE id = {0}", basketId);
 				MySqlCommand cmd4 = new MySqlCommand(sqlQueryString, mySqlConnection);
 				object basketAllocatedFunds = cmd4.ExecuteScalar();
+				form.basket.UpdateInfoJson(string.Format("basketAllocatedFunds: {0}", basketAllocatedFunds), "volumeCalculate", "calc", requestId); // Update json info feild in DB
+
 
 				// Get asset allocated percent
 				sqlQueryString = string.Format("SELECT allocated_percent FROM assets WHERE request_id = {0}", requestId);
 				MySqlCommand cmd5 = new MySqlCommand(sqlQueryString, mySqlConnection);
 				object assetAllocatedPercent = cmd5.ExecuteScalar();
+				form.basket.UpdateInfoJson(string.Format("assetAllocatedPercent: {0}", assetAllocatedPercent), "volumeCalculate", "calc", requestId); // Update json info feild in DB
+
 
 				// Get fx quote
 				sqlQueryString = string.Format("SELECT fx_quote FROM assets WHERE request_id = {0}", requestId);
 				MySqlCommand cmd6 = new MySqlCommand(sqlQueryString, mySqlConnection);
 				object fxQuote = cmd6.ExecuteScalar();
+				form.basket.UpdateInfoJson(string.Format("fxQuote: {0}", fxQuote), "volumeCalculate", "calc", requestId); // Update json info feild in DB
+
 
 				// VOLUME CALCULATION
 				// Stock quote can be zero. In this case record zero to DB. This asset will not be executed.
 				if (stockQuote != 0)
 				{
-					//vol = (10.000 * 13 % / 100) / 182 * 1.16
-					volume = Math.Ceiling((Convert.ToDouble(basketAllocatedFunds) * Convert.ToDouble(assetAllocatedPercent) / 100) / stockQuote * Convert.ToDouble(fxQuote));
+					if (Convert.ToDouble(basketAllocatedFunds) != 0 && Convert.ToDouble(assetAllocatedPercent) != 0 && Convert.ToDouble(fxQuote) != 0 && stockQuote != 0)
+					{
+						//vol = (10.000 * 13 % / 100) / 182 * 1.16
+						volume = Math.Ceiling((Convert.ToDouble(basketAllocatedFunds) * Convert.ToDouble(assetAllocatedPercent) / 100) / stockQuote * Convert.ToDouble(fxQuote));
+						//MessageBox.Show(volume.ToString());
+						form.basket.UpdateInfoJson(string.Format("Volume successfully calculated. Volume: {0}", volume), "volumeCalculate", "ok", requestId); // Update json info feild in DB
+					}
+					else
+					{
+						form.basket.UpdateInfoJson(string.Format("Volume can not be calculated! One or few of the following valus is 0: basketAllocatedFunds, assetAllocatedPercent, fxQuote, stockQuote. RequestID: {0}", requestId), "volumeCalculate", "error", requestId); // Update json info feild in DB
+					}
 				}
 				else
 				{
 					volume = 0;
 					string info = DateTime.Now.ToString() + " Stock quote received as 0. Stock wont be executed";
-					// Stock quote was recevied with 0 value. Add this info to DB and mark DB execution status as error (partial filled)
-					sqlQueryString = string.Format("UPDATE assets SET info = '{0}' WHERE request_id = {1} ", info, requestId);
-					MySqlCommand updateInfo = new MySqlCommand(sqlQueryString, mySqlConnection);
-					updateInfo.ExecuteNonQuery();
+
+
+					// remove this request from here
+					//sqlQueryString = string.Format("UPDATE assets SET info = '{0}' WHERE request_id = {1} ", info, requestId);
+					//MySqlCommand updateInfo = new MySqlCommand(sqlQueryString, mySqlConnection);
+					//updateInfo.ExecuteNonQuery();
+
+					form.basket.UpdateInfoJson(string.Format("Stock quote recevied with 0 value. Exchange server may be off-line. This symbol wont be executed. RequestID: {0}", requestId), "volumeCalculate", "error", requestId); // Update json info feild in DB
 				}
 
 				
@@ -435,9 +453,8 @@ namespace TBR_noform
 				cmd7.ExecuteNonQuery();
 				
 
-				//MessageBox.Show(Convert.ToDouble(result).ToString());
-				ListViewLog.AddRecord(form, "brokerListBox", "Basket.cs", "Line 427. Volume calculated. Alloc. funds, stk quote, fx quote, req id:  " + Convert.ToDouble(basketAllocatedFunds).ToString() + " | " + stockQuote + " | " + Convert.ToDouble(fxQuote).ToString() + " | " + volume + " | " + requestId, "green");
-				
+				ListViewLog.AddRecord(form, "brokerListBox", "Basket.cs", "Line 434. Volume calculated. Alloc. funds, stk quote, fx quote, req id:  " + Convert.ToDouble(basketAllocatedFunds).ToString() + " | " + stockQuote + " | " + Convert.ToDouble(fxQuote).ToString() + " | " + volume + " | " + requestId, "green");
+			
 				mySqlConnection.Close();
 			}
 		}
@@ -445,9 +462,8 @@ namespace TBR_noform
 		// Updates JSON feild info in the DB. This method is called when making FX quote request, volume calculation, quote request etc.
 		// Then the respose is received in 
 		// Later, using this json data reports will be built. These reports are gonna be availible in the browser by clicking on filled icon in the basket list
-		public void UpdateInfoJson(int id, int basketId, string symbol, int requestId, string currency, int volume)
+		public void UpdateInfoJson(string logText, string logObject, string statusText, int requestId)
 		{
-			string z = "fxQuoteRequest";
 
 			using (var mySqlConnection = new MySqlConnection(connectionString))
 			{
@@ -460,16 +476,44 @@ namespace TBR_noform
 					Console.WriteLine("Basket.cs. Line 444. Connection state: " + dbConn.State + " .Connection open, no need to connect");
 				}
 
-				// sqlQueryString = string.Format(" UPDATE assets set info = JSON_SET(info, '$.fxQuoteRequest', JSON_SET((json_extract(info, '$.fxQuoteRequest')), '$.requestId', {0}, '$.time', '{1}'))  where id = {2} ", requestId, DateTime.Now.ToString("yyyy.MM.dd. HH:mm:ss:fff"), id, z);
-				// sqlQueryString = string.Format(" UPDATE assets SET info = JSON_SET(info, '$.{3}', JSON_SET((json_extract(info, '$.{3}')), '$.requestId', {0}, '$.time', '{1}', '$.info', 'Request sent'))  where id = {2} ", requestId, DateTime.Now.ToString("yyyy.MM.dd. HH:mm:ss:fff"), id, z);
-
-				sqlQueryString = string.Format(" UPDATE assets SET info = JSON_SET(info, '$.fxQuoteRequest.log', CONCAT(`info`->> '$.fxQuoteRequest.log', '{0} FX quote request sent. Request id: {1}.<br> ')) WHERE request_id = {1} ", DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss.fff"), requestId);
-
+				sqlQueryString = string.Format(
+				//" UPDATE assets SET info = JSON_SET(info, '$.fxQuoteRequest', JSON_SET(info->'$.{4}', '$.status', '{3}')), info = JSON_SET(info, '$.{4}.log', CONCAT(`info`->>'$.{4}.log', '{2} {5}.<br>')) WHERE request_id = {1} ", fxQuote, requestId, DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss.fff"), statusText, logObject, logText);
+				" UPDATE assets SET info = JSON_SET(info, '$.{0}', JSON_SET(info->'$.{0}', '$.status', '{1}')), info = JSON_SET(info, '$.{0}.log', CONCAT(`info`->>'$.{0}.log', '{2} {3}.<br>')) WHERE request_id = {4} ", logObject, statusText, DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss.fff"), logText, requestId);
 
 				MySqlCommand updateRequestId = new MySqlCommand(sqlQueryString, mySqlConnection);
 				updateRequestId.ExecuteNonQuery();
 				mySqlConnection.Close();
+				
 			}
 		}
+
+		// Json update method only for Order Execute json object in info feild. It has more feilds that is why a separate method is used
+		public void UpdateInfoJsonExecuteOrder(string logText, string logObject, string statusText, int requestId, double avgFillPrice, double filled)
+		{
+
+			using (var mySqlConnection = new MySqlConnection(connectionString))
+			{
+				if (mySqlConnection.State == System.Data.ConnectionState.Closed)
+				{
+					mySqlConnection.Open(); // If no connection to DB
+				}
+				else
+				{
+					Console.WriteLine("Basket.cs. Line 444. Connection state: " + dbConn.State + " .Connection open, no need to connect");
+				}
+
+				
+
+				sqlQueryString = string.Format(
+				//" UPDATE assets SET info = JSON_SET(info, '$.fxQuoteRequest', JSON_SET(info->'$.{4}', '$.status', '{3}')), info = JSON_SET(info, '$.{4}.log', CONCAT(`info`->>'$.{4}.log', '{2} {5}.<br>')) WHERE request_id = {1} ", fxQuote, requestId, DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss.fff"), statusText, logObject, logText);
+				" UPDATE assets SET info = JSON_SET(info, '$.{0}', JSON_SET(info->'$.{0}', '$.status', '{1}')), info = JSON_SET(info, '$.{0}.log', CONCAT(`info`->>'$.{0}.log', '{2} {3}.<br>'), '$.{0}.filled', {5}, '$.{0}.avgFillprice', {6}) WHERE request_id = {4} ", logObject, statusText, DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss.fff"), logText, requestId,filled, avgFillPrice);
+
+				MySqlCommand updateRequestId = new MySqlCommand(sqlQueryString, mySqlConnection);
+				updateRequestId.ExecuteNonQuery();
+				mySqlConnection.Close();
+
+			}
+		}
+
 	}
 }

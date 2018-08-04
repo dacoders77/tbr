@@ -90,7 +90,7 @@ namespace TBR_noform
 			var server = new WebSocketServer("ws://0.0.0.0:8181");
 
 			// Other
-			basket = new Basket(this);
+			basket = new Basket(this, ibClient);
 
 			server.SupportedSubProtocols = new[] { "superchat", "chat" };
 			server.Start(socket =>
@@ -142,7 +142,6 @@ namespace TBR_noform
 			ibClient.OrderStatus += IbClient_OrderStatus; // Status of a placed order
 
 			ibClient.NextValidId += IbClient_NextValidId; // Fires when api is connected. Connection status received here
-			//ibClient.OrderStatus += IbClient_OrderStatus; // Order status
 			ibClient.ContractDetails += IbClient_ContractDetails; // Ticker search
 			ibClient.ContractDetailsEnd += IbClient_ContractDetailsEnd; // Fires up when the the search response feed is finished. One search request can contain multiple contracts
 			ibClient.UpdateAccountValue += IbClient_UpdateAccountValue; // Account info
@@ -151,6 +150,9 @@ namespace TBR_noform
 		private void IbClient_OrderStatus(IBSampleApp.messages.OrderStatusMessage obj)
 		{
 			ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "IbClient_OrderStatus. line 153. avgFillprice, filled, orderID, orderStatus: " + obj.AvgFillPrice + " | " + obj.Filled + " | " + obj.OrderId + " | " + obj.Status , "white");
+
+			basket.UpdateInfoJsonExecuteOrder(string.Format("Order executed! Info text: {0}", obj.Status), "executeOrder", "ok", obj.OrderId, obj.AvgFillPrice, obj.Filled); // Update json info feild in DB
+			
 		}
 
 		private void IbClient_UpdateAccountValue(IBSampleApp.messages.AccountValueMessage obj) // Account info event. https://interactivebrokers.github.io/tws-api/interfaceIBApi_1_1EWrapper.html#ae15a34084d9f26f279abd0bdeab1b9b5
@@ -191,25 +193,34 @@ namespace TBR_noform
 			// 2104 - A market data farm is connected.
 			// 2108 - A market data farm connection has become inactive but should be available upon demand.
 			// 2106 - A historical data farm is connected. 
+			// 10167 - Requested market data is not subscribed. Displaying delayed market data
 			// .. Not all codes are listed
 
-			//if (arg2 != 2104 && arg2 != 2119 && arg2 != 2108 && arg2 != 2106 && arg2 != 10167)
-			if (true)
+			if (arg2 != 2104 && arg2 != 2119 && arg2 != 2108 && arg2 != 2106 && arg2 != 10167)
+			//if (true)
+			{
+				// arg1 - requestId
 				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "IbClient_Error: args: " + arg1 + " " + arg2 + " " + arg3 + "exception: " + arg4, "white");
+				// id, code, text
+				
+				//basket.UpdateInfoJson(string.Format("Place order error! Error text: '{2}'. Error code: {1} RequestID: {0}", arg1, arg2, arg3), "placeOrder", "error", arg1); // Update json info feild in DB
+				basket.UpdateInfoJson(string.Format("Place order error! Error text: {2} . Error code:{1}  RequestID: {0}. ibClient.NextOrderId: {3}", arg1, arg2, arg3, ibClient.NextOrderId), "placeOrder", "error", arg1); // Update json info feild in DB
+			}
 		}
 
 		private void IbClient_TickPrice(IBSampleApp.messages.TickPriceMessage obj) // ReqMktData. Get quote. Tick types https://interactivebrokers.github.io/tws-api/rtd_simple_syntax.html 
 		{
 			char requestCode = obj.RequestId.ToString()[0]; // First char is the code. C# requests: 5 - fx, 6 - stock. PHP: 7 - stock
 
-			// FX pairs. C# while executing a basket
+			// FX quote. C# while executing a basket
+			// When a fx quote is received, ExecuteBasketThread() checks it and requests a stock quote
 			if (TickType.getField(obj.Field) == "close") // bidPrice = -1. This value returned when market is closed. https://interactivebrokers.github.io/tws-api/md_receive.html
 			{
 				basket.assetForexQuote = obj.Price;
-				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs line 206", "IbClient_TickPrice. FX Quote: " + obj.Price + " " + obj.RequestId, "yellow");
+				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs line 210", "IbClient_TickPrice. FX Quote: " + obj.Price + " " + obj.RequestId, "yellow");
 
-				//Console.WriteLine("Form1.cs. line 184: " + obj.RequestId + " : " + obj.Price);
-				basket.addForexQuoteToDB(obj.RequestId, obj.Price);
+				basket.UpdateInfoJson(string.Format("FX quote successfully recevied. FX quote: {0}. RequestID: {1}", obj.Price, obj.RequestId), "fxQuoteRequest", "ok", obj.RequestId); // Update json info feild in DB
+				basket.addForexQuoteToDB(obj.RequestId, obj.Price); // Update fx quote in the BD
 			}
 
 			// For stock. A request from PHP. While adding an asset to a basket
@@ -217,7 +228,7 @@ namespace TBR_noform
 			if (TickType.getField(obj.Field) == "delayedLast" && requestCode.ToString() == "7") // PHP. Stock quote request
 			{
 
-				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs line 216", "IbClient_TickPrice. PHP req. price: " + obj.Price + "reqId: " + obj.RequestId, "white");
+				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs line 221", "IbClient_TickPrice. PHP req. price: " + obj.Price + "reqId: " + obj.RequestId, "white");
 
 				quoteResponse.symbolPrice = obj.Price;
 				quoteResponse.symbolName = apiManager.symbolPass; // We have to store symbol name and basket number as apiManager fields. Symbol name is not returned with IbClient_TickPrice response as well as basket number. Then basket number will be returnet to php and passed as the parameter to Quote.php class where price field will be updated. Symbol name and basket number are the key
@@ -235,6 +246,8 @@ namespace TBR_noform
 				// Updte quote value in DB
 				basket.UpdateStockQuoteValue(obj.RequestId, obj.Price, this);
 				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "IbClient_TickPrice. C# 6 req. price: " + obj.Price + " " + obj.RequestId, "white");
+
+				basket.UpdateInfoJson(string.Format("Stock quote successfully recevied. Stock quote: {0}. RequestID: {1}", obj.Price, obj.RequestId), "stockQuoteRequest", "ok", obj.RequestId); // Update json info feild in DB
 			}
 		}
 

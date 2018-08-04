@@ -106,4 +106,8 @@ const app3 = new Vue({
     el: '#vueHomeForm',
 });
 
-
+// Vue home page component
+Vue.component('report-block', require('./components/Report.vue'));
+const app4 = new Vue({
+    el: '#reportForm',
+});

@@ -32,9 +32,16 @@ Route::get('/basket/{z}', function ($basketId) {
     return View::make('basket')->with('basket_id', $basketId);
 });
 
+// report.blade.php
+Route::get('/report/{z}', function ($basketId) {
+    return View::make('report')->with('basket_id', $basketId);
+});
+
 Route::get('/settings', function () {
     return view('settings');
 });
+
+
 
 // Add a record (message) to websocket que DB. Later these messages are sent to C#
 Route::get('/addmsgws/{requestType}/{searchRequestString}', 'AddMessageToSocketQue@index');
@@ -47,7 +54,7 @@ Route::get('/searchRequestTest', function () {
     return view('searchRequestTest');
 });
 
-// Search response pusher event
+// Search response pusher event test
 Route::get('event', function () {
     event(new \App\Events\TbrAppSearchResponse('How are you?'));
 });
@@ -74,6 +81,9 @@ Route::get('homegetbasketslist', 'HomeGetBasketsList@index');
 
 // Get server timr
 Route::get('getservertime', 'GetServerTime'); // Single action controller
+
+// Get the report
+Route::post('/report', 'GetReport@index');
 
 // Test table view. Delete it
 Route::view('/table', 'table');

@@ -23,9 +23,11 @@
                     <td><span>{{ asset.execution_time | moment("MM-DD-YY HH:mm") }}</span> <span>&nbsp{{ asset.elapsed_time }}</span></td>
                     <td><a v-bind:href="'basket/' + asset.id">{{ asset.name }}</a></td>
                     <td>{{ asset.allocated_funds }}$</td>
-                    <td class="text-danger mx-auto"><span class="badge"
-                                                          v-bind:class="{ 'badge-warning': (asset.status == 'new'), 'badge-success': (asset.status == 'filled'), 'badge-danger': (asset.status == 'error')}">{{ asset.status
-                        }}</span></td>
+
+
+                    <td class="text-danger mx-auto"><a v-bind:href="'report/' + asset.id"><span class="badge" v-bind:class="{ 'badge-warning': (asset.status == 'new'), 'badge-success': (asset.status == 'executed'), 'badge-danger': (asset.status == 'error')}">{{ asset.status}}</span></a></td>
+
+
                     <td><a href="" v-on:click.prevent="deleteBasket(asset.id)"><i class="fas fa-trash-alt"
                                                                                   style="color: tomato"></i></a></td>
                 </tr>

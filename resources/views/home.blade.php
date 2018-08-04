@@ -9,8 +9,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
 
-                <div id="vueJsContainer></div>
-
+                <div id="vueJsContainer"></div>
 
 
                 <!-- Display flash message -->

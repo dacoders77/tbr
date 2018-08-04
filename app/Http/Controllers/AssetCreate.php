@@ -16,8 +16,11 @@ class AssetCreate extends Controller
             'long_name' => $longName,
             'exchange' => $assetExchange,
             'currency' => $assetCurrency,
+            'fx_quote_processed' => 0,
+            'volume' => 0,
+            'order_placed' => 0,
             'allocated_percent' => $assetAllocatedPercent,
-            'info' => '{ "placeOrder": { "log": "", "status": "" }, "executeOrder": { "log": "", "status": "", "filled": "", "orderStatus": "", "avgFillprice": "" }, "fxQuoteRequest": { "log": "", "status": "" }, "volumeCalculate": { "log": "", "status": "" }, "stockQuoteRequest": { "log": "", "status": "" } }'
+            'info' => '{ "placeOrder": { "log": "", "status": "" }, "executeOrder": { "log": "", "status": "", "filled": "", "avgFillprice": "" }, "fxQuoteRequest": { "log": "", "status": "" }, "volumeCalculate": { "log": "", "status": "" }, "stockQuoteRequest": { "log": "", "status": "" } }'
 
         ));
 
