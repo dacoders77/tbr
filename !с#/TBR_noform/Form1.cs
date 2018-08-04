@@ -20,7 +20,7 @@ namespace TBR_noform
 	public partial class Form1 : Form
 	{
 		// Threads
-		public Thread emailThread;
+		public Thread emailThread; // Delete it? It is used nowhere
 		private Thread logThread; // A thread of Logging class. From this thread DB is searched for new messages
 		private Thread executeBasketThread; // Basket items search and execution thread. Searchs for baskets which need to be executed
 
@@ -420,6 +420,7 @@ namespace TBR_noform
 
 			executeBasketThread.IsBackground = true;
 			executeBasketThread.Start();
+
 		}
 
 		private void search_Button2_Click(object sender, EventArgs e) // Ticker search button click

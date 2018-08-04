@@ -44,6 +44,7 @@
 			this.button11 = new System.Windows.Forms.Button();
 			this.button10 = new System.Windows.Forms.Button();
 			this.groupBox8 = new System.Windows.Forms.GroupBox();
+			this.textBox4 = new System.Windows.Forms.TextBox();
 			this.textBox3 = new System.Windows.Forms.TextBox();
 			this.button12 = new System.Windows.Forms.Button();
 			this.label5 = new System.Windows.Forms.Label();
@@ -92,7 +93,6 @@
 			this.button3 = new System.Windows.Forms.Button();
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.button4 = new System.Windows.Forms.Button();
-			this.textBox4 = new System.Windows.Forms.TextBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox6.SuspendLayout();
 			this.groupBox5.SuspendLayout();
@@ -248,6 +248,14 @@
 			this.groupBox8.TabIndex = 53;
 			this.groupBox8.TabStop = false;
 			this.groupBox8.Text = "Market data";
+			// 
+			// textBox4
+			// 
+			this.textBox4.Location = new System.Drawing.Point(59, 22);
+			this.textBox4.Name = "textBox4";
+			this.textBox4.Size = new System.Drawing.Size(43, 20);
+			this.textBox4.TabIndex = 4;
+			this.textBox4.Text = "USD";
 			// 
 			// textBox3
 			// 
@@ -636,21 +644,13 @@
 			// 
 			// button4
 			// 
-			this.button4.Location = new System.Drawing.Point(226, 215);
+			this.button4.Location = new System.Drawing.Point(227, 209);
 			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(108, 19);
+			this.button4.Size = new System.Drawing.Size(108, 22);
 			this.button4.TabIndex = 56;
 			this.button4.Text = "Account balance";
 			this.button4.UseVisualStyleBackColor = true;
 			this.button4.Click += new System.EventHandler(this.button4_Click);
-			// 
-			// textBox4
-			// 
-			this.textBox4.Location = new System.Drawing.Point(59, 22);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(43, 20);
-			this.textBox4.TabIndex = 4;
-			this.textBox4.Text = "USD";
 			// 
 			// Form1
 			// 

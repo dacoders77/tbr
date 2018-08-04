@@ -22,3 +22,8 @@ W:\domains\tbr.kk\!с#\TBR_noform\bin\Debug\Echovoice.JSON.pdb
 W:\domains\tbr.kk\!с#\TBR_noform\bin\Debug\Echovoice.JSON.xml
 W:\domains\tbr.kk\!с#\TBR_noform\bin\Debug\MySql.Data.xml
 W:\domains\tbr.kk\!с#\TBR_noform\bin\Debug\ObjectDumper.dll
+W:\domains\tbr.kk\!с#\TBR_noform\bin\Debug\BouncyCastle.Crypto.dll
+W:\domains\tbr.kk\!с#\TBR_noform\bin\Debug\MailKit.dll
+W:\domains\tbr.kk\!с#\TBR_noform\bin\Debug\MimeKit.dll
+W:\domains\tbr.kk\!с#\TBR_noform\bin\Debug\MailKit.xml
+W:\domains\tbr.kk\!с#\TBR_noform\bin\Debug\MimeKit.xml

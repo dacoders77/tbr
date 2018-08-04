@@ -126,6 +126,8 @@ namespace TBR_noform
 					//if (!(bool)readerBasketsTable["executed"]) // This case is only when exectute == 0. Just for debbuing purpuse. Not to wait for execution time. Set it to 0 - basket is executed
 					if ((DateTime.Compare((DateTime)readerBasketsTable["execution_time"], DateTime.Now)) < 0 && !(bool)readerBasketsTable["executed"])
 					{
+						TFR_noform.Email.Send("Basket ID:" +  basketId + " executed", "The basket ID:" + basketId + " has been executed! In order to see the detailed execution report please follow the link: http://173.248.133.174/tbr.kk/public/report/" + basketId); // Send email notification
+
 						basketAllocatedFunds = Convert.ToDouble(readerBasketsTable["allocated_funds"]); // Get basket allocated funds
 						var sqlConnectionSelectAssets = new MySqlConnection(connectionString);
 						sqlConnectionSelectAssets.Open();
