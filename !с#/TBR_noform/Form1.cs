@@ -26,7 +26,7 @@ namespace TBR_noform
 
 		// Websocket
 		private List<IWebSocketConnection> allSockets; // The list of all connected clients to the websocket server
-		
+
 		// IB API variables
 		private IBClient ibClient;
 		private EReaderMonitorSignal signal;
@@ -49,6 +49,14 @@ namespace TBR_noform
 		// Other
 		public Basket basket; // Baskets execution 
 
+		private int initialNextValidOrderID;
+		// Trying to get the right next order id
+		public int nxtOrderID {
+			get {
+				initialNextValidOrderID++;
+				return initialNextValidOrderID;
+			}
+		}
 
 		public Form1()
 		{
@@ -161,6 +169,7 @@ namespace TBR_noform
 			{
 				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "UpdateAccountValue: " + obj.Key + " " + obj.Value, "white");
 				availableFundsResponse.availableFunds = Convert.ToDouble(obj.Value);
+
 				foreach (var socket in allSockets.ToList()) // Loop through all connections/connected clients and send each of them a message
 				{
 					socket.Send(availableFundsResponse.ReturnJson());
@@ -203,14 +212,18 @@ namespace TBR_noform
 				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "IbClient_Error: args: " + arg1 + " " + arg2 + " " + arg3 + "exception: " + arg4, "white");
 				// id, code, text
 				
-				//basket.UpdateInfoJson(string.Format("Place order error! Error text: '{2}'. Error code: {1} RequestID: {0}", arg1, arg2, arg3), "placeOrder", "error", arg1); // Update json info feild in DB
-				basket.UpdateInfoJson(string.Format("Place order error! Error text: {2} . Error code:{1}  RequestID: {0}. ibClient.NextOrderId: {3}", arg1, arg2, arg3, ibClient.NextOrderId), "placeOrder", "error", arg1); // Update json info feild in DB
+				// A error can triggerd by any request: fx, quote or place order. Use place order for now
+				basket.UpdateInfoJson(string.Format("Place order error! Error text: {2} . Error code:{1}  RequestID: {0}. ibClient.NextOrderId: {3}", arg1, arg2, arg3, ibClient.NextOrderId), "placeOrder", "error", arg1, "placeorder_request_id"); // Update json info feild in DB
 			}
 		}
 
 		private void IbClient_TickPrice(IBSampleApp.messages.TickPriceMessage obj) // ReqMktData. Get quote. Tick types https://interactivebrokers.github.io/tws-api/rtd_simple_syntax.html 
 		{
-			char requestCode = obj.RequestId.ToString()[0]; // First char is the code. C# requests: 5 - fx, 6 - stock. PHP: 7 - stock
+			char requestCode = obj.RequestId.ToString()[obj.RequestId.ToString().Length - 1]; // First char is the code. C# requests: 5 - fx, 6 - stock. PHP: 7 - stock
+			
+
+			// Tick types: Close - for FX quotes. DelayedCLose - for stock quotes
+			//ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs line 215", "IbClient_TickPrice. Price " + obj.Price + " requestId: " + obj.RequestId + " tick type: " + TickType.getField(obj.Field), "yellow");
 
 			// FX quote. C# while executing a basket
 			// When a fx quote is received, ExecuteBasketThread() checks it and requests a stock quote
@@ -219,16 +232,17 @@ namespace TBR_noform
 				basket.assetForexQuote = obj.Price;
 				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs line 210", "IbClient_TickPrice. FX Quote: " + obj.Price + " " + obj.RequestId, "yellow");
 
-				basket.UpdateInfoJson(string.Format("FX quote successfully recevied. FX quote: {0}. RequestID: {1}", obj.Price, obj.RequestId), "fxQuoteRequest", "ok", obj.RequestId); // Update json info feild in DB
+				basket.UpdateInfoJson(string.Format("FX quote successfully recevied. FX quote: {0}. RequestID: {1}", obj.Price, obj.RequestId), "fxQuoteRequest", "ok", obj.RequestId, "fx_request_id"); // Update json info feild in DB
 				basket.addForexQuoteToDB(obj.RequestId, obj.Price); // Update fx quote in the BD
 			}
 
+			
 			// For stock. A request from PHP. While adding an asset to a basket
 			// In this case we do not record this price to the DB. It is recorded from PHP
 			if (TickType.getField(obj.Field) == "delayedLast" && requestCode.ToString() == "7") // PHP. Stock quote request
 			{
 
-				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs line 221", "IbClient_TickPrice. PHP req. price: " + obj.Price + "reqId: " + obj.RequestId, "white");
+				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs line 221", "IbClient_TickPrice. PHP req. price: " + obj.Price + " reqId: " + obj.RequestId, "white");
 
 				quoteResponse.symbolPrice = obj.Price;
 				quoteResponse.symbolName = apiManager.symbolPass; // We have to store symbol name and basket number as apiManager fields. Symbol name is not returned with IbClient_TickPrice response as well as basket number. Then basket number will be returnet to php and passed as the parameter to Quote.php class where price field will be updated. Symbol name and basket number are the key
@@ -239,6 +253,7 @@ namespace TBR_noform
 					socket.Send(quoteResponse.ReturnJson());
 				}
 			}
+			
 
 			// C#. ApiManager stock quote request
 			if (TickType.getField(obj.Field) == "delayedLast" && requestCode.ToString() == "6") 
@@ -247,12 +262,16 @@ namespace TBR_noform
 				basket.UpdateStockQuoteValue(obj.RequestId, obj.Price, this);
 				ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "IbClient_TickPrice. C# 6 req. price: " + obj.Price + " " + obj.RequestId, "white");
 
-				basket.UpdateInfoJson(string.Format("Stock quote successfully recevied. Stock quote: {0}. RequestID: {1}", obj.Price, obj.RequestId), "stockQuoteRequest", "ok", obj.RequestId); // Update json info feild in DB
+				basket.UpdateInfoJson(string.Format("Stock quote successfully recevied. Stock quote: {0}. RequestID: {1}", obj.Price, obj.RequestId), "stockQuoteRequest", "ok", obj.RequestId, "quote_request_id"); // Update json info feild in DB
 			}
+
+			
 		}
 
 		private void IbClient_NextValidId(IBSampleApp.messages.ConnectionStatusMessage obj) // Api connection established
 		{
+			initialNextValidOrderID = ibClient.NextOrderId; // Get initial value once. Then this value vill be encreased
+
 			ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "API connected: " + obj.IsConnected + " Next valid req id: " + ibClient.NextOrderId, "white");
 
 			// 1 - Realtime, 2 - Frozen, 3 - Delayed data, 4 - Delayed frozen
@@ -316,7 +335,7 @@ namespace TBR_noform
 
 		}
 
-		private void button13_Click(object sender, EventArgs e) // Api coonect button click 
+		private void button13_Click(object sender, EventArgs e) // Api connect button click 
 		{
 			if (!isConnected) // False on startup
 			{
@@ -380,7 +399,7 @@ namespace TBR_noform
 			{
 				basket.Watch(); // Watch baskets table. When the time comes - execute all assets from this basket and set executed flag to 1 in the DB
 				basket.WatchFxQuoteRow(); // Watch when a fx quote is received and added to assets table
-				basket.WatchVolumeRow(); // Watch when a volume is calculated. When calculated - execute the asset
+				basket.WatchVolumeRow(); // Watch when volume is calculated. When calculated - place the order
 				Thread.Sleep(1000);
 			}
 		}
@@ -421,25 +440,20 @@ namespace TBR_noform
 			executeBasketThread.IsBackground = true;
 			executeBasketThread.Start();
 
+			button13_Click(sender, e); // Get connected
+
 		}
 
 		private void search_Button2_Click(object sender, EventArgs e) // Ticker search button click
 		{
+			ListViewLog.AddRecord(this, "brokerListBox", "Form1.cs", "Connection status: " + ibClient.ClientSocket.CheckConnection().ToString(), (ibClient.ClientSocket.CheckConnection() ? "white" : "red"));
+
 			apiManager.Search(textBox1.Text);
 		}
 
 		private void button12_Click(object sender, EventArgs e) // Get quote button click
 		{
-			/*
-			contract = new Contract();
-			contract.Symbol = textBox3.Text;
-			contract.SecType = "STK";
-			contract.Currency = "USD";
-			//In the API side, NASDAQ is always defined as ISLAND in the exchange field
-			contract.Exchange = "SMART"; // SMART ISLAND
-			ibClient.ClientSocket.reqMktData((Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds, contract, "", true, false, null); ; // Request market data for a contract https://interactivebrokers.github.io/tws-api/classIBApi_1_1EClient.html#a7a19258a3a2087c07c1c57b93f659b63
-			*/
-
+			
 			apiManager.GetQuote(textBox3.Text, 1, textBox4.Text); // Symbol, Basket number, currency
 			//apiManager.GetForexQuote("EUR", "USD", 7894561);
 		}
@@ -452,6 +466,40 @@ namespace TBR_noform
 		private void label5_Click(object sender, EventArgs e)
 		{
 			listView2.Items.Clear();
+		}
+
+		// Cleare DB quotes. Debug purpuses
+		private void button5_Click(object sender, EventArgs e)
+		{
+			basket.ClearQuotesDB();
+		}
+
+		// Set basket executed row to 0. DEBUG ONLY!
+		private void button6_Click(object sender, EventArgs e)
+		{
+			LogOrderIdToFile("--------------------------------------------------------");
+			basket.ClearBasketsExecutedColumn();
+		}
+
+		// Logs all generated order ids to a file. DEBUG ONLY!
+		public void LogOrderIdToFile(string str) {
+
+			using (System.IO.StreamWriter file =
+				new System.IO.StreamWriter(@"orderIdLog.txt", true))
+			{
+				file.WriteLine(DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss:fff") + " " + str);
+			}
+		}
+
+		// Get next valid ID. DEBUG!
+		private void button7_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Form1.cs 493 " + nxtOrderID.ToString());
+		}
+
+		private void button7_Click_1(object sender, EventArgs e)
+		{
+			ibClient.ClientSocket.reqAccountUpdates(true, "U2314623");
 		}
 	}
 }

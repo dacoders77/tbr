@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IBApi;
-
+using System.Windows.Forms;
 
 /*
  * Sends API requests to Interactive Brokers like quote requests, fx quote requests, order placement.
@@ -17,7 +17,6 @@ namespace TBR_noform
 	class ApiManager
 	{
 		internal IBClient iBClient;
-		private Contract contract;
 		private Order order;
 		public int basketNumber; // When getQuote request is recevied, it contains: symbol and basket number. Then we need to determine the price of a requested sybol and return it with basket number to PHP. Then the mentioned symbol will be updated in basket № ... If there is no basket number, it is not gonna be possible to understand which price of the symbol must be updated. The same symbol can be located and a number of baskets
 		public string symbolPass; // The same applies to symbol. We need to pass symbol name the same way we pass basket number. Because IbClient_TickPrice event does not return symbol name
@@ -27,51 +26,68 @@ namespace TBR_noform
 		{
 			iBClient = IBClient;
 			form = Form;
-
-			// Contract
-			contract = new Contract(); // A contract is created. Then while calling a class method contract.Symbol field is assigned
-									   //contract.Symbol = "AAPL";
-			contract.SecType = "STK";
-			contract.Currency = ""; // USD
-									//In the API side, NASDAQ is always defined as ISLAND in the exchange field
-			contract.Exchange = "SMART"; // SMART. If no exchange specefied - all availible exchanges will be listed
-
 		}
 
 		public void Search(string symbol) // Ticker search
 		{
+			Contract contract;
+			contract = new Contract();
+			contract.SecType = "STK"; // "STK"
+			contract.Currency = ""; // USD. In the API side, NASDAQ is always defined as ISLAND in the exchange field
+			contract.Exchange = "SMART"; // SMART. If no exchange specefied - all availible exchanges will be listed
+
 			contract.Symbol = symbol;
 			contract.Currency = ""; // Need to reset the currency because it remains the same after previous search
-			iBClient.ClientSocket.reqContractDetails((Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds, contract);
+			//iBClient.ClientSocket.reqContractDetails((Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds, contract);
+			iBClient.ClientSocket.reqContractDetails(form.nxtOrderID, contract);
 		}
 
-		public void GetQuote(string symbol, int basketNum, string currency) // Get ticker quote. Called from fleck, php and websocket
+		// Get ticker quote. Called from frontend (browser - socket - fleck)
+		public void GetQuote(string symbol, int basketNum, string currency) 
 		{
-			int requestId = (int)new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
-			string x = "7" + requestId.ToString().Remove(0, 3);
-			requestId = Convert.ToInt32(x); // C# requests: 5 - fx, 6 - stock. PHP: 7 - stock. 8 - place order
+
+			int requestId = form.nxtOrderID;
+			requestId = Convert.ToInt32(requestId.ToString() + "7"); // C# requests: 5 - fx, 6 - stock. PHP get stock quote: 7 - stock. 8 - place order
 
 			basketNumber = basketNum;
 			symbolPass = symbol;
 
-			contract.Symbol = symbol; // Assign fields of the created contract
+			Contract contract;
+			contract = new Contract();
+			contract.SecType = "STK"; 
+			contract.Currency = ""; 
+			contract.Exchange = "SMART"; 
+			contract.Symbol = symbol; 
 			contract.Currency = currency;
 
 			iBClient.ClientSocket.reqMktData(requestId, contract, "", true, false, null); // Request market data for a contract https://interactivebrokers.github.io/tws-api/classIBApi_1_1EClient.html#a7a19258a3a2087c07c1c57b93f659b63
 		}
 
-		public void GetQuoteBasket(string symbol, string currency, int requestId) // Used from basket.cs while basket execution. The difference of this method is that we pass request number as a parameter but in GetQute - the request id is generated in the method itself
+		// Used from basket.cs while basket execution. The difference of this method is that we pass request number as a parameter but in GetQute -
+		// the request id is generated in the method itself
+		public void GetQuoteBasket(string symbol, int basketId, string currency) // Dont need to send request id
 		{
+			Contract contract;
+			contract = new Contract();
+			contract.SecType = "STK";
+			contract.Currency = "";
+			contract.Exchange = "SMART";
+
 			contract.Symbol = symbol;
 			contract.Currency = currency;
-			//Console.WriteLine("ApiManager.cs line 58 ******" + requestId + contract.Symbol + " | " + contract.Currency);
 
-			System.Threading.Thread.Sleep(2000); // If dont place this delay - no symbol found error pops up
+			System.Threading.Thread.Sleep(1000); // Make a request onece a second
+
+			int requestId = form.nxtOrderID; 
+			requestId = Convert.ToInt32(requestId.ToString() + "6");
 
 			// The first action from which basket execution is started
-			Console.WriteLine("GetQuoteBasket. ApiManager.cs line 72. " + DateTime.Now.ToString("yyyy.MM.dd. HH:mm:ss:fff") + " " + contract.Symbol + " | " + contract.Currency + " " + requestId);
+			Console.WriteLine("GetQuoteBasket. ApiManager.cs line 72. " + DateTime.Now.ToString("yyyy.MM.dd. HH:mm:ss:fff") + " " + contract.Symbol + " | " + contract.Currency + " requestID: " + requestId);
 			
-			form.basket.UpdateInfoJson(string.Format("Stock quote requested. Symbol: {1}. Currency: {2}.  RequestID: {0}", requestId, contract.Symbol, contract.Currency), "stockQuoteRequest", "sent", requestId); // Update json info feild in DB
+			form.basket.UpdateInfoJson(string.Format("Stock quote requested. Symbol: {1}. Currency: {2}.  RequestID: {0}", requestId, contract.Symbol, contract.Currency), "stockQuoteRequest", "sent", requestId, "quote_request_id"); // Update json info feild in DB
+			form.basket.UpdateRequestId("quote_request_id", requestId, basketId, currency, symbol);
+			form.LogOrderIdToFile("ApiManager.cs GetQuoteBasket line 80. " + requestId.ToString());
+
 			iBClient.ClientSocket.reqMktData(requestId, contract, "", true, false, null); 
 		}
 
@@ -85,13 +101,9 @@ namespace TBR_noform
 			contract_x.Currency = currency; // USD. For all pairs except CAD, JPY, CHF which are converted backwards. https://groups.io/g/twsapi/topic/22665204?p=Created,,,20,2,0,0 
 			contract_x.Exchange = "IDEALPRO";
 
-			Console.WriteLine("GetForexQuote. ApiManager.cs line 79. " + DateTime.Now.ToString("yyyy.MM.dd. HH:mm:ss:fff") + " " + contract_x + " " + requestId);
+			//Console.WriteLine("GetForexQuote. ApiManager.cs line 79. " + DateTime.Now.ToString("yyyy.MM.dd. HH:mm:ss:fff") + " " + contract_x + " " + requestId);
 
-			//private void UpdateInfoJson(int basketId, string symbol, int requestId, string currency, int volume)
-
-			
-
-			form.basket.UpdateInfoJson(string.Format("FX quote requested. RequestID: {0}", requestId), "fxQuoteRequest", "ok", requestId); // Update json info feild in DB. Log: time, fx request has been sent
+			form.basket.UpdateInfoJson(string.Format("FX quote requested. RequestID: {0}", requestId), "fxQuoteRequest", "ok", requestId, "fx_request_id"); // Update json info feild in DB. Log: time, fx request has been sent
 			iBClient.ClientSocket.reqMktData(requestId, contract_x, "", true, false, null); 
 		}
 
@@ -102,6 +114,8 @@ namespace TBR_noform
 
 			Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds; // Unix time in milleseconds is used as an order id
 
+
+			Contract contract;
 			contract = new Contract(); // New instance of the contract class
 			contract.Symbol = symbol;
 			contract.SecType = "STK";
@@ -119,7 +133,7 @@ namespace TBR_noform
 			*/
 
 			order = new Order();
-			order.OrderId = 1;
+			order.OrderId = unixTimestamp; // 1
 			order.Action = "BUY";
 			order.OrderType = "MKT"; // MARKET
 									 //if (!lmtPrice.Text.Equals(""))
@@ -136,11 +150,9 @@ namespace TBR_noform
 			order.Tif = "DAY";
 
 			System.Threading.Thread.Sleep(1000);
-			//Console.WriteLine("ApiManager.cs line 116. place order id ******" + requestId);
-			//iBClient.ClientSocket.placeOrder(requestId, contract, order);
 
 			Console.WriteLine("PlaceOrder. ApiManager.cs line 132. " + DateTime.Now.ToString("yyyy.MM.dd. HH:mm:ss:fff" + " ibClient.NextOrderId: " + iBClient.NextOrderId ) + " " + contract.Symbol + " | " + contract.Currency + " " + requestId);
-			form.basket.UpdateInfoJson(string.Format("Order placed. RequestID: {0}", requestId), "placeOrder", "ok", requestId); // Update json info feild in DB
+			form.basket.UpdateInfoJson(string.Format("Order placed. RequestID: {0}", requestId), "placeOrder", "ok", requestId, "placeorder_request_id"); // Update json info feild in DB
 
 			//iBClient.ClientSocket.placeOrder(unixTimestamp, contract, order);
 			

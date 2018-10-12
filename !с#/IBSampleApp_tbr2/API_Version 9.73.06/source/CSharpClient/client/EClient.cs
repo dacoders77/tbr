@@ -2946,7 +2946,7 @@ namespace IBApi
 
         protected abstract void CloseAndSend(BinaryWriter request, uint lengthPos);
 
-        protected bool CheckConnection()
+        public bool CheckConnection()
         {
             if (!isConnected)
             {

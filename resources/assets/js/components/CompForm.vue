@@ -184,8 +184,6 @@
 
             Echo.channel('tbrChannel').listen('TbrAppSearchResponse', (e) => {
 
-
-
                 // SHOW BASKET CONTENT
                 var jsonParsedResponse = JSON.parse(e.update);
 
@@ -202,15 +200,8 @@
                 }
             });
 
-            axios.get('/addmsgws/getAvailableFunds/0') // Get available funds for trading
-                .then(response => {
-                    //console.log('/addmsgws/getAvailableFunds/0 response:');
-                    //console.log(response);
-                }) // Output returned data by controller
-                .catch(error => {
-                    console.log('CompForm.vue. /addmsgws/getAvailableFunds/0 error: ');
-                    console.log(error.response);
-                })
+
+
 
             axios.get('/getservertime')
                 .then(response => {
@@ -222,5 +213,18 @@
                 })
 
         },
+        mounted(){
+
+            axios.get('/addmsgws/getAvailableFunds/0') // Get available funds for trading
+                .then(response => {
+                    //console.log('/addmsgws/getAvailableFunds/0 response:');
+                    //console.log(response);
+                }) // Output returned data by controller
+                .catch(error => {
+                    console.log('CompForm.vue. /addmsgws/getAvailableFunds/0 error: ');
+                    console.log(error.response);
+                })
+
+        }
     }
 </script>

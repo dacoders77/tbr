@@ -1,0 +1,119 @@
+2018.10.11 16:48:07:861 --------------------------------------------------------
+2018.10.11 16:48:09:649 ApiManager.cs GetQuoteBasket line 80. 3857406
+2018.10.11 16:48:10:680 ApiManager.cs GetQuoteBasket line 80. 3857426
+2018.10.11 16:48:11:727 ApiManager.cs GetQuoteBasket line 80. 3857446
+2018.10.11 16:48:12:786 ApiManager.cs GetQuoteBasket line 80. 3857466
+2018.10.11 16:48:12:824 Basket.cs line 160. Fx quote for CAD, JPY, CHF. 3857475
+2018.10.11 16:48:13:872 ApiManager.cs GetQuoteBasket line 80. 3857486
+2018.10.11 16:48:13:888 Basket.cs line 166. Fx quote != USD. 3857495
+2018.10.11 16:48:13:921 Basket.cs line 264. Place order. 3857508
+2018.10.11 16:48:14:981 Basket.cs line 264. Place order. 3857518
+2018.10.11 16:48:17:089 Basket.cs line 264. Place order. 3857528
+2018.10.11 16:48:32:979 --------------------------------------------------------
+2018.10.11 16:48:34:831 ApiManager.cs GetQuoteBasket line 80. 3857536
+2018.10.11 16:48:35:852 ApiManager.cs GetQuoteBasket line 80. 3857556
+2018.10.11 16:48:36:887 ApiManager.cs GetQuoteBasket line 80. 3857576
+2018.10.11 16:48:37:935 ApiManager.cs GetQuoteBasket line 80. 3857596
+2018.10.11 16:48:37:962 Basket.cs line 160. Fx quote for CAD, JPY, CHF. 3857605
+2018.10.11 16:48:38:981 ApiManager.cs GetQuoteBasket line 80. 3857616
+2018.10.11 16:48:39:030 Basket.cs line 166. Fx quote != USD. 3857625
+2018.10.11 16:48:39:059 Basket.cs line 264. Place order. 3857638
+2018.10.11 16:48:40:114 Basket.cs line 264. Place order. 3857648
+2018.10.11 16:48:42:612 Basket.cs line 264. Place order. 3857658
+2018.10.11 16:49:30:896 --------------------------------------------------------
+2018.10.11 16:49:32:918 ApiManager.cs GetQuoteBasket line 80. 3857666
+2018.10.11 16:49:33:953 ApiManager.cs GetQuoteBasket line 80. 3857686
+2018.10.11 16:49:35:035 ApiManager.cs GetQuoteBasket line 80. 3857706
+2018.10.11 16:49:36:080 ApiManager.cs GetQuoteBasket line 80. 3857726
+2018.10.11 16:49:36:135 Basket.cs line 160. Fx quote for CAD, JPY, CHF. 3857735
+2018.10.11 16:49:37:176 ApiManager.cs GetQuoteBasket line 80. 3857746
+2018.10.11 16:49:37:214 Basket.cs line 166. Fx quote != USD. 3857755
+2018.10.11 16:49:37:246 Basket.cs line 264. Place order. 3857768
+2018.10.11 16:49:38:266 Basket.cs line 264. Place order. 3857778
+2018.10.11 16:49:39:336 Basket.cs line 264. Place order. 3857788
+2018.10.11 16:50:22:051 --------------------------------------------------------
+2018.10.11 16:50:22:165 --------------------------------------------------------
+2018.10.11 16:50:23:936 ApiManager.cs GetQuoteBasket line 80. 3857796
+2018.10.11 16:50:24:962 ApiManager.cs GetQuoteBasket line 80. 3857816
+2018.10.11 16:50:26:013 ApiManager.cs GetQuoteBasket line 80. 3857836
+2018.10.11 16:50:27:047 ApiManager.cs GetQuoteBasket line 80. 3857856
+2018.10.11 16:50:27:069 Basket.cs line 160. Fx quote for CAD, JPY, CHF. 3857865
+2018.10.11 16:50:28:088 ApiManager.cs GetQuoteBasket line 80. 3857876
+2018.10.11 16:50:28:107 Basket.cs line 166. Fx quote != USD. 3857885
+2018.10.11 16:50:28:158 Basket.cs line 264. Place order. 3857898
+2018.10.11 16:50:29:235 Basket.cs line 264. Place order. 3857908
+2018.10.11 16:50:30:255 Basket.cs line 264. Place order. 3857918
+2018.10.12 02:56:00:537 --------------------------------------------------------
+2018.10.12 02:56:02:582 ApiManager.cs GetQuoteBasket line 80. 38579206
+2018.10.12 02:56:03:837 ApiManager.cs GetQuoteBasket line 80. 38579226
+2018.10.12 02:56:06:671 ApiManager.cs GetQuoteBasket line 80. 38579246
+2018.10.12 02:56:07:778 ApiManager.cs GetQuoteBasket line 80. 38579266
+2018.10.12 02:56:07:834 Basket.cs line 160. Fx quote for CAD, JPY, CHF. 38579275
+2018.10.12 02:56:09:092 ApiManager.cs GetQuoteBasket line 80. 38579286
+2018.10.12 02:56:09:296 Basket.cs line 166. Fx quote != USD. 38579295
+2018.10.12 03:24:30:165 --------------------------------------------------------
+2018.10.12 03:24:31:483 ApiManager.cs GetQuoteBasket line 80. 38579206
+2018.10.12 03:24:32:599 ApiManager.cs GetQuoteBasket line 80. 38579226
+2018.10.12 03:25:36:338 ApiManager.cs GetQuoteBasket line 80. 38579206
+2018.10.12 03:25:37:471 --------------------------------------------------------
+2018.10.12 03:25:37:807 ApiManager.cs GetQuoteBasket line 80. 38579226
+2018.10.12 03:25:38:827 ApiManager.cs GetQuoteBasket line 80. 38579246
+2018.10.12 03:25:39:852 ApiManager.cs GetQuoteBasket line 80. 38579266
+2018.10.12 03:25:39:957 Basket.cs line 160. Fx quote for CAD, JPY, CHF. 38579275
+2018.10.12 03:25:40:977 ApiManager.cs GetQuoteBasket line 80. 38579286
+2018.10.12 03:25:40:994 Basket.cs line 166. Fx quote != USD. 38579295
+2018.10.12 03:25:42:014 ApiManager.cs GetQuoteBasket line 80. 38579306
+2018.10.12 03:27:15:371 --------------------------------------------------------
+2018.10.12 03:27:17:391 ApiManager.cs GetQuoteBasket line 80. 38579206
+2018.10.12 03:27:18:435 ApiManager.cs GetQuoteBasket line 80. 38579226
+2018.10.12 03:27:19:528 ApiManager.cs GetQuoteBasket line 80. 38579246
+2018.10.12 03:27:20:546 ApiManager.cs GetQuoteBasket line 80. 38579266
+2018.10.12 03:27:20:566 Basket.cs line 160. Fx quote for CAD, JPY, CHF. 38579275
+2018.10.12 03:27:21:585 ApiManager.cs GetQuoteBasket line 80. 38579286
+2018.10.12 03:27:21:660 Basket.cs line 166. Fx quote != USD. 38579295
+2018.10.12 03:27:22:678 ApiManager.cs GetQuoteBasket line 80. 38579306
+2018.10.12 03:27:22:719 Basket.cs line 264. Place order. 38579328
+2018.10.12 03:56:58:977 --------------------------------------------------------
+2018.10.12 03:57:00:957 ApiManager.cs GetQuoteBasket line 80. 385793306
+2018.10.12 03:57:02:228 ApiManager.cs GetQuoteBasket line 80. 385793326
+2018.10.12 03:57:03:245 ApiManager.cs GetQuoteBasket line 80. 385793346
+2018.10.12 03:57:04:630 ApiManager.cs GetQuoteBasket line 80. 385793366
+2018.10.12 03:57:04:644 Basket.cs line 160. Fx quote for CAD, JPY, CHF. 385793375
+2018.10.12 03:57:06:033 ApiManager.cs GetQuoteBasket line 80. 385793386
+2018.10.12 03:57:06:297 Basket.cs line 166. Fx quote != USD. 385793395
+2018.10.12 04:55:09:786 ApiManager.cs GetQuoteBasket line 80. 385793306
+2018.10.12 04:55:11:003 ApiManager.cs GetQuoteBasket line 80. 385793326
+2018.10.12 04:55:14:072 ApiManager.cs GetQuoteBasket line 80. 385793346
+2018.10.12 04:55:15:094 ApiManager.cs GetQuoteBasket line 80. 385793366
+2018.10.12 04:55:15:147 Basket.cs line 160. Fx quote for CAD, JPY, CHF. 385793375
+2018.10.12 04:55:15:173 Basket.cs line 264. Place order. 385793388
+2018.10.12 04:55:17:334 Basket.cs line 264. Place order. 385793398
+2018.10.12 04:55:18:359 Basket.cs line 264. Place order. 385793408
+2018.10.12 05:20:26:984 ApiManager.cs GetQuoteBasket line 80. 116
+2018.10.12 05:40:03:614 ApiManager.cs GetQuoteBasket line 80. 276
+2018.10.12 05:40:04:656 Basket.cs line 264. Place order. 298
+2018.10.12 05:50:03:253 ApiManager.cs GetQuoteBasket line 80. 306
+2018.10.12 05:50:05:723 ApiManager.cs GetQuoteBasket line 80. 326
+2018.10.12 05:50:06:793 Basket.cs line 264. Place order. 348
+2018.10.12 05:55:04:696 ApiManager.cs GetQuoteBasket line 80. 356
+2018.10.12 05:55:05:743 ApiManager.cs GetQuoteBasket line 80. 376
+2018.10.12 05:55:05:783 Basket.cs line 160. Fx quote for CAD, JPY, CHF. 385
+2018.10.12 05:55:06:863 ApiManager.cs GetQuoteBasket line 80. 396
+2018.10.12 05:55:06:892 Basket.cs line 264. Place order. 418
+2018.10.12 08:03:02:165 --------------------------------------------------------
+2018.10.12 08:03:08:077 ApiManager.cs GetQuoteBasket line 80. 4206
+2018.10.12 08:03:10:058 ApiManager.cs GetQuoteBasket line 80. 4226
+2018.10.12 08:03:11:090 ApiManager.cs GetQuoteBasket line 80. 4246
+2018.10.12 08:03:12:110 ApiManager.cs GetQuoteBasket line 80. 4266
+2018.10.12 08:03:12:130 Basket.cs line 160. Fx quote for CAD, JPY, CHF. 4275
+2018.10.12 08:03:14:177 Basket.cs line 264. Place order. 4288
+2018.10.12 08:08:43:776 --------------------------------------------------------
+2018.10.12 08:08:47:231 ApiManager.cs GetQuoteBasket line 80. 4396
+2018.10.12 08:08:47:246 Basket.cs line 166. Fx quote != USD. 4405
+2018.10.12 08:08:48:262 ApiManager.cs GetQuoteBasket line 80. 4416
+2018.10.12 08:08:49:330 ApiManager.cs GetQuoteBasket line 80. 4436
+2018.10.12 08:08:50:347 ApiManager.cs GetQuoteBasket line 80. 4456
+2018.10.12 08:08:50:359 Basket.cs line 160. Fx quote for CAD, JPY, CHF. 4465
+2018.10.12 08:08:50:374 Basket.cs line 264. Place order. 4478
+2018.10.12 08:08:51:405 Basket.cs line 264. Place order. 4488
+2018.10.12 08:08:53:465 Basket.cs line 264. Place order. 4498
